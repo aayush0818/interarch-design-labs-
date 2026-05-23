@@ -1,26 +1,51 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Header } from "@/components/home/Header";
+import { Hero } from "@/components/home/Hero";
+import { Verticals } from "@/components/home/Verticals";
+import { FeaturedWorks } from "@/components/home/FeaturedWorks";
+import { SketchSection } from "@/components/home/SketchSection";
+import { Manifesto } from "@/components/home/Manifesto";
+import { Clients } from "@/components/home/Clients";
+import { Recognition } from "@/components/home/Recognition";
+import { HoverImageNav } from "@/components/home/HoverImageNav";
+import { Footer } from "@/components/home/Footer";
+import { CustomCursor } from "@/components/home/CustomCursor";
+import { useReveal } from "@/components/home/useReveal";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Interarch Design Labs — Architecture & Interiors" },
+      {
+        name: "description",
+        content:
+          "Interarch Design Labs designs homes, workplaces, hospitality and institutional buildings with daylight, proportion and material intelligence.",
+      },
+      { property: "og:title", content: "Interarch Design Labs — Architecture & Interiors" },
+      {
+        property: "og:description",
+        content: "Not just spaces. Stories, shaped with care, clarity, and the way you live.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  useReveal();
+  return (
+    <>
+      <CustomCursor />
+      <Header />
+      <Hero />
+      <Verticals />
+      <FeaturedWorks />
+      <SketchSection />
+      <Manifesto />
+      <Clients />
+      <Recognition />
+      <HoverImageNav />
+      <Footer />
+    </>
+  );
 }

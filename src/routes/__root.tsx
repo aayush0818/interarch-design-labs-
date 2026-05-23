@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { SmoothScroll } from "@/components/home/SmoothScroll";
 
 function NotFoundComponent() {
   return (
