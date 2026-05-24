@@ -358,45 +358,91 @@ body {
   color: var(--bg);
 }
 
-.work-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  outline: 1px solid transparent;
-  transition: outline-color 320ms ease;
-  cursor: none;
+/* ============================================================
+   WORKS (editorial list)
+   ============================================================ */
+.works-section {
+  padding: 120px 0 60px;
 }
-.work-card:hover { outline-color: var(--accent); }
-.work-card-img {
-  width: 100%;
-  height: 340px;
-  overflow: hidden;
-}
-.work-card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 320ms ease;
-  will-change: transform;
-}
-.work-card:hover .work-card-img img { transform: scale(1.03); }
-.work-card-meta {
+.works-header {
   display: flex;
   justify-content: space-between;
-  padding: 16px 0 0;
+  align-items: flex-end;
+  padding: 0 60px;
+  margin-bottom: 48px;
+}
+.works-viewall {
   font-family: var(--sans);
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  background-image: linear-gradient(var(--fg), var(--fg));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 280ms ease;
+  padding-bottom: 4px;
+  cursor: none;
+}
+.works-viewall:hover { background-size: 100% 1px; }
+
+.works-list {
+  border-top: 0.5px solid var(--stone);
+}
+.works-row {
+  display: grid;
+  grid-template-columns: 48px 1fr 160px 80px 32px;
+  align-items: center;
+  padding: 20px 60px;
+  border-bottom: 0.5px solid var(--stone);
+  cursor: none;
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  transition: background 280ms ease;
+}
+.works-row:hover { background: rgba(63, 52, 49, 0.04); }
+.works-index {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.works-name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(18px, 2vw, 24px);
+  color: var(--fg);
+  transition: letter-spacing 400ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.works-row:hover .works-name { letter-spacing: 0.015em; }
+.works-location {
+  font-family: var(--sans);
+  font-size: 12px;
   color: var(--muted);
 }
-.work-card-sector {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: 22px;
-  color: var(--fg);
-  margin-top: 8px;
+.works-year {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--muted);
+  text-align: right;
 }
+.works-arrow {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--muted);
+  text-align: right;
+  transition: transform 280ms ease, color 280ms ease;
+  display: inline-block;
+}
+.works-row:hover .works-arrow {
+  transform: rotate(-45deg);
+  color: var(--fg);
+}
+
 
 /* ============================================================
    SKETCH + PHILOSOPHY (combined sticky section)
