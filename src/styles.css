@@ -818,6 +818,27 @@ body {
 [data-reveal-stagger="1"] { transition-delay: 100ms; }
 [data-reveal-stagger="2"] { transition-delay: 200ms; }
 
+/* ============================================================
+   IMAGE REVEAL (slide-down on enter)
+   ============================================================ */
+.img-reveal-wrap {
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  transition: opacity 800ms ease;
+}
+.img-reveal-wrap.is-visible { opacity: 1; }
+.img-reveal-wrap img {
+  transform: translateY(-8%);
+  transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.img-reveal-wrap.is-visible img { transform: translateY(0); }
+
 /* Responsive trims */
 @media (max-width: 900px) {
   .verticals-section { flex-direction: column; padding: 80px 0; }
