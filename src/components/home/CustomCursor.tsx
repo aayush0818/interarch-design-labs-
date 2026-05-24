@@ -12,6 +12,7 @@ export function CustomCursor() {
     let my = window.innerHeight / 2;
     let cx = mx;
     let cy = my;
+    const LERP = 0.18;
     let raf = 0;
 
     const onMove = (e: MouseEvent) => {
@@ -19,38 +20,19 @@ export function CustomCursor() {
       my = e.clientY;
     };
 
-    const onOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement | null;
-      if (!target) return;
-      if (target.closest('a, button, [data-hover]')) {
-        el.classList.add("is-hover");
-      }
-    };
-    const onOut = (e: MouseEvent) => {
-      const target = e.target as HTMLElement | null;
-      if (!target) return;
-      if (target.closest('a, button, [data-hover]')) {
-        el.classList.remove("is-hover");
-      }
-    };
-
     function loop() {
-      cx += (mx - cx) * 0.18;
-      cy += (my - cy) * 0.18;
+      cx += (mx - cx) * LERP;
+      cy += (my - cy) * LERP;
       el!.style.transform = `translate(${cx - 3.5}px, ${cy - 3.5}px)`;
       raf = requestAnimationFrame(loop);
     }
 
     document.addEventListener("mousemove", onMove, { passive: true });
-    document.addEventListener("mouseover", onOver, { passive: true });
-    document.addEventListener("mouseout", onOut, { passive: true });
     raf = requestAnimationFrame(loop);
 
     return () => {
       cancelAnimationFrame(raf);
       document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseover", onOver);
-      document.removeEventListener("mouseout", onOut);
     };
   }, []);
 

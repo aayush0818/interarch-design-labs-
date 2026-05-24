@@ -3,8 +3,7 @@ import { Header } from "@/components/home/Header";
 import { Hero } from "@/components/home/Hero";
 import { Verticals } from "@/components/home/Verticals";
 import { FeaturedWorks } from "@/components/home/FeaturedWorks";
-import { SketchSection } from "@/components/home/SketchSection";
-import { Manifesto } from "@/components/home/Manifesto";
+import { SketchPhilosophy } from "@/components/home/SketchPhilosophy";
 import { Clients } from "@/components/home/Clients";
 import { Recognition } from "@/components/home/Recognition";
 import { HoverImageNav } from "@/components/home/HoverImageNav";
@@ -40,8 +39,7 @@ function Index() {
       <Hero />
       <Verticals />
       <FeaturedWorks />
-      <SketchSection />
-      <Manifesto />
+      <SketchPhilosophy />
       <Clients />
       <Recognition />
       <HoverImageNav />
