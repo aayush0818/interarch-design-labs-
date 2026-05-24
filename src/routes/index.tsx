@@ -39,8 +39,7 @@ function Index() {
       <Hero />
       <Verticals />
       <FeaturedWorks />
-      <SketchSection />
-      <Manifesto />
+      <SketchPhilosophy />
       <Clients />
       <Recognition />
       <HoverImageNav />
