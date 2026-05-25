@@ -1,21 +1,28 @@
 import { useEffect } from "react";
 
 /**
- * Continuous rAF loop that drives:
- *   1. text/element reveal via IntersectionObserver (one-shot)
- *   2. image curtain mask (cream overlay lifts as you scroll past)
- *   3. parallax drift on .parallax-img wrappers
+ * Cinematic image system.
  *
- * We use a continuous rAF instead of a `scroll` listener because smooth-scroll
- * libraries (Lenis) and programmatic scrolls don't always fire native
- * `scroll` on window — a continuous loop is bulletproof and trivially cheap
- * (a handful of getBoundingClientRect calls per frame).
+ * For every `.img-reveal-wrap > .img-parallax` on the page we drive a single
+ * transform per frame that combines three behaviours:
+ *
+ *   1. REVEAL          — image starts translated down (+60px) and scaled
+ *                        UP (1.12). As it enters the viewport it slides
+ *                        upward and scales DOWN to (0, 1.0). This is the
+ *                        "camera stabilising" feel.
+ *   2. PARALLAX        — once revealed, the inner element continues to drift
+ *                        opposite to scroll at ~30% speed. Mimics camera
+ *                        movement across a static scene.
+ *   3. WORKS REVERSE   — `.works-drop-wrap` overrides the parallax direction
+ *                        so images drift DOWNWARD as the page scrolls down.
+ *
+ * Text reveals use a one-shot IntersectionObserver (unchanged).
  */
 export function useReveal() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // ---- 1. One-shot reveal for [data-reveal] (text blocks, headings) ----
+    // ---- Text / element reveal (one-shot) ----
     let textIo: IntersectionObserver | null = null;
     if ("IntersectionObserver" in window) {
       textIo = new IntersectionObserver(
@@ -38,58 +45,70 @@ export function useReveal() {
         .forEach((el) => el.classList.add("is-visible"));
     }
 
-    // Snapshot wraps once. Components on this page mount synchronously, so a
-    // single rAF after first paint catches them all. If sections mount later,
-    // we re-query inside the loop (cheap on a small DOM).
-    const queryWraps = () =>
-      Array.from(document.querySelectorAll<HTMLElement>(".img-reveal-wrap"));
+    // ---- Image system ----
+    type Entry = { wrap: HTMLElement; inner: HTMLElement; isWorks: boolean };
+    const collect = (): Entry[] => {
+      const wraps = Array.from(
+        document.querySelectorAll<HTMLElement>(".img-reveal-wrap")
+      );
+      const out: Entry[] = [];
+      for (const wrap of wraps) {
+        const inner = wrap.querySelector<HTMLElement>(".img-parallax");
+        if (inner) {
+          out.push({
+            wrap,
+            inner,
+            isWorks: wrap.classList.contains("works-drop-wrap"),
+          });
+        }
+      }
+      return out;
+    };
 
-    let wraps = queryWraps();
-    let frame = 0;
+    let entries = collect();
     let lastQuery = performance.now();
     let rafId = 0;
 
+    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
     const tick = () => {
       const now = performance.now();
-      // Re-query every 1.5s to pick up newly-mounted wraps without paying
-      // the cost on every frame.
-      if (now - lastQuery > 1500) {
-        wraps = queryWraps();
+      if (now - lastQuery > 1200) {
+        entries = collect();
         lastQuery = now;
       }
 
       const vh = window.innerHeight || 1;
 
-      for (const wrap of wraps) {
+      for (const { wrap, inner, isWorks } of entries) {
         const rect = wrap.getBoundingClientRect();
-        if (rect.bottom < -300 || rect.top > vh + 300) continue;
+        if (rect.bottom < -400 || rect.top > vh + 400) continue;
 
-        // Scroll progress 0 → 1 as the element travels from just entering
-        // the viewport bottom to having scrolled past the top.
-        const total = vh + rect.height;
-        const traveled = vh - rect.top;
-        const raw = traveled / total;
-        const p = raw < 0 ? 0 : raw > 1 ? 1 : raw;
+        // Reveal progress: 0 when the top edge is at the viewport bottom,
+        // 1 by the time the top edge reaches 25% from the viewport top.
+        const revealRaw = (vh - rect.top) / (vh * 0.75);
+        const reveal = revealRaw < 0 ? 0 : revealRaw > 1 ? 1 : revealRaw;
+        const r = easeOutCubic(reveal);
 
-        // Works section only: image translates DOWNWARD as page scrolls down.
-        // Starts slightly above (-12%) and ends slightly below (+12%).
-        if (wrap.classList.contains("works-drop-wrap")) {
-          const y = -12 + p * 24;
-          wrap.style.setProperty("--works-drop", `${y.toFixed(2)}%`);
-        }
+        // Reveal contribution: translateY +60px → 0, scale 1.12 → 1.0
+        const revealY = (1 - r) * 60;
+        const revealScale = 1 + (1 - r) * 0.12;
+        const opacity = r;
 
-        if (wrap.classList.contains("parallax-img")) {
-          const speed = parseFloat(wrap.dataset.parallaxSpeed || "0.08");
-          const delta = rect.top + rect.height / 2 - vh / 2;
-          const y = -delta * speed;
-          const inner = wrap.querySelector<HTMLElement>(".img-parallax");
-          if (inner) {
-            inner.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0)`;
-          }
-        }
+        // Parallax contribution: progress from -1 (entering) to +1 (leaving)
+        // through the viewport. Drives a subtle 24px range.
+        const center = rect.top + rect.height / 2;
+        const through = (center - vh / 2) / (vh / 2 + rect.height / 2);
+        const t = through < -1 ? -1 : through > 1 ? 1 : through;
+        // Default: image moves UPWARD opposite to scroll (camera-like).
+        // Works override: image moves DOWNWARD as you scroll down.
+        const parallaxY = isWorks ? t * 26 : t * -26;
+
+        const y = revealY + parallaxY;
+        inner.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0) scale(${revealScale.toFixed(4)})`;
+        inner.style.opacity = opacity.toFixed(3);
       }
 
-      frame++;
       rafId = requestAnimationFrame(tick);
     };
 
