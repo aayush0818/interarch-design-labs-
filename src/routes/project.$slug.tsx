@@ -1,17 +1,26 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { PageHero, PageShell } from "@/components/home/PageShell";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { motion } from "framer-motion";
+import { Header } from "@/components/home/Header";
+import { Footer } from "@/components/home/Footer";
+import { CustomCursor } from "@/components/home/CustomCursor";
 import { projects } from "@/data/projects";
 import { pageImages } from "@/data/siteContent";
 
 export const Route = createFileRoute("/project/$slug")({
-  head: () => ({ meta: [
-    { title: "Project — Interarch Design Labs" },
-    { name: "description", content: "Project case study by Interarch Design Labs." },
-    { property: "og:title", content: "Project — Interarch Design Labs" },
-    { property: "og:description", content: "Architecture and interiors case study with context, process and imagery." },
-  ] }),
+  head: ({ params }) => {
+    const p = projects.find((x) => x.slug === params.slug);
+    return { meta: [
+      { title: `${p?.name ?? "Project"} — IDL` },
+      { name: "description", content: p?.description ?? "Project case study by Interarch Design Labs." },
+      { property: "og:title", content: `${p?.name ?? "Project"} — IDL` },
+      { property: "og:description", content: p?.description ?? "" },
+      ...(p?.cover ? [{ property: "og:image", content: p.cover }] : []),
+    ] };
+  },
   component: ProjectPage,
 });
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 function ProjectPage() {
   const { slug } = Route.useParams();
@@ -20,15 +29,77 @@ function ProjectPage() {
   const next = projects[(index + 1) % projects.length];
 
   return (
-    <PageShell>
-      <PageHero image={pageImages.works[index % pageImages.works.length]} alt={`${project.name} project`} title={project.name} />
-      <section className="project-meta"><div><span>Sector</span><strong>{project.sector}</strong></div><div><span>Location</span><strong>{project.location}</strong></div><div><span>Year</span><strong>{project.year}</strong></div><div><span>Area</span><strong>{project.area}</strong></div></section>
-      <section className="project-body">
-        <div data-reveal><p className="dropcap">{project.description}</p><p>The project is read through thresholds, quiet rooms, calibrated daylight and a material palette that allows the architecture to age with dignity.</p></div>
-        <div className="project-side-images"><div className="img-reveal-wrap"><div className="img-parallax"><img src={pageImages.works[(index + 1) % pageImages.works.length]} alt="Project detail" width={900} height={1200} loading="lazy" /></div></div><div className="img-reveal-wrap"><div className="img-parallax"><img src={pageImages.works[(index + 2) % pageImages.works.length]} alt="Project interior" width={900} height={1200} loading="lazy" /></div></div></div>
-      </section>
-      <section className="project-wide"><div className="img-reveal-wrap"><div className="img-parallax"><img src={pageImages.works[(index + 3) % pageImages.works.length]} alt="Project wide view" width={1920} height={1080} loading="lazy" /></div></div></section>
-      <a className="next-project" href={`/project/${next.slug}`} data-hover><div><span>Next project</span><strong>{next.name} →</strong></div><img src={pageImages.works[(index + 1) % pageImages.works.length]} alt={next.name} width={1200} height={900} loading="lazy" /></a>
-    </PageShell>
+    <>
+      <CustomCursor />
+      <Header />
+      <article className="idl-mono">
+        <header className="idl-mono-plate">
+          <motion.div
+            className="idl-mono-cover"
+            initial={{ opacity: 0, scale: 1.06 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: EASE }}
+          >
+            <img src={project.cover} alt={project.name} />
+            <div className="idl-mono-shade" />
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: EASE }}
+          >
+            {project.name}
+          </motion.h1>
+        </header>
+        <section className="idl-mono-ledger">
+          <div><span>Sector</span><strong>{project.sector}</strong></div>
+          <div><span>Location</span><strong>{project.location}</strong></div>
+          <div><span>Year</span><strong>{project.year}</strong></div>
+          <div><span>Area</span><strong>{project.area}</strong></div>
+          <div><span>Type</span><strong>{project.category}</strong></div>
+        </section>
+        <section className="idl-mono-body">
+          <p className="dropcap">{project.description}</p>
+          <p>The project is read through thresholds, quiet rooms, calibrated daylight and a material palette that allows the architecture to age with dignity.</p>
+        </section>
+        <section className="idl-mono-essay">
+          <motion.div
+            className="idl-mono-img idl-mono-img--bleed"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: EASE }}
+          >
+            <img src={pageImages.works[(index + 1) % pageImages.works.length]} alt="Project view" />
+          </motion.div>
+          <motion.div
+            className="idl-mono-img idl-mono-img--indent"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: EASE }}
+          >
+            <img src={pageImages.works[(index + 2) % pageImages.works.length]} alt="Project detail" />
+          </motion.div>
+          <motion.div
+            className="idl-mono-img idl-mono-img--bleed"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: EASE }}
+          >
+            <img src={pageImages.works[(index + 3) % pageImages.works.length]} alt="Project wide view" />
+          </motion.div>
+        </section>
+        <Link to="/project/$slug" params={{ slug: next.slug }} className="idl-mono-next" data-hover>
+          <div>
+            <span>Next project</span>
+            <strong>{next.name} →</strong>
+          </div>
+          <img src={next.cover} alt={next.name} />
+        </Link>
+      </article>
+      <Footer />
+    </>
   );
 }
