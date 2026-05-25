@@ -185,6 +185,7 @@ export function Header() {
               <ul className="idl-mega-nav">
                 {NAV.map((item, i) => {
                   const isActive = i === activeIdx;
+                  const hasKids = !!item.children?.length;
                   return (
                     <motion.li
                       key={item.label}
@@ -192,19 +193,33 @@ export function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, ease: EASE, delay: 0.15 + i * 0.06 }}
                       className={`idl-mega-nav-row${isActive ? " is-active" : ""}`}
-                      onMouseEnter={() => setActiveIdx(i)}
                     >
-                      <Link
-                        to={item.to}
-                        className="idl-mega-nav-link"
-                        data-hover
-                        onClick={close}
-                      >
-                        <span className="idl-mega-nav-index">{String(i + 1).padStart(2, "0")}</span>
-                        <span className="idl-mega-nav-label">{item.label}</span>
-                      </Link>
+                      {hasKids ? (
+                        <button
+                          type="button"
+                          className="idl-mega-nav-link"
+                          data-hover
+                          aria-expanded={isActive}
+                          onClick={() => setActiveIdx(isActive ? null : i)}
+                        >
+                          <span className="idl-mega-nav-index">{String(i + 1).padStart(2, "0")}</span>
+                          <span className="idl-mega-nav-label">{item.label}</span>
+                          <span className="idl-mega-nav-caret" aria-hidden>{isActive ? "—" : "+"}</span>
+                        </button>
+                      ) : (
+                        <Link
+                          to={item.to}
+                          className="idl-mega-nav-link"
+                          data-hover
+                          onClick={close}
+                          onMouseEnter={() => setActiveIdx(i)}
+                        >
+                          <span className="idl-mega-nav-index">{String(i + 1).padStart(2, "0")}</span>
+                          <span className="idl-mega-nav-label">{item.label}</span>
+                        </Link>
+                      )}
                       <AnimatePresence>
-                        {isActive && item.children ? (
+                        {isActive && hasKids ? (
                           <motion.ul
                             className="idl-mega-sub"
                             initial={{ height: 0, opacity: 0 }}
@@ -212,7 +227,7 @@ export function Header() {
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.4, ease: EASE }}
                           >
-                            {item.children.map((c, ci) => (
+                            {item.children!.map((c, ci) => (
                               <motion.li
                                 key={c.label}
                                 initial={{ opacity: 0, x: -10 }}
