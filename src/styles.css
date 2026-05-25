@@ -163,12 +163,29 @@ body {
   color: var(--fg);
 }
 .idl-logo {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 22px;
-  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
   color: inherit;
   text-decoration: none;
+  line-height: 0;
+}
+.idl-logo-mark {
+  height: 38px;
+  width: auto;
+  display: block;
+  /* On the dark hero, invert the logo to read as cream. On scrolled
+     (cream) header, the natural brown/red mark sits beautifully. */
+  filter: brightness(0) invert(1);
+  transition: filter 400ms ease;
+}
+.idl-header.scrolled .idl-logo-mark { filter: none; }
+.idl-footer-logo {
+  display: block;
+  height: 56px;
+  width: auto;
+  margin-bottom: 18px;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
 }
 .idl-menu-btn {
   background: none;
