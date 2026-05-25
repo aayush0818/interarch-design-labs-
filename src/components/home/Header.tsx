@@ -88,7 +88,10 @@ export function Header() {
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 80);
+      setHoverIdx(null);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
