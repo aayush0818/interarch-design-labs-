@@ -1,19 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { AnimatePresence, motion } from "framer-motion";
 import logo from "@/assets/idl-logo.png";
 import { sectors } from "@/data/siteContent";
+import navWork from "@/assets/nav-work.jpg";
+import navStory from "@/assets/nav-story.jpg";
+import navTeam from "@/assets/nav-team.jpg";
+import navContact from "@/assets/nav-contact.jpg";
 
+type SubItem = { label: string; to: string; params?: Record<string, string> };
 type NavItem = {
   label: string;
   to: string;
-  children?: { label: string; to: string; params?: Record<string, string> }[];
+  image: string;
+  blurb: string;
+  children?: SubItem[];
 };
 
 const NAV: NavItem[] = [
-  { label: "Projects", to: "/works" },
   {
-    label: "Sectors",
+    label: "Projects",
+    to: "/works",
+    image: navWork,
+    blurb: "A growing archive of architecture, interiors and research built across India.",
+  },
+  {
+    label: "Expertise",
     to: "/sectors",
+    image: navStory,
+    blurb: "Six sectors, one architectural language — measured, material, daylit.",
     children: sectors.map((s) => ({
       label: s.name,
       to: "/sectors/$sector",
@@ -21,23 +36,38 @@ const NAV: NavItem[] = [
     })),
   },
   {
-    label: "Studio",
+    label: "Practice",
     to: "/studio",
+    image: navStory,
+    blurb: "How the studio thinks, draws, and brings buildings into the world.",
     children: [
       { label: "Overview", to: "/studio" },
       { label: "History", to: "/studio/history" },
-      { label: "Team", to: "/studio/team" },
+      { label: "Process", to: "/process" },
+      { label: "Journal", to: "/journal" },
+      { label: "Contact", to: "/contact" },
     ],
   },
-  { label: "Process", to: "/process" },
-  { label: "Journal", to: "/journal" },
-  { label: "Contact", to: "/contact" },
+  {
+    label: "Studios",
+    to: "/studio",
+    image: navContact,
+    blurb: "Working between Mumbai, Ahmedabad and site — one continuous practice.",
+  },
+  {
+    label: "Specialists",
+    to: "/studio/team",
+    image: navTeam,
+    blurb: "Architects, interior designers and researchers shaping every project.",
+  },
 ];
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [activeIdx, setActiveIdx] = useState<number>(0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -53,105 +83,165 @@ export function Header() {
     };
   }, [open]);
 
-  const closeAll = () => {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const close = () => {
     setOpen(false);
-    setActiveIdx(null);
+    setActiveIdx(0);
   };
 
-  const activeChildren =
-    activeIdx !== null ? NAV[activeIdx]?.children : undefined;
+  const active = useMemo(() => NAV[activeIdx], [activeIdx]);
+  const headerClass = `idl-header${scrolled ? " is-scrolled" : ""}${open ? " is-menu" : ""}`;
 
   return (
     <>
-      <header className={`idl-header${scrolled || open ? " scrolled" : ""}${open ? " menu-open" : ""}`}>
-        <Link to="/" className="idl-logo" aria-label="Interarch Design Labs — Home" onClick={closeAll}>
+      <header className={headerClass}>
+        <Link to="/" className="idl-logo" aria-label="Interarch Design Labs — Home" onClick={close}>
           <img src={logo} alt="Interarch Design Labs" className="idl-logo-mark" />
         </Link>
-        <button
-          className="idl-menu-btn"
-          data-hover
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-        >
-          {open ? "Close" : "Menu"}
-        </button>
+
+        <nav className="idl-topnav" aria-label="Primary">
+          {NAV.map((item) => (
+            <Link key={item.label} to={item.to} className="idl-topnav-link" data-hover>
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="idl-header-right">
+          <button
+            type="button"
+            className="idl-icon-btn"
+            aria-label="Search"
+            data-hover
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
+              <circle cx="7" cy="7" r="5" />
+              <path d="m11 11 4 4" strokeLinecap="round" />
+            </svg>
+          </button>
+          <button
+            className="idl-menu-btn"
+            data-hover
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="idl-mega-menu"
+          >
+            <span className="idl-menu-btn-label">{open ? "Close" : "Menu"}</span>
+            <span className="idl-menu-btn-icon" aria-hidden>
+              <span /><span />
+            </span>
+          </button>
+        </div>
       </header>
 
-      <div className={`idl-menu-overlay${open ? " open" : ""}`} aria-hidden={!open}>
-        <div className={`idl-menu-panel idl-menu-panel--main${activeChildren ? " has-sub" : ""}`}>
-          <div className="idl-menu-eyebrow">Navigation</div>
-          <nav className="idl-menu-list">
-            {NAV.map((item, i) => {
-              const isActive = activeIdx === i;
-              return (
-                <div key={item.label} className="idl-menu-row">
-                  {item.children ? (
-                    <button
-                      type="button"
-                      className={`idl-menu-link${isActive ? " active" : ""}`}
-                      data-hover
-                      onClick={() => setActiveIdx(isActive ? null : i)}
-                    >
-                      <span>{item.label}</span>
-                      <span className="idl-menu-caret">{isActive ? "—" : "+"}</span>
-                    </button>
-                  ) : (
-                    <Link
-                      to={item.to}
-                      className="idl-menu-link"
-                      data-hover
-                      onClick={closeAll}
-                      onMouseEnter={() => setActiveIdx(null)}
-                    >
-                      {item.label}
-                    </Link>
-                  )}
-                </div>
-              );
-            })}
-          </nav>
-          <div className="idl-menu-foot">
-            <span>Interarch Design Labs</span>
-            <span>© {new Date().getFullYear()}</span>
-          </div>
-        </div>
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            id="idl-mega-menu"
+            className="idl-mega"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.55, ease: EASE }}
+            role="dialog"
+            aria-modal="true"
+          >
+            {/* LEFT — editorial panel */}
+            <div className="idl-mega-left">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active.label}
+                  className="idl-mega-left-inner"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.5, ease: EASE }}
+                >
+                  <div className="idl-mega-eyebrow">— {String(activeIdx + 1).padStart(2, "0")} / {String(NAV.length).padStart(2, "0")}</div>
+                  <h2 className="idl-mega-title">{active.label}</h2>
+                  <p className="idl-mega-blurb">{active.blurb}</p>
+                  <div className="idl-mega-image">
+                    <img src={active.image} alt="" width={1200} height={1500} />
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-        <div className={`idl-menu-panel idl-menu-panel--sub${activeChildren ? " open" : ""}`}>
-          {activeChildren ? (
-            <>
-              <div className="idl-menu-eyebrow">
-                {NAV[activeIdx!].label}
-              </div>
-              <ul className="idl-menu-sublist">
-                {activeChildren.map((c) => (
-                  <li key={c.label}>
-                    <Link
-                      to={c.to}
-                      params={c.params as never}
-                      className="idl-menu-sublink"
-                      data-hover
-                      onClick={closeAll}
+            {/* RIGHT — nav + submenu */}
+            <div className="idl-mega-right">
+              <div className="idl-mega-eyebrow idl-mega-eyebrow--right">Navigation</div>
+              <ul className="idl-mega-nav">
+                {NAV.map((item, i) => {
+                  const isActive = i === activeIdx;
+                  return (
+                    <motion.li
+                      key={item.label}
+                      initial={{ opacity: 0, y: 18 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, ease: EASE, delay: 0.15 + i * 0.06 }}
+                      className={`idl-mega-nav-row${isActive ? " is-active" : ""}`}
+                      onMouseEnter={() => setActiveIdx(i)}
                     >
-                      {c.label}
-                    </Link>
-                  </li>
-                ))}
-                <li className="idl-menu-sub-all">
-                  <Link
-                    to={NAV[activeIdx!].to}
-                    className="idl-menu-sublink muted"
-                    data-hover
-                    onClick={closeAll}
-                  >
-                    View all →
-                  </Link>
-                </li>
+                      <Link
+                        to={item.to}
+                        className="idl-mega-nav-link"
+                        data-hover
+                        onClick={close}
+                      >
+                        <span className="idl-mega-nav-index">{String(i + 1).padStart(2, "0")}</span>
+                        <span className="idl-mega-nav-label">{item.label}</span>
+                      </Link>
+                      <AnimatePresence>
+                        {isActive && item.children ? (
+                          <motion.ul
+                            className="idl-mega-sub"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.4, ease: EASE }}
+                          >
+                            {item.children.map((c, ci) => (
+                              <motion.li
+                                key={c.label}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.35, ease: EASE, delay: ci * 0.05 }}
+                              >
+                                <Link
+                                  to={c.to}
+                                  params={c.params as never}
+                                  className="idl-mega-sub-link"
+                                  data-hover
+                                  onClick={close}
+                                >
+                                  {c.label}
+                                </Link>
+                              </motion.li>
+                            ))}
+                          </motion.ul>
+                        ) : null}
+                      </AnimatePresence>
+                    </motion.li>
+                  );
+                })}
               </ul>
-            </>
-          ) : null}
-        </div>
-      </div>
+
+              <div className="idl-mega-foot">
+                <span>Interarch Design Labs</span>
+                <span>© {new Date().getFullYear()}</span>
+              </div>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }
