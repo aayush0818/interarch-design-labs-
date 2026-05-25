@@ -20,53 +20,51 @@ type NavItem = {
 const NAV: NavItem[] = [
   {
     label: "Projects",
+    to: "/projects",
     image: navWork,
-    blurb: "A growing archive of architecture, interiors and research built across India.",
+    blurb: "A growing archive — split between architecture and interiors.",
     children: [
-      { label: "All Works", to: "/works" },
-      ...sectors.map((s) => ({
-        label: s.name,
-        to: "/sectors/$sector",
-        params: { sector: s.slug },
-      })),
+      { label: "Architecture", to: "/projects/$category", params: { category: "architecture" } },
+      { label: "Interiors", to: "/projects/$category", params: { category: "interiors" } },
     ],
   },
   {
     label: "Expertise",
+    to: "/expertise",
     image: navStory,
     blurb: "Six sectors, one architectural language — measured, material, daylit.",
     children: sectors.map((s) => ({
       label: s.name,
-      to: "/sectors/$sector",
+      to: "/expertise/$sector",
       params: { sector: s.slug },
     })),
   },
   {
+    label: "Studio",
+    to: "/studio/about",
+    image: navTeam,
+    blurb: "Who we are, and the people who shape every project.",
+    children: [
+      { label: "About", to: "/studio/about" },
+      { label: "Team", to: "/studio/team" },
+    ],
+  },
+  {
     label: "Practice",
+    to: "/practice",
     image: navStory,
     blurb: "How the studio thinks, draws, and brings buildings into the world.",
     children: [
-      { label: "Overview", to: "/studio" },
-      { label: "History", to: "/studio/history" },
-      { label: "Process", to: "/process" },
-      { label: "Journal", to: "/journal" },
-      { label: "Contact", to: "/contact" },
+      { label: "History", to: "/practice/history" },
+      { label: "Process", to: "/practice/process" },
+      { label: "Journal", to: "/practice/journal" },
     ],
   },
   {
-    label: "Studios",
+    label: "Contact",
+    to: "/contact",
     image: navContact,
-    blurb: "Working between Mumbai and Ahmedabad — one continuous practice.",
-    children: [
-      { label: "Mumbai", to: "/studio" },
-      { label: "Ahmedabad", to: "/contact" },
-    ],
-  },
-  {
-    label: "Specialists",
-    to: "/studio/team",
-    image: navTeam,
-    blurb: "Architects, interior designers and researchers shaping every project.",
+    blurb: "Wherever you are, we design for you.",
   },
 ];
 
@@ -127,13 +125,12 @@ export function Header() {
           <img src={logo} alt="Interarch Design Labs" className="idl-logo-mark" />
         </Link>
 
-        {/* Hero state: centered full nav with hover dropdowns (hidden when scrolled / menu open) */}
         <nav className="idl-topnav" aria-label="Primary" onMouseLeave={() => setHoverIdx(null)}>
           {NAV.map((item, i) =>
-            item.to && !item.children ? (
+            !item.children ? (
               <Link
                 key={item.label}
-                to={item.to}
+                to={item.to!}
                 className="idl-topnav-link"
                 data-hover
                 onMouseEnter={() => setHoverIdx(null)}
@@ -146,9 +143,9 @@ export function Header() {
                 className="idl-topnav-item"
                 onMouseEnter={() => setHoverIdx(i)}
               >
-                <button type="button" className="idl-topnav-link" data-hover>
+                <Link to={item.to!} className="idl-topnav-link" data-hover>
                   {item.label}
-                </button>
+                </Link>
                 <AnimatePresence>
                   {hoverIdx === i && item.children ? (
                     <motion.div
@@ -178,8 +175,6 @@ export function Header() {
           )}
         </nav>
 
-
-        {/* Right cluster: Menu (scrolled only) + Search */}
         <div className="idl-header-right">
           <button
             className="idl-menu-btn"
@@ -215,7 +210,6 @@ export function Header() {
             role="dialog"
             aria-modal="true"
           >
-            {/* LEFT — editorial panel */}
             <div className="idl-mega-left">
               <AnimatePresence mode="wait">
                 {active ? (
@@ -255,7 +249,6 @@ export function Header() {
               </AnimatePresence>
             </div>
 
-            {/* RIGHT — nav + submenu */}
             <div className="idl-mega-right">
               <div className="idl-mega-eyebrow idl-mega-eyebrow--right">Navigation</div>
               <ul className="idl-mega-nav">

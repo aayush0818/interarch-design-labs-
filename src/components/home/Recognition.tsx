@@ -9,7 +9,7 @@ const items = [
     date: "2010",
     headline:
       "Chief Minister of Maharashtra Award — Babasaheb Ambedkar Bhavan",
-    href: "/journal",
+    href: "/practice/journal",
   },
   {
     img: award2,
@@ -17,7 +17,7 @@ const items = [
     date: "25 Years",
     headline:
       "25 years of continuous service to DRDO, Ministry of Defence",
-    href: "/journal",
+    href: "/practice/journal",
   },
   {
     img: award3,
@@ -25,7 +25,7 @@ const items = [
     date: "2015",
     headline:
       "Rachana Sansad Diamond Jubilee felicitation of Ar. Dipak Thaker",
-    href: "/journal",
+    href: "/practice/journal",
   },
 ];
 
@@ -35,7 +35,7 @@ export function Recognition() {
       <div className="recognition-grid">
         <div className="recognition-left">
           <h2 className="recognition-title">Recognition</h2>
-          <a className="idl-pill" href="/journal" data-hover>
+          <a className="idl-pill" href="/practice/journal" data-hover>
             View all
           </a>
         </div>

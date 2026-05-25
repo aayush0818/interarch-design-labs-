@@ -21,7 +21,7 @@ export function FeaturedWorks() {
     <section className="works-section idl-section">
       <div className="works-header">
         <h2 className="idl-section-title">Selected Works</h2>
-        <a className="works-viewall" href="/works" data-hover>
+        <a className="works-viewall" href="/projects" data-hover>
           View all works →
         </a>
       </div>
@@ -30,7 +30,7 @@ export function FeaturedWorks() {
         {grid.map((cell, i) => (
           <a
             key={i}
-            href={cell.slug ? `/project/${cell.slug}` : "/works"}
+            href={cell.slug ? `/project/${cell.slug}` : "/projects"}
             className={`works-card works-card--${cell.span}`}
             data-hover
           >

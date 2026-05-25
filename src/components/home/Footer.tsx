@@ -12,20 +12,18 @@ export function Footer() {
         </div>
         <div className="idl-footer-col">
           <nav className="idl-footer-nav">
-            <a href="/studio" data-hover>Studio</a>
-            <a href="/works" data-hover>Works</a>
-            <a href="/sectors" data-hover>Sectors</a>
-            <a href="/process" data-hover>Process</a>
-            <a href="/journal" data-hover>Journal</a>
+            <a href="/projects" data-hover>Projects</a>
+            <a href="/expertise" data-hover>Expertise</a>
+            <a href="/studio/about" data-hover>Studio</a>
+            <a href="/practice" data-hover>Practice</a>
             <a href="/contact" data-hover>Contact</a>
           </nav>
         </div>
         <div className="idl-footer-col idl-footer-right">
-          <p className="copy">© 2025 Interarch Design Labs</p>
+          <p className="copy">© {new Date().getFullYear()} Interarch Design Labs</p>
           <p className="tag">Designed with intention.</p>
         </div>
       </div>
     </footer>
   );
 }
-
