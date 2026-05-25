@@ -1,10 +1,12 @@
+import logo from "@/assets/idl-logo.png";
+
 export function Footer() {
   return (
     <footer className="idl-footer">
       <div className="idl-footer-ghost">Interarch Design Labs</div>
       <div className="idl-footer-grid">
         <div className="idl-footer-col">
-          <h4>IDL</h4>
+          <img src={logo} alt="Interarch Design Labs" className="idl-footer-logo" />
           <p>Mumbai &amp; Ahmedabad</p>
           <a href="mailto:hello@interarchlabs.com">hello@interarchlabs.com</a>
         </div>
@@ -26,3 +28,4 @@ export function Footer() {
     </footer>
   );
 }
+
