@@ -116,17 +116,6 @@ export function Header() {
 
         <div className="idl-header-right">
           <button
-            type="button"
-            className="idl-icon-btn"
-            aria-label="Search"
-            data-hover
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
-              <circle cx="7" cy="7" r="5" />
-              <path d="m11 11 4 4" strokeLinecap="round" />
-            </svg>
-          </button>
-          <button
             className="idl-menu-btn"
             data-hover
             type="button"
