@@ -823,47 +823,52 @@ body {
 [data-reveal-stagger="2"] { transition-delay: 200ms; }
 
 /* ============================================================
-   IMAGE REVEAL — slide down + fade + parallax + gentle hover scale
+   IMAGE REVEAL — scroll-tied curtain (cream mask lifts as you scroll)
    ============================================================ */
 .img-reveal-wrap {
-  overflow: hidden;
   position: relative;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  transition: opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  background: var(--bg);
 }
-.img-reveal-wrap.is-visible { opacity: 1; }
-
-/* Inner wrapper handles parallax (JS sets translate3d on scroll). */
+/* Inner wrapper handles parallax — JS writes translate3d here. */
 .img-parallax {
   position: absolute;
-  inset: -8% 0 -8% 0;   /* slight overdraw so parallax never reveals edge */
+  inset: -8% 0 -8% 0;
   width: 100%;
   height: 116%;
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }
-
-/* Image itself handles the slide-down entrance and hover scale. */
 .img-reveal-wrap img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: translateY(-9%) scale(1);
-  transition: transform 1400ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1);
+  transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
-.img-reveal-wrap.is-visible img {
-  transform: translateY(0) scale(1);
+/* The cream curtain. JS drives `--mask` from 100 (fully covered)
+   → 0 (fully revealed) tied directly to scroll position. */
+.img-reveal-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  transform: translate3d(0, calc(var(--mask, 100) * -1%), 0);
+  will-change: transform;
+  pointer-events: none;
+  z-index: 2;
 }
-/* Barely-perceptible hover bloom — only after reveal. */
-.img-reveal-wrap.is-visible:hover img,
-a:hover .img-reveal-wrap.is-visible img {
-  transform: translateY(0) scale(1.018);
+/* Barely-perceptible hover bloom. */
+.img-reveal-wrap:hover img,
+a:hover .img-reveal-wrap img {
+  transform: scale(1.018);
   transition-duration: 1200ms;
 }
+
 
 
 /* Responsive trims */
