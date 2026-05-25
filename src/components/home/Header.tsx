@@ -67,7 +67,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [activeIdx, setActiveIdx] = useState<number>(0);
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -93,10 +93,10 @@ export function Header() {
 
   const close = () => {
     setOpen(false);
-    setActiveIdx(0);
+    setActiveIdx(null);
   };
 
-  const active = useMemo(() => NAV[activeIdx], [activeIdx]);
+  const active = useMemo(() => (activeIdx !== null ? NAV[activeIdx] : null), [activeIdx]);
   const headerClass = `idl-header${scrolled ? " is-scrolled" : ""}${open ? " is-menu" : ""}`;
 
   return (
