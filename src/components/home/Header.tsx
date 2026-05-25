@@ -146,21 +146,36 @@ export function Header() {
             {/* LEFT — editorial panel */}
             <div className="idl-mega-left">
               <AnimatePresence mode="wait">
-                <motion.div
-                  key={active.label}
-                  className="idl-mega-left-inner"
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.5, ease: EASE }}
-                >
-                  <div className="idl-mega-eyebrow">— {String(activeIdx + 1).padStart(2, "0")} / {String(NAV.length).padStart(2, "0")}</div>
-                  <h2 className="idl-mega-title">{active.label}</h2>
-                  <p className="idl-mega-blurb">{active.blurb}</p>
-                  <div className="idl-mega-image">
-                    <img src={active.image} alt="" width={1200} height={1500} />
-                  </div>
-                </motion.div>
+                {active ? (
+                  <motion.div
+                    key={active.label}
+                    className="idl-mega-left-inner"
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.5, ease: EASE }}
+                  >
+                    <div className="idl-mega-eyebrow">— {String((activeIdx ?? 0) + 1).padStart(2, "0")} / {String(NAV.length).padStart(2, "0")}</div>
+                    <h2 className="idl-mega-title">{active.label}</h2>
+                    <p className="idl-mega-blurb">{active.blurb}</p>
+                    <div className="idl-mega-image">
+                      <img src={active.image} alt="" width={1200} height={1500} />
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="idle"
+                    className="idl-mega-left-inner"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4, ease: EASE }}
+                  >
+                    <div className="idl-mega-eyebrow">— Index</div>
+                    <h2 className="idl-mega-title">Interarch<br />Design Labs</h2>
+                    <p className="idl-mega-blurb">Architecture, interiors and research — measured, material, daylit. Choose a section to begin.</p>
+                  </motion.div>
+                )}
               </AnimatePresence>
             </div>
 
