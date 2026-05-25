@@ -349,11 +349,55 @@ body {
 }
 
 /* ============================================================
-   MEGA MENU OVERLAY
+   HERO TOP-NAV HOVER DROPDOWN
+   ============================================================ */
+.idl-topnav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+.idl-topnav-drop {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 20px;
+  min-width: 180px;
+  background: rgba(20, 20, 20, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 220;
+}
+.idl-header.is-scrolled .idl-topnav-drop {
+  background: rgba(245, 243, 239, 0.95);
+  border-color: rgba(42, 37, 32, 0.08);
+  box-shadow: 0 14px 30px -18px rgba(42, 37, 32, 0.22);
+}
+.idl-topnav-drop-link {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+  padding: 8px 4px;
+  opacity: 0.78;
+  white-space: nowrap;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+.idl-topnav-drop-link:hover { opacity: 1; transform: translateX(4px); }
+
+/* ============================================================
+   MEGA MENU OVERLAY (compact, fits viewport, no scroll)
    ============================================================ */
 .idl-mega {
   position: fixed;
   inset: 0;
+  height: 100dvh;
   z-index: 150;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -364,10 +408,11 @@ body {
 .idl-mega-left,
 .idl-mega-right {
   position: relative;
-  padding: 140px 64px 56px;
+  padding: 100px 56px 36px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow: hidden;
+  min-height: 0;
 }
 .idl-mega-left {
   background: #6f7a73;
@@ -382,30 +427,37 @@ body {
   letter-spacing: 0.28em;
   text-transform: uppercase;
   opacity: 0.6;
-  margin-bottom: 28px;
+  margin-bottom: 18px;
 }
-.idl-mega-left-inner { display: flex; flex-direction: column; gap: 22px; }
+.idl-mega-left-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  flex: 1;
+}
 .idl-mega-title {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(56px, 6.4vw, 104px);
+  font-size: clamp(36px, 4.2vw, 64px);
   line-height: 1;
   letter-spacing: -0.01em;
   margin: 0;
 }
 .idl-mega-blurb {
   font-family: var(--sans);
-  font-size: 15px;
-  line-height: 1.65;
-  max-width: 460px;
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 420px;
   opacity: 0.78;
   margin: 0;
 }
 .idl-mega-image {
-  margin-top: 24px;
+  margin-top: 12px;
   width: 100%;
-  max-width: 560px;
-  aspect-ratio: 4 / 5;
+  max-width: 420px;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
 }
 .idl-mega-image img {
@@ -421,21 +473,27 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
   flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 .idl-mega-nav-row {
   position: relative;
-  padding: 6px 0;
+  padding: 0;
   border-bottom: 1px solid rgba(245, 237, 224, 0.1);
 }
 .idl-mega-nav-link {
   display: flex;
   align-items: baseline;
-  gap: 24px;
+  gap: 18px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
   color: inherit;
   text-decoration: none;
-  padding: 18px 0;
+  padding: 10px 0;
   cursor: none;
   opacity: 0.65;
   transition: opacity 320ms cubic-bezier(0.22, 1, 0.36, 1), transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -443,7 +501,7 @@ body {
 .idl-mega-nav-row:hover .idl-mega-nav-link,
 .idl-mega-nav-row.is-active .idl-mega-nav-link {
   opacity: 1;
-  transform: translateX(10px);
+  transform: translateX(8px);
 }
 .idl-mega-nav-index {
   font-family: var(--sans);
@@ -455,27 +513,36 @@ body {
 .idl-mega-nav-label {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(36px, 4.6vw, 64px);
+  font-size: clamp(24px, 2.8vw, 40px);
   line-height: 1.05;
+}
+.idl-mega-nav-caret {
+  margin-left: auto;
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 300;
+  opacity: 0.55;
+  align-self: center;
 }
 .idl-mega-sub {
   list-style: none;
   margin: 0;
-  padding: 0 0 18px 52px;
+  padding: 0 0 10px 46px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   overflow: hidden;
 }
 .idl-mega-sub-link {
   font-family: var(--sans);
-  font-size: 13px;
-  letter-spacing: 0.04em;
+  font-size: 12px;
+  letter-spacing: 0.06em;
   color: inherit;
   text-decoration: none;
-  opacity: 0.7;
+  opacity: 0.72;
   cursor: none;
   display: inline-block;
+  padding: 2px 0;
   transition: opacity 240ms ease, transform 240ms ease;
 }
 .idl-mega-sub-link:hover { opacity: 1; transform: translateX(6px); }
@@ -488,16 +555,23 @@ body {
   letter-spacing: 0.24em;
   text-transform: uppercase;
   opacity: 0.5;
-  padding-top: 40px;
+  padding-top: 20px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .idl-mega-left, .idl-mega-right { padding: 88px 36px 28px; }
+  .idl-mega-nav-label { font-size: clamp(22px, 3.4vw, 32px); }
+}
+
+@media (max-width: 768px) {
   .idl-mega { grid-template-columns: 1fr; }
   .idl-mega-left { display: none; }
-  .idl-mega-right { padding: 110px 24px 40px; }
-  .idl-mega-nav-label { font-size: clamp(32px, 8vw, 48px); }
-  .idl-mega-sub { padding-left: 40px; }
+  .idl-mega-right { padding: 88px 22px 28px; }
+  .idl-mega-nav-label { font-size: clamp(22px, 6.4vw, 32px); }
+  .idl-mega-sub { padding-left: 36px; }
+  .idl-topnav-drop { display: none; }
 }
+
 
 /* ============================================================
    SECTION DEFAULTS — slide over hero
