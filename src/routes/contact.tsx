@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Header } from "@/components/home/Header";
+import { Footer } from "@/components/home/Footer";
 import { CustomCursor } from "@/components/home/CustomCursor";
-import skyline from "@/assets/skyline-sketch.png";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({ meta: [
@@ -16,96 +16,95 @@ export const Route = createFileRoute("/contact")({
 });
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const GREETING = "Dear IDL,";
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
-  const [typed, setTyped] = useState("");
-  const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-
-  useEffect(() => {
-    let i = 0;
-    const id = setInterval(() => {
-      i++;
-      setTyped(GREETING.slice(0, i));
-      if (i >= GREETING.length) clearInterval(id);
-    }, 70);
-    return () => clearInterval(id);
-  }, []);
 
   return (
     <>
       <CustomCursor />
       <Header />
-      <main className="idl-letter">
-        <section className="idl-letter-paper">
-          <div className="idl-letter-stamp">{today}</div>
-          <h1 className="idl-letter-greeting">
-            {typed}
-            <span className="idl-letter-caret" />
-          </h1>
+      <main className="idl-contact">
+        <div className="idl-contact-form-wrap">
+          <span className="idl-eyebrow">— Contact</span>
+          <motion.h1
+            className="idl-contact-head"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: EASE }}
+          >
+            Wherever you are,<br />we design for you.
+          </motion.h1>
           {sent ? (
-            <motion.div
-              className="idl-letter-thanks"
-              initial={{ opacity: 0, y: 16 }}
+            <motion.p
+              className="idl-contact-thanks"
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: EASE }}
             >
-              <p>Thank you. The studio will reply with care.</p>
-              <p className="idl-letter-sign">— IDL</p>
-            </motion.div>
+              Thank you. The studio will write back with care.
+            </motion.p>
           ) : (
             <motion.form
-              className="idl-letter-form"
+              className="idl-contact-form"
               onSubmit={(e) => { e.preventDefault(); setSent(true); }}
               initial="hidden"
               animate="show"
-              variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.6 } } }}
+              variants={{ show: { transition: { staggerChildren: 0.08, delayChildren: 0.3 } } }}
             >
               {[
-                ["My name is", "name", "text", "Your name"],
-                ["I can be reached at", "email", "email", "you@studio.com"],
-                ["I'd like to talk about", "topic", "text", "A home, an office, a hotel…"],
-              ].map(([prefix, n, t, ph]) => (
+                { label: "Name", name: "name", type: "text", ph: "Your name" },
+                { label: "Email", name: "email", type: "email", ph: "you@studio.com" },
+                { label: "Project type", name: "type", type: "text", ph: "Residence, workplace, hospitality…" },
+              ].map((f) => (
                 <motion.label
-                  key={n as string}
-                  className="idl-letter-line"
-                  variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
-                  transition={{ duration: 0.6, ease: EASE }}
+                  key={f.name}
+                  className="idl-cfield"
+                  variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
+                  transition={{ duration: 0.7, ease: EASE }}
                 >
-                  <span>{prefix}</span>
-                  <input type={t as string} name={n as string} placeholder={ph as string} required />
-                  <em>.</em>
+                  <span>{f.label}</span>
+                  <input type={f.type} name={f.name} placeholder={f.ph} required />
                 </motion.label>
               ))}
               <motion.label
-                className="idl-letter-block"
-                variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
-                transition={{ duration: 0.6, ease: EASE }}
+                className="idl-cfield"
+                variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.7, ease: EASE }}
               >
-                <span>More about the project —</span>
-                <textarea rows={4} required placeholder="Site, scale, timeline, anything that helps us listen." />
+                <span>Message</span>
+                <textarea name="message" placeholder="Site, scale, timeline — anything that helps us listen." required />
               </motion.label>
-              <motion.div
-                className="idl-letter-actions"
+              <motion.button
+                type="submit"
+                className="idl-contact-submit"
+                data-hover
                 variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
-                transition={{ duration: 0.6, ease: EASE }}
+                transition={{ duration: 0.7, ease: EASE }}
               >
-                <span className="idl-letter-sign">— Yours,</span>
-                <button type="submit" data-hover>Send the letter →</button>
-              </motion.div>
+                Send →
+              </motion.button>
             </motion.form>
           )}
-        </section>
-        <aside className="idl-letter-aside">
-          <span className="idl-eyebrow-line">— Studio</span>
-          <h2>Interarch<br />Design Labs</h2>
-          <p>Mumbai &middot; Ahmedabad<br />Projects across India, the Middle East &amp; Africa.</p>
-          <a href="mailto:hello@interarchlabs.com" data-hover className="idl-letter-mail">hello@interarchlabs.com</a>
-          <img src={skyline} alt="Skyline sketch" className="idl-letter-skyline" />
-          <p className="idl-letter-sig">— A studio that listens first.</p>
+        </div>
+        <aside className="idl-contact-info">
+          <h3>Studio</h3>
+          <div className="idl-contact-block">
+            <strong>Mumbai</strong>
+            <p>Interarch Design Labs<br />Mumbai, Maharashtra, India</p>
+          </div>
+          <div className="idl-contact-block">
+            <strong>Ahmedabad</strong>
+            <p>Interarch Design Labs<br />Ahmedabad, Gujarat, India</p>
+          </div>
+          <h3>Contact</h3>
+          <div className="idl-contact-block">
+            <p><a href="mailto:hello@interarchlabs.com" data-hover>hello@interarchlabs.com</a></p>
+            <p style={{ marginTop: 10 }}>Projects across India,<br />the Middle East &amp; Africa.</p>
+          </div>
         </aside>
       </main>
+      <Footer />
     </>
   );
 }

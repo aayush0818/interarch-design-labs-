@@ -26,78 +26,98 @@ function ProjectPage() {
   const { slug } = Route.useParams();
   const index = Math.max(0, projects.findIndex((p) => p.slug === slug));
   const project = projects[index] ?? projects[0];
-  const next = projects[(index + 1) % projects.length];
+  const related = projects.filter((p) => p.slug !== project.slug && p.category === project.category).slice(0, 2);
+  const w = pageImages.works;
 
   return (
     <>
       <CustomCursor />
       <Header />
       <article className="idl-mono">
-        <header className="idl-mono-plate">
-          <motion.div
-            className="idl-mono-cover"
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: EASE }}
-          >
-            <img src={project.cover} alt={project.name} />
-            <div className="idl-mono-shade" />
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: EASE }}
-          >
-            {project.name}
-          </motion.h1>
-        </header>
-        <section className="idl-mono-ledger">
-          <div><span>Sector</span><strong>{project.sector}</strong></div>
-          <div><span>Location</span><strong>{project.location}</strong></div>
-          <div><span>Year</span><strong>{project.year}</strong></div>
-          <div><span>Area</span><strong>{project.area}</strong></div>
-          <div><span>Type</span><strong>{project.category}</strong></div>
-        </section>
-        <section className="idl-mono-body">
-          <p className="dropcap">{project.description}</p>
-          <p>The project is read through thresholds, quiet rooms, calibrated daylight and a material palette that allows the architecture to age with dignity.</p>
-        </section>
-        <section className="idl-mono-essay">
-          <motion.div
-            className="idl-mono-img idl-mono-img--bleed"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: EASE }}
-          >
-            <img src={pageImages.works[(index + 1) % pageImages.works.length]} alt="Project view" />
-          </motion.div>
-          <motion.div
-            className="idl-mono-img idl-mono-img--indent"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: EASE }}
-          >
-            <img src={pageImages.works[(index + 2) % pageImages.works.length]} alt="Project detail" />
-          </motion.div>
-          <motion.div
-            className="idl-mono-img idl-mono-img--bleed"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: EASE }}
-          >
-            <img src={pageImages.works[(index + 3) % pageImages.works.length]} alt="Project wide view" />
-          </motion.div>
-        </section>
-        <Link to="/project/$slug" params={{ slug: next.slug }} className="idl-mono-next" data-hover>
-          <div>
-            <span>Next project</span>
-            <strong>{next.name} →</strong>
+        <section className="idl-phero idl-phero--full">
+          <div className="idl-phero-img"><img src={project.cover} alt={project.name} /></div>
+          <div className="idl-phero-shade" />
+          <div className="idl-phero-cap">
+            <span className="idl-eyebrow"><span className="dot" />{project.location} · {project.sector}</span>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.2, ease: EASE }}
+            >
+              {project.name}
+            </motion.h1>
           </div>
-          <img src={next.cover} alt={next.name} />
-        </Link>
+        </section>
+        <section className="idl-metarow">
+          <div><span>Location</span><strong>{project.location}</strong></div>
+          <div><span>Sector</span><strong>{project.sector}</strong></div>
+          <div><span>Scope</span><strong>{project.scope}</strong></div>
+          <div><span>Area</span><strong>{project.area}</strong></div>
+          <div><span>Year</span><strong>{project.year}</strong></div>
+        </section>
+        <section className="idl-mono-intro">
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: EASE }}
+          >
+            {project.description}
+          </motion.p>
+        </section>
+        <section className="idl-mono-gallery">
+          <motion.div className="idl-mono-fig idl-mono-fig--full" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: EASE }}>
+            <img src={w[(index + 1) % w.length]} alt="" loading="lazy" />
+          </motion.div>
+          <div className="idl-mono-pair">
+            <motion.div className="idl-mono-fig" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: EASE }}>
+              <img src={w[(index + 2) % w.length]} alt="" loading="lazy" />
+            </motion.div>
+            <motion.div className="idl-mono-fig" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.08, ease: EASE }}>
+              <img src={w[(index + 3) % w.length]} alt="" loading="lazy" />
+            </motion.div>
+          </div>
+          <motion.div className="idl-mono-fig idl-mono-portrait" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: EASE }}>
+            <img src={w[(index + 4) % w.length]} alt="" loading="lazy" />
+          </motion.div>
+          <motion.div className="idl-mono-fig idl-mono-fig--full" initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: EASE }}>
+            <img src={w[(index + 5) % w.length]} alt="" loading="lazy" />
+          </motion.div>
+        </section>
+        <section className="idl-mono-material">
+          <div className="idl-mono-material-head">
+            <span className="idl-eyebrow">— Material</span>
+            <h2>The studio in detail.</h2>
+          </div>
+          <motion.div className="idl-mono-fig" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: EASE }}>
+            <img src={w[(index + 1) % w.length]} alt="" loading="lazy" />
+          </motion.div>
+          <motion.div className="idl-mono-fig" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.08, ease: EASE }}>
+            <img src={w[(index + 3) % w.length]} alt="" loading="lazy" />
+          </motion.div>
+          <motion.div className="idl-mono-fig" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.16, ease: EASE }}>
+            <img src={w[(index + 5) % w.length]} alt="" loading="lazy" />
+          </motion.div>
+        </section>
+        {related.length > 0 && (
+          <section className="idl-related">
+            <header className="idl-related-head">
+              <span className="idl-eyebrow">— Related</span>
+              <h2>More from the {project.category.toLowerCase()} archive.</h2>
+            </header>
+            <div className="idl-related-grid">
+              {related.map((r) => (
+                <Link key={r.slug} to="/project/$slug" params={{ slug: r.slug }} className="idl-pcard" data-hover>
+                  <div className="idl-pcard-img"><img src={r.cover} alt={r.name} loading="lazy" /></div>
+                  <div className="idl-pcard-cap">
+                    <span>{r.location}</span>
+                    <strong>{r.name}</strong>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </article>
       <Footer />
     </>
