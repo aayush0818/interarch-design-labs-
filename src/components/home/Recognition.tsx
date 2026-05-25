@@ -42,12 +42,8 @@ export function Recognition() {
         <div className="recognition-cards">
           {items.map((a, i) => (
             <a key={i} href={a.href} className="rec-card" data-hover>
-              <div className="rec-card-img">
-                <div className="img-reveal-wrap parallax-img" data-parallax-speed="0.07">
-                  <div className="img-parallax">
-                    <img src={a.img} alt="" width={960} height={1280} loading="lazy" />
-                  </div>
-                </div>
+              <div className="rec-card-img static-image-wrap">
+                <img src={a.img} alt="" width={960} height={1280} loading="lazy" />
               </div>
               <div className="rec-card-rule" />
               <div className="rec-card-meta">

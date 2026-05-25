@@ -71,9 +71,11 @@ export function useReveal() {
         const raw = (startY - rect.top) / (startY - endY);
         const p = raw < 0 ? 0 : raw > 1 ? 1 : raw;
 
-        // 100 = fully covered, 0 = fully revealed.
-        const mask = (1 - p) * 100;
-        wrap.style.setProperty("--mask", mask.toFixed(2));
+        wrap.style.setProperty("--mask", p.toFixed(3));
+        if (wrap.dataset.revealDirection === "down") {
+          wrap.style.setProperty("--works-drop", `${(-10 + p * 10).toFixed(2)}%`);
+          wrap.style.setProperty("--works-opacity", String(Math.max(0.08, p)));
+        }
 
         if (wrap.classList.contains("parallax-img")) {
           const speed = parseFloat(wrap.dataset.parallaxSpeed || "0.08");

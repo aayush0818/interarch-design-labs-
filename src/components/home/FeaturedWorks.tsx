@@ -36,10 +36,7 @@ export function FeaturedWorks() {
               className={`works-card works-card--${cell.span}`}
               data-hover
             >
-              <div
-                className="img-reveal-wrap parallax-img"
-                data-parallax-speed={cell.span === "wide" ? "0.06" : "0.09"}
-              >
+              <div className="img-reveal-wrap works-drop-wrap" data-reveal-direction="down">
                 <div className="img-parallax">
                   <img
                     src={cell.img}
