@@ -90,9 +90,9 @@ export function useReveal() {
         const reveal = revealRaw < 0 ? 0 : revealRaw > 1 ? 1 : revealRaw;
         const r = easeOutCubic(reveal);
 
-        // Reveal contribution: translateY +60px → 0, scale 1.12 → 1.0
-        const revealY = (1 - r) * 60;
-        const revealScale = 1 + (1 - r) * 0.12;
+        // Reveal contribution: translateY +40px → 0, scale 1.06 → 1.0
+        const revealY = (1 - r) * 40;
+        const revealScale = 1 + (1 - r) * 0.06;
         const opacity = r;
 
         // Parallax contribution: progress from -1 (entering) to +1 (leaving)
