@@ -1,106 +1,109 @@
-# Site Restructure & Page Rebuild — Each Page Its Own Artwork
 
-Homepage stays untouched. Every other page is rebuilt from scratch with its **own distinct visual personality, layout language, and motion vocabulary**. Shared only: the brand (typography family, color tokens, cursor, header, footer). Composition, rhythm, and choreography differ per page.
+# Internal Pages — Unified Cinematic Rebuild
 
-## 1. New Information Architecture
+The previous rebuild gave each page a distinct concept (Diptych, Newspaper, Letter, Three Doors, etc.). The brief now asks for the opposite: one calm, symmetrical, institutional language across every internal page. Homepage stays untouched.
 
-```text
-Projects          Expertise         Studio        Practice        Contact
-├ Architecture    ├ Residential     ├ About       ├ History
-└ Interiors       ├ Commercial      └ Team        ├ Process
-                  ├ Institutional                 └ Journal
-                  ├ Hospitality
-                  ├ Industrial
-                  └ Workplace
-```
+## 1. Global Language (applies to every internal page)
 
-Removed: Specialists, Studios (Mumbai/Ahmedabad), Studio overview, "All Works".
+- **Palette**: cream `#f5eee3` background, warm brown `#3f3431` text, red `#ed3d39` used sparingly as a single accent rule/dot.
+- **Type**: existing serif for headings (restrained sizes — never oversized), existing sans for metadata/body.
+- **Grid**: 12-col, generous outer margins, large vertical rhythm (≥160px between sections desktop).
+- **Motion vocabulary (single set, reused everywhere)**:
+  - Hero images: scale 1.03 → 1, opacity 0 → 1, 1.4s, ease `[0.22,1,0.36,1]`.
+  - Section reveal: y 40 → 0, opacity 0 → 1, 0.9s, stagger 0.08s.
+  - Tile hover: image scale 1 → 1.02, brightness +4%, 0.6s.
+  - Underlines/dividers: scaleX 0 → 1, 0.8s.
+  - No bounce, no layout morphs, no horizontal scroll, no sticky-stack pinning, no typewriter, no FLIP.
+- **UI primitives**: minimal. Underline-only form fields. Thin 1px dividers in warm brown at 20% opacity. Cursor stays as existing CustomCursor.
 
-## 2. Route Changes
+## 2. Pages to Rebuild
 
-**Delete:** `works.tsx`, `sectors.tsx`, `sectors.$sector.tsx`, `studio.history.tsx`, old `studio.tsx`, `journal.tsx`, `journal.$slug.tsx`, `process.tsx`.
+Each page below is rebuilt to the same calm spec. All previously-created "concept" CSS (`.idl-diptych`, `.idl-archive-grid`, `.idl-timeline-spine`, `.idl-letter`, `.idl-three-doors`, `.idl-phase-stack`, `.idl-newspaper`, `.idl-portrait-gallery`, `.idl-manifesto`, `.idl-editorial-spread`, `.idl-museum-index`) is removed from `styles.css` and replaced by a small shared set: `.idl-hero`, `.idl-meta-row`, `.idl-prose`, `.idl-grid-2`, `.idl-grid-3`, `.idl-section`, `.idl-divider`, `.idl-figure`, `.idl-eyebrow`.
 
-**Create:**
-- `projects.tsx`, `projects.$category.tsx`
-- `expertise.tsx`, `expertise.$sector.tsx`
-- `studio.tsx` (layout, redirects to `/studio/about`), `studio.about.tsx`, `studio.team.tsx` (rebuilt)
-- `practice.tsx` (layout + landing), `practice.history.tsx`, `practice.process.tsx`, `practice.journal.tsx`, `practice.journal.$slug.tsx`
-- `contact.tsx` (rebuilt)
+### Projects (`/projects`)
+- 70vh cinematic hero image, small serif heading bottom-left, eyebrow "Projects".
+- Category nav: inline "Architecture · Interiors" with large spacing, hover underline.
+- 2-col strict grid of all projects, large gutters, image + location + name only.
+- Filter by category via inline nav (no separate `$category` page needed, but keep route for deep-link).
 
-Old `/works`, `/sectors/*`, `/journal/*`, `/process`, `/studio/history` `beforeLoad`-redirect to new equivalents.
+### Projects / $category (`/projects/architecture`, `/projects/interiors`)
+- Same template as Projects landing, pre-filtered, eyebrow shows category.
 
-## 3. Per-Page Design Direction (each one different)
+### Project detail (`/project/$slug`)
+- Fullscreen hero with Location / Sector / Project Name bottom-left.
+- Metadata row: Location · Sector · Scope · Area · Year — equal columns, thin dividers.
+- Narrow centered intro paragraph.
+- Sequential gallery: fullscreen → 2-col pair → portrait → fullscreen → material closeups (uses existing cover + work images; layout, not new assets).
+- Material detail strip (3-col closeups).
+- Related projects: 2 large cards.
 
-Each page below = its own concept, its own grid, its own motion register. No shared "page template".
+### Expertise (`/expertise`)
+- Small cinematic hero.
+- Six full-width horizontal panels (Residential, Commercial, Institutional, Hospitality, Industrial, Workplace), each: full-bleed image left, title + 2-line description + "View work →" right. Alternating side every other row for rhythm (still symmetrical, not asymmetrical chaos).
+- Philosophy block centered.
 
-### Projects (landing) — *The Diptych*
-Full-bleed split screen: left half **Architecture**, right half **Interiors**, each a tall photographic plate. On hover, the chosen half expands to 60/40, the other dims; oversized serif label slides up from the bottom; a thin horizontal rule extends across as you hover. No header copy — just two doors.
-Motion: Framer `layout` for the width morph, cursor-tracked vignette light.
+### Expertise / $sector (`/expertise/$sector`)
+- Hero with sector name.
+- Narrow philosophy paragraph (from existing siteContent).
+- 2-col grid of projects in that sector.
 
-### Projects/Architecture & Projects/Interiors — *The Archive Wall*
-Edge-to-edge dense **brick-grid** of projects, varying aspect ratios. Sticky left rail with category name in vertical lockup and project count animating. Click → project detail. On hover, neighbouring tiles desaturate, hovered tile blooms.
-Motion: GSAP-style stagger on first paint, magnetic cursor on tiles.
+### Studio (`/studio` → redirects to `/studio/about`)
+- Layout wrapper with sub-tab strip "About · Team", thin underline on active.
 
-### Expertise (landing) — *The Index*
-Pure typography page. Six rows like a museum index — each row: `01 — Residential — short statement`. Hovering a row triggers a large image of that sector to fade in **fixed top-right** as a floating peek. Background turns near-black on hover for cinema effect.
-Motion: row index counter ticks, image peek with mask-reveal.
+### Studio / About (`/studio/about`)
+- Intro statement (narrow, centered).
+- About: text left, image right, large breathing room.
+- Five philosophy blocks (Clarity, Intent, People & Place, Sustainability, Craft & Collaboration) — each a symmetrical split (alternating image side), large image + 1 paragraph.
+- Recognition list: Award · Institution · Year, three columns, thin dividers, no badges.
+- Culture strip: 3 documentary images, captions.
 
-### Expertise/$sector — *The Editorial Spread*
-Magazine layout: oversized sector name as drop-cap, two-column body text, pull-quote with rule, then a vertically scrolling **filmstrip of projects in that sector** (horizontal scroll inside a section, snap points). Footer CTA: "Start a [sector] project".
-Motion: horizontal scroll-snap with momentum, drop-cap draws in.
+### Studio / Team (`/studio/team`)
+- Leadership intro paragraph.
+- Strict symmetrical portrait grid (3-col desktop, 2-col tablet), consistent aspect ratio, name + role only.
+- Studio culture strip below: 3 documentary frames.
 
-### Studio (layout) — sub-tab strip "About · Team" pinned top of content.
+### Practice (`/practice`)
+- Calm landing: three stacked sections (History · Process · Journal), each a horizontal split with image + title + 2-line intro + link. No "three doors" full-height bands.
 
-### Studio/About — *The Manifesto*
-Asymmetric centered single column with **huge serif statement** that scrolls past sticky sketches in the margin (skyline doodle, material swatches). Principles rendered as oversized numerals (01, 02, 03) on alternating sides. Ends with quiet image of the studio table.
-Motion: text mask-reveal line by line, marginalia parallax.
+### Practice / History (`/practice/history`)
+- Vertical timeline, large centered years (1989, 2001, 2008, 2010, 2015, Today), narrow narrative beneath each. Thin vertical line drawn via `useScroll`. No alternating left/right card layout.
 
-### Studio/Team — *The Portrait Gallery*
-Four partner portraits arranged in a **2×2 imperfect grid** (each card slightly offset, rotated 0.5–1°, like prints on a wall). Hover a portrait → it lifts, straightens, their quote appears beside it in handwritten-feel italic. Click → expands inline to full bio.
-Motion: subtle tilt-correction on hover, FLIP expand on click.
+### Practice / Process (`/practice/process`)
+- Five sections (Listening, Concept, Development, Execution, Evolution). Each: left = stage number + title; right = paragraph + small supporting image. Large vertical spacing between stages. No sticky pinning.
 
-### Practice (landing) — *The Three Doors*
-Three full-height vertical bands stacked: **History · Process · Journal**. Each band shows a teaser (year ticker / phase counter / latest post). Click any band — it grows to full screen and routes.
-Motion: band hover lifts content, scroll-driven band height variation.
+### Practice / Journal (`/practice/journal`)
+- Featured article (large image + date + title).
+- Symmetrical 3-col grid of articles below. Image + date + title only.
+- Hover: slow image scale, opacity shift on text. No newspaper masthead/column rules.
 
-### Practice/History — *The Timeline Spine*
-Vertical chronological spine down the center. Years on the left, milestones on the right, alternating sides past the spine. Scroll-linked progress line **draws the spine** as you scroll. Each milestone enters from its own side.
-Motion: `useScroll` + `useTransform` to draw SVG path; per-milestone slide-in.
+### Practice / Journal / $slug (`/practice/journal/$slug`)
+- Centered narrow measure, serif body, large drop-cap, generous leading. Keep existing scroll-progress bar (it's restrained enough).
 
-### Practice/Process — *The Phase Stack*
-Five **sticky stacked panels**, one per phase. As you scroll, each panel pins, the deliverable badge animates in, then the next panel slides up over it. Big phase number bleeds off the edge.
-Motion: scroll-pinning via `position: sticky` + opacity/scale on the outgoing card.
+### Contact (`/contact`)
+- Hero: serif statement "Wherever you are, we design for you." (left-aligned, large whitespace).
+- Two-col: left = underline-only form (Name, Email, Project Type, Message), right = office metadata (City / Address / Email / Phone) styled as architectural documentation.
+- Remove typewriter intro, "Dear IDL" letter framing, skyline sketch.
 
-### Practice/Journal — *The Newspaper*
-Editorial broadsheet layout: masthead with date, then a **featured essay** taking 2/3 width, secondary essays in narrower columns with column rules. Serif headlines, tracked-out kicker. Hover → ink underline draws under title.
-Motion: column rules draw down on enter, headlines mask-reveal.
+## 3. Files Touched
 
-### Practice/Journal/$slug — *The Long Read*
-Single narrow measure (~640px) centered, generous leading, drop-cap on first paragraph, pull-quotes as horizontal bands breaking out of the measure. Reading-progress bar fixed top.
-Motion: progress bar scroll-linked, pull-quotes scale-in on enter.
+**Edit:**
+- `src/styles.css` — remove all per-concept classes from the prior rebuild; add a small shared set listed in §1.
+- `src/components/home/Header.tsx` — keep new IA; ensure nav matches (`Projects / Expertise / Studio / Practice / Contact`).
+- `src/routes/project.$slug.tsx` — rebuild to spec.
+- `src/routes/projects.tsx`, `src/routes/projects.$category.tsx` — rebuild.
+- `src/routes/expertise.tsx`, `src/routes/expertise.$sector.tsx` — rebuild.
+- `src/routes/studio.tsx`, `src/routes/studio.about.tsx`, `src/routes/studio.team.tsx` — rebuild.
+- `src/routes/practice.tsx`, `src/routes/practice.history.tsx`, `src/routes/practice.process.tsx`, `src/routes/practice.journal.tsx`, `src/routes/practice.journal.$slug.tsx` — rebuild.
+- `src/routes/contact.tsx` — rebuild.
+- `src/data/projects.ts` — add `scope` field where missing (uses existing data otherwise).
 
-### Contact — *The Letter*
-Two-thirds left: a written-letter feel — date stamp, "Dear IDL," intro line typing in, then the form fields appear inline as if part of a letter ("My name is ___, I'd like to talk about ___"). Right third: studio address + skyline sketch + email as a signature line.
-Motion: typewriter intro line, fields fade in sequentially.
+**Create:** none (the small shared classes live inside `styles.css`; no new components needed — `useReveal` and `CustomCursor` already exist).
 
-### Project/$slug — *The Monograph*
-Already exists — light polish only: bigger title plate, project facts as a horizontal ledger, vertical photo essay with alternating full-bleed and indented images.
+**Delete:** none (all current routes get rebuilt in place).
 
-## 4. Shared (only the bones)
+## 4. Out of Scope
 
-- Header (updated NAV array), Footer, CustomCursor, useReveal — unchanged components, reused.
-- Color tokens, fonts, easing curve — already global in `styles.css`.
-- **No** shared `PageHero` / `PageShell` template forced on every page. `PageShell` kept available but pages opt in only where it fits (it won't fit most of these).
-
-## 5. Files Touched
-
-**Edit:** `src/components/home/Header.tsx` (NAV only), `src/styles.css` (one additive block per page concept, namespaced `.idl-projects-*`, `.idl-expertise-*`, `.idl-studio-*`, `.idl-practice-*`, `.idl-contact-*`), `src/data/projects.ts` (add entries so every sector has projects; add `cover` field), `src/routes/project.$slug.tsx` (polish).
-
-**Create:** all routes in §2, plus `src/components/site/HoverPeek.tsx`, `src/components/site/ScrollProgressLine.tsx`, `src/components/site/StickyStack.tsx` (small reusable motion primitives, not visual templates).
-
-**Delete:** files listed in §2.
-
-## 6. Out of Scope
-
-- Homepage (`index.tsx` and all `components/home/*` except `Header.tsx`) untouched.
-- No backend, auth, or content rewriting — uses existing `siteContent.ts` + the doc shared earlier.
+- Homepage (`index.tsx`, all `components/home/*` except `Header.tsx`) — untouched.
+- No new content; uses existing `siteContent.ts` and `projects.ts` strings.
+- No new images generated; reuses the existing `work-*.jpg` and `skyline-sketch.png` assets.
+- No backend, data, or auth changes.
