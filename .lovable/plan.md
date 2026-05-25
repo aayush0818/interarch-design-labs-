@@ -1,43 +1,20 @@
-Plan to fix the navigation exactly as requested:
+Two focused tweaks to the header:
 
-1. Rebuild `Header.tsx` around the required state model
-   - Keep only two visible header states:
-     - Hero/top: logo + centered full nav + search icon, no Menu button.
-     - Scrolled: logo + Menu + search icon, no nav items.
-   - Use scroll threshold state without flicker and close/reset overlay cleanly.
-   - Add ESC close and body scroll lock while the overlay is open.
+1. Hero-state hover dropdowns (no fullscreen overlay)
+   - In the top/hero nav, hovering a parent item (Projects, Expertise, Practice, Studios) reveals its subpages as a small dropdown anchored under that link.
+   - Clicking the parent label itself does nothing (or toggles); only sub-links navigate.
+   - Hovering "Specialists" (no children) does nothing extra — it stays a direct link.
+   - Dropdown styling: transparent/blurred dark panel matching hero text, small uppercase sans labels, subtle fade + 4px translateY animation via Framer Motion.
+   - Dropdown closes on mouse leave of the link + panel group, and on scroll.
+   - The fullscreen mega-menu overlay is no longer triggered from the hero state — it only opens from the scrolled-state Menu button.
 
-2. Correct the navigation hierarchy and submenu logic
-   - Make every parent category with children expand/collapse instead of navigating.
-   - Only final child links navigate and close the menu.
-   - Add children for the main groups using existing routes/data:
-     - Projects: project/detail links or archive group.
-     - Expertise: sector links.
-     - Practice: overview/history/process/journal/contact.
-     - Studios: Mumbai/Dubai-style submenu labels mapped to existing safe routes unless matching route files are added later.
-     - Specialists: team/people route.
-   - Ensure active parent updates the left content panel.
+2. Shrink the fullscreen overlay so it fits the viewport without scrolling
+   - Reduce vertical padding (top ~96px, bottom ~40px) and tighten gaps.
+   - Reduce nav typography: `idl-mega-nav-label` from `clamp(36px, 4.6vw, 64px)` → roughly `clamp(26px, 3.2vw, 44px)`.
+   - Reduce row padding (18px → 10px) and gap between rows.
+   - Reduce left panel `idl-mega-title` from `clamp(56px, 6.4vw, 104px)` → `clamp(36px, 4.4vw, 64px)`; shrink editorial image max-height so the whole left column fits.
+   - Submenu items: tighter line-height and smaller font.
+   - Set `.idl-mega` to `height: 100dvh; overflow: hidden` and give each column `overflow: hidden` (was `auto`) so nothing scrolls.
+   - Tablet/mobile: scale further down; on mobile stack vertically with compact spacing (overlay still fits one screen).
 
-3. Rebuild the fullscreen overlay behavior
-   - 50/50 desktop split: left dynamic editorial content, right nav/submenus.
-   - Muted sage-gray architectural background.
-   - Framer Motion opacity/translateY animations with 50–80ms stagger.
-   - Smooth reverse close animation; no abrupt disappearance.
-   - Parent click toggles submenu; clicking active parent again collapses it.
-
-4. Fix responsive behavior
-   - Desktop hero: logo + full nav + search.
-   - Mobile hero: logo + search only; no desktop nav and no Menu at top.
-   - Mobile scrolled: logo + Menu + search.
-   - Mobile overlay: stacked layout with accordion-style submenu reveal.
-
-5. Update CSS precisely for premium spacing and stable layout
-   - Logo width: desktop 160–190px, mobile 110–130px.
-   - Header heights: 110px desktop, 90px tablet, 80px mobile.
-   - Scrolled background: warm light with dark type, subtle blur/shadow.
-   - Use the requested `0.4s cubic-bezier(0.22, 1, 0.36, 1)` transitions.
-   - Fix z-index, overlay clipping, spacing, and scrolled nav visibility.
-
-6. Verify after implementation
-   - Check the edited files for syntax and JSX balance.
-   - Validate the header rules in the preview: top state, scrolled state, menu open, submenu toggle, final link close, and mobile layout.
+Files to edit: `src/components/home/Header.tsx` (hero hover dropdowns), `src/styles.css` (new `.idl-topnav-drop` styles + overlay size reductions).
