@@ -33,8 +33,12 @@ html, body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--sans);
-  overflow-x: hidden;
+  /* `overflow-x: clip` (not hidden) — `hidden` on html/body breaks
+     `position: sticky` for descendants. clip suppresses the same overflow
+     without killing the containing-block ancestor chain. */
+  overflow-x: clip;
 }
+
 
 body {
   cursor: none;
@@ -613,56 +617,77 @@ body {
 }
 
 /* ============================================================
-   RECOGNITION
+   RECOGNITION (HBA Perspectives-style image cards)
    ============================================================ */
-.awards-row {
-  width: 78%;
-  display: flex;
-  gap: 16px;
-}
-.award-card {
-  flex: 1;
-  border-top: 0.5px solid var(--stone);
-  padding-top: 20px;
-  cursor: default;
-  transition: border-color 280ms ease;
+.recognition-section {
   position: relative;
+  z-index: 4;
+  background: var(--bg);
+  padding: 120px clamp(40px, 6vw, 100px) 140px;
 }
-.award-card:hover { border-top-color: var(--accent); }
-.award-year-big {
+.recognition-grid {
+  display: grid;
+  grid-template-columns: 22% 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.recognition-left {
+  padding-top: 8px;
+}
+.recognition-title {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: 72px;
-  line-height: 1;
-  color: var(--stone);
+  font-size: clamp(40px, 4.4vw, 64px);
+  line-height: 1.05;
+  color: var(--fg);
+  margin: 0 0 20px;
+  letter-spacing: -0.01em;
 }
-.award-meta {
+.recognition-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.rec-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: none;
+}
+.rec-card-img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--stone);
+  margin-bottom: 16px;
+}
+.rec-card-rule {
+  height: 0.5px;
+  background: var(--stone);
+  transition: background-color 280ms ease;
+}
+.rec-card:hover .rec-card-rule { background: var(--accent); }
+.rec-card-meta {
   display: flex;
   justify-content: space-between;
-  margin-top: 16px;
+  margin-top: 14px;
   font-family: var(--sans);
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
 }
-.award-name {
+.rec-card-headline {
   font-family: var(--serif);
-  font-style: italic;
   font-weight: 300;
-  font-size: 20px;
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.25;
   color: var(--fg);
-  margin-top: 8px;
-  line-height: 1.2;
+  margin-top: 10px;
+  letter-spacing: -0.005em;
 }
-.award-body {
-  font-family: var(--sans);
-  font-weight: 300;
-  font-size: 13px;
-  color: var(--muted);
-  margin-top: 6px;
-  line-height: 1.5;
-}
+
 
 
 /* ============================================================
@@ -819,47 +844,52 @@ body {
 [data-reveal-stagger="2"] { transition-delay: 200ms; }
 
 /* ============================================================
-   IMAGE REVEAL — slide down + fade + parallax + gentle hover scale
+   IMAGE REVEAL — scroll-tied curtain (cream mask lifts as you scroll)
    ============================================================ */
 .img-reveal-wrap {
-  overflow: hidden;
   position: relative;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  transition: opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  background: var(--bg);
 }
-.img-reveal-wrap.is-visible { opacity: 1; }
-
-/* Inner wrapper handles parallax (JS sets translate3d on scroll). */
+/* Inner wrapper handles parallax — JS writes translate3d here. */
 .img-parallax {
   position: absolute;
-  inset: -8% 0 -8% 0;   /* slight overdraw so parallax never reveals edge */
+  inset: -8% 0 -8% 0;
   width: 100%;
   height: 116%;
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }
-
-/* Image itself handles the slide-down entrance and hover scale. */
 .img-reveal-wrap img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: translateY(-9%) scale(1);
-  transition: transform 1400ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1);
+  transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
-.img-reveal-wrap.is-visible img {
-  transform: translateY(0) scale(1);
+/* The cream curtain. JS drives `--mask` from 100 (fully covered)
+   → 0 (fully revealed) tied directly to scroll position. */
+.img-reveal-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  transform: translate3d(0, calc(var(--mask, 100) * -1%), 0);
+  will-change: transform;
+  pointer-events: none;
+  z-index: 2;
 }
-/* Barely-perceptible hover bloom — only after reveal. */
-.img-reveal-wrap.is-visible:hover img,
-a:hover .img-reveal-wrap.is-visible img {
-  transform: translateY(0) scale(1.018);
+/* Barely-perceptible hover bloom. */
+.img-reveal-wrap:hover img,
+a:hover .img-reveal-wrap img {
+  transform: scale(1.018);
   transition-duration: 1200ms;
 }
+
 
 
 /* Responsive trims */
@@ -875,6 +905,9 @@ a:hover .img-reveal-wrap.is-visible img {
   .works-grid { grid-template-columns: 1fr; gap: 16px; padding: 0 24px; }
   .works-header { padding: 0 24px; }
   .works-card--tall { aspect-ratio: 4 / 5; }
+  .recognition-grid { grid-template-columns: 1fr; gap: 32px; }
+  .recognition-cards { grid-template-columns: 1fr; gap: 32px; }
+  .recognition-section { padding: 80px 24px; }
 }
 
 
