@@ -240,6 +240,28 @@ body {
 .idl-topnav-link:hover { opacity: 1; }
 .idl-topnav-link:hover::after { transform: scaleX(1); transform-origin: left center; }
 .idl-header.is-menu .idl-topnav { opacity: 0; pointer-events: none; transition: opacity 200ms ease; }
+.idl-header.is-scrolled .idl-topnav { opacity: 0; pointer-events: none; }
+
+/* Menu button only visible once scrolled OR when overlay open */
+.idl-menu-btn {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.idl-header.is-scrolled .idl-menu-btn,
+.idl-header.is-menu .idl-menu-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.idl-mega-nav-caret {
+  margin-left: auto;
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 300;
+  opacity: 0.55;
+  align-self: center;
+}
 
 /* Right cluster */
 .idl-header-right {
