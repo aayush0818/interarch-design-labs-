@@ -905,6 +905,9 @@ a:hover .img-reveal-wrap img {
   .works-grid { grid-template-columns: 1fr; gap: 16px; padding: 0 24px; }
   .works-header { padding: 0 24px; }
   .works-card--tall { aspect-ratio: 4 / 5; }
+  .recognition-grid { grid-template-columns: 1fr; gap: 32px; }
+  .recognition-cards { grid-template-columns: 1fr; gap: 32px; }
+  .recognition-section { padding: 80px 24px; }
 }
 
 
