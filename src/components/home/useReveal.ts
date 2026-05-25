@@ -64,20 +64,18 @@ export function useReveal() {
         const rect = wrap.getBoundingClientRect();
         if (rect.bottom < -300 || rect.top > vh + 300) continue;
 
-        // Reveal progress: starts when top of element enters viewport bottom,
-        // completes by the time the top reaches ~25% from viewport top.
-        const startY = vh;
-        const endY = vh * 0.25;
-        const raw = wrap.classList.contains("page-hero-image")
-          ? -rect.top / (vh * 0.75)
-          : (startY - rect.top) / (startY - endY);
+        // Scroll progress 0 → 1 as the element travels from just entering
+        // the viewport bottom to having scrolled past the top.
+        const total = vh + rect.height;
+        const traveled = vh - rect.top;
+        const raw = traveled / total;
         const p = raw < 0 ? 0 : raw > 1 ? 1 : raw;
 
-        wrap.style.setProperty("--mask", p.toFixed(3));
-        if (wrap.dataset.revealDirection === "down") {
-          const eased = 1 - Math.pow(1 - p, 3);
-          wrap.style.setProperty("--works-drop", `${(-22 + eased * 22).toFixed(2)}%`);
-          wrap.style.setProperty("--works-opacity", eased.toFixed(3));
+        // Works section only: image translates DOWNWARD as page scrolls down.
+        // Starts slightly above (-12%) and ends slightly below (+12%).
+        if (wrap.classList.contains("works-drop-wrap")) {
+          const y = -12 + p * 24;
+          wrap.style.setProperty("--works-drop", `${y.toFixed(2)}%`);
         }
 
         if (wrap.classList.contains("parallax-img")) {
