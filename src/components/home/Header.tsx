@@ -123,30 +123,57 @@ export function Header() {
           <img src={logo} alt="Interarch Design Labs" className="idl-logo-mark" />
         </Link>
 
-        {/* Hero state: centered full nav (hidden when scrolled / menu open) */}
-        <nav className="idl-topnav" aria-label="Primary">
-          {NAV.map((item) =>
+        {/* Hero state: centered full nav with hover dropdowns (hidden when scrolled / menu open) */}
+        <nav className="idl-topnav" aria-label="Primary" onMouseLeave={() => setHoverIdx(null)}>
+          {NAV.map((item, i) =>
             item.to && !item.children ? (
-              <Link key={item.label} to={item.to} className="idl-topnav-link" data-hover>
+              <Link
+                key={item.label}
+                to={item.to}
+                className="idl-topnav-link"
+                data-hover
+                onMouseEnter={() => setHoverIdx(null)}
+              >
                 {item.label}
               </Link>
             ) : (
-              <button
+              <div
                 key={item.label}
-                type="button"
-                className="idl-topnav-link"
-                data-hover
-                onClick={() => {
-                  const idx = NAV.findIndex((n) => n.label === item.label);
-                  setActiveIdx(idx);
-                  setOpen(true);
-                }}
+                className="idl-topnav-item"
+                onMouseEnter={() => setHoverIdx(i)}
               >
-                {item.label}
-              </button>
+                <button type="button" className="idl-topnav-link" data-hover>
+                  {item.label}
+                </button>
+                <AnimatePresence>
+                  {hoverIdx === i && item.children ? (
+                    <motion.div
+                      className="idl-topnav-drop"
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 4 }}
+                      transition={{ duration: 0.22, ease: EASE }}
+                    >
+                      {item.children.map((c) => (
+                        <Link
+                          key={c.label}
+                          to={c.to}
+                          params={c.params as never}
+                          className="idl-topnav-drop-link"
+                          data-hover
+                          onClick={() => setHoverIdx(null)}
+                        >
+                          {c.label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+              </div>
             )
           )}
         </nav>
+
 
         {/* Right cluster: Menu (scrolled only) + Search */}
         <div className="idl-header-right">
