@@ -33,8 +33,12 @@ html, body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--sans);
-  overflow-x: hidden;
+  /* `overflow-x: clip` (not hidden) — `hidden` on html/body breaks
+     `position: sticky` for descendants. clip suppresses the same overflow
+     without killing the containing-block ancestor chain. */
+  overflow-x: clip;
 }
+
 
 body {
   cursor: none;
