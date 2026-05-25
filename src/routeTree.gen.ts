@@ -9,11 +9,42 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StudioRouteImport } from './routes/studio'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PracticeRouteImport } from './routes/practice'
+import { Route as ExpertiseRouteImport } from './routes/expertise'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudioTeamRouteImport } from './routes/studio.team'
+import { Route as StudioAboutRouteImport } from './routes/studio.about'
+import { Route as ProjectsCategoryRouteImport } from './routes/projects.$category'
 import { Route as ProjectSlugRouteImport } from './routes/project.$slug'
+import { Route as PracticeProcessRouteImport } from './routes/practice.process'
+import { Route as PracticeJournalRouteImport } from './routes/practice.journal'
+import { Route as PracticeHistoryRouteImport } from './routes/practice.history'
+import { Route as ExpertiseSectorRouteImport } from './routes/expertise.$sector'
+import { Route as PracticeJournalSlugRouteImport } from './routes/practice.journal.$slug'
 
+const StudioRoute = StudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PracticeRoute = PracticeRouteImport.update({
+  id: '/practice',
+  path: '/practice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExpertiseRoute = ExpertiseRouteImport.update({
+  id: '/expertise',
+  path: '/expertise',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -25,52 +56,197 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const StudioTeamRoute = StudioTeamRouteImport.update({
-  id: '/studio/team',
-  path: '/studio/team',
-  getParentRoute: () => rootRouteImport,
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => StudioRoute,
+} as any)
+const StudioAboutRoute = StudioAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => StudioRoute,
+} as any)
+const ProjectsCategoryRoute = ProjectsCategoryRouteImport.update({
+  id: '/$category',
+  path: '/$category',
+  getParentRoute: () => ProjectsRoute,
 } as any)
 const ProjectSlugRoute = ProjectSlugRouteImport.update({
   id: '/project/$slug',
   path: '/project/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PracticeProcessRoute = PracticeProcessRouteImport.update({
+  id: '/process',
+  path: '/process',
+  getParentRoute: () => PracticeRoute,
+} as any)
+const PracticeJournalRoute = PracticeJournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => PracticeRoute,
+} as any)
+const PracticeHistoryRoute = PracticeHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => PracticeRoute,
+} as any)
+const ExpertiseSectorRoute = ExpertiseSectorRouteImport.update({
+  id: '/$sector',
+  path: '/$sector',
+  getParentRoute: () => ExpertiseRoute,
+} as any)
+const PracticeJournalSlugRoute = PracticeJournalSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => PracticeJournalRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/expertise': typeof ExpertiseRouteWithChildren
+  '/practice': typeof PracticeRouteWithChildren
+  '/projects': typeof ProjectsRouteWithChildren
+  '/studio': typeof StudioRouteWithChildren
+  '/expertise/$sector': typeof ExpertiseSectorRoute
+  '/practice/history': typeof PracticeHistoryRoute
+  '/practice/journal': typeof PracticeJournalRouteWithChildren
+  '/practice/process': typeof PracticeProcessRoute
   '/project/$slug': typeof ProjectSlugRoute
+  '/projects/$category': typeof ProjectsCategoryRoute
+  '/studio/about': typeof StudioAboutRoute
   '/studio/team': typeof StudioTeamRoute
+  '/practice/journal/$slug': typeof PracticeJournalSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/expertise': typeof ExpertiseRouteWithChildren
+  '/practice': typeof PracticeRouteWithChildren
+  '/projects': typeof ProjectsRouteWithChildren
+  '/studio': typeof StudioRouteWithChildren
+  '/expertise/$sector': typeof ExpertiseSectorRoute
+  '/practice/history': typeof PracticeHistoryRoute
+  '/practice/journal': typeof PracticeJournalRouteWithChildren
+  '/practice/process': typeof PracticeProcessRoute
   '/project/$slug': typeof ProjectSlugRoute
+  '/projects/$category': typeof ProjectsCategoryRoute
+  '/studio/about': typeof StudioAboutRoute
   '/studio/team': typeof StudioTeamRoute
+  '/practice/journal/$slug': typeof PracticeJournalSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/expertise': typeof ExpertiseRouteWithChildren
+  '/practice': typeof PracticeRouteWithChildren
+  '/projects': typeof ProjectsRouteWithChildren
+  '/studio': typeof StudioRouteWithChildren
+  '/expertise/$sector': typeof ExpertiseSectorRoute
+  '/practice/history': typeof PracticeHistoryRoute
+  '/practice/journal': typeof PracticeJournalRouteWithChildren
+  '/practice/process': typeof PracticeProcessRoute
   '/project/$slug': typeof ProjectSlugRoute
+  '/projects/$category': typeof ProjectsCategoryRoute
+  '/studio/about': typeof StudioAboutRoute
   '/studio/team': typeof StudioTeamRoute
+  '/practice/journal/$slug': typeof PracticeJournalSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contact' | '/project/$slug' | '/studio/team'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/expertise'
+    | '/practice'
+    | '/projects'
+    | '/studio'
+    | '/expertise/$sector'
+    | '/practice/history'
+    | '/practice/journal'
+    | '/practice/process'
+    | '/project/$slug'
+    | '/projects/$category'
+    | '/studio/about'
+    | '/studio/team'
+    | '/practice/journal/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/project/$slug' | '/studio/team'
-  id: '__root__' | '/' | '/contact' | '/project/$slug' | '/studio/team'
+  to:
+    | '/'
+    | '/contact'
+    | '/expertise'
+    | '/practice'
+    | '/projects'
+    | '/studio'
+    | '/expertise/$sector'
+    | '/practice/history'
+    | '/practice/journal'
+    | '/practice/process'
+    | '/project/$slug'
+    | '/projects/$category'
+    | '/studio/about'
+    | '/studio/team'
+    | '/practice/journal/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/expertise'
+    | '/practice'
+    | '/projects'
+    | '/studio'
+    | '/expertise/$sector'
+    | '/practice/history'
+    | '/practice/journal'
+    | '/practice/process'
+    | '/project/$slug'
+    | '/projects/$category'
+    | '/studio/about'
+    | '/studio/team'
+    | '/practice/journal/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
+  ExpertiseRoute: typeof ExpertiseRouteWithChildren
+  PracticeRoute: typeof PracticeRouteWithChildren
+  ProjectsRoute: typeof ProjectsRouteWithChildren
+  StudioRoute: typeof StudioRouteWithChildren
   ProjectSlugRoute: typeof ProjectSlugRoute
-  StudioTeamRoute: typeof StudioTeamRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/studio': {
+      id: '/studio'
+      path: '/studio'
+      fullPath: '/studio'
+      preLoaderRoute: typeof StudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practice': {
+      id: '/practice'
+      path: '/practice'
+      fullPath: '/practice'
+      preLoaderRoute: typeof PracticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/expertise': {
+      id: '/expertise'
+      path: '/expertise'
+      fullPath: '/expertise'
+      preLoaderRoute: typeof ExpertiseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -87,10 +263,24 @@ declare module '@tanstack/react-router' {
     }
     '/studio/team': {
       id: '/studio/team'
-      path: '/studio/team'
+      path: '/team'
       fullPath: '/studio/team'
       preLoaderRoute: typeof StudioTeamRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof StudioRoute
+    }
+    '/studio/about': {
+      id: '/studio/about'
+      path: '/about'
+      fullPath: '/studio/about'
+      preLoaderRoute: typeof StudioAboutRouteImport
+      parentRoute: typeof StudioRoute
+    }
+    '/projects/$category': {
+      id: '/projects/$category'
+      path: '/$category'
+      fullPath: '/projects/$category'
+      preLoaderRoute: typeof ProjectsCategoryRouteImport
+      parentRoute: typeof ProjectsRoute
     }
     '/project/$slug': {
       id: '/project/$slug'
@@ -99,14 +289,117 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/practice/process': {
+      id: '/practice/process'
+      path: '/process'
+      fullPath: '/practice/process'
+      preLoaderRoute: typeof PracticeProcessRouteImport
+      parentRoute: typeof PracticeRoute
+    }
+    '/practice/journal': {
+      id: '/practice/journal'
+      path: '/journal'
+      fullPath: '/practice/journal'
+      preLoaderRoute: typeof PracticeJournalRouteImport
+      parentRoute: typeof PracticeRoute
+    }
+    '/practice/history': {
+      id: '/practice/history'
+      path: '/history'
+      fullPath: '/practice/history'
+      preLoaderRoute: typeof PracticeHistoryRouteImport
+      parentRoute: typeof PracticeRoute
+    }
+    '/expertise/$sector': {
+      id: '/expertise/$sector'
+      path: '/$sector'
+      fullPath: '/expertise/$sector'
+      preLoaderRoute: typeof ExpertiseSectorRouteImport
+      parentRoute: typeof ExpertiseRoute
+    }
+    '/practice/journal/$slug': {
+      id: '/practice/journal/$slug'
+      path: '/$slug'
+      fullPath: '/practice/journal/$slug'
+      preLoaderRoute: typeof PracticeJournalSlugRouteImport
+      parentRoute: typeof PracticeJournalRoute
+    }
   }
 }
+
+interface ExpertiseRouteChildren {
+  ExpertiseSectorRoute: typeof ExpertiseSectorRoute
+}
+
+const ExpertiseRouteChildren: ExpertiseRouteChildren = {
+  ExpertiseSectorRoute: ExpertiseSectorRoute,
+}
+
+const ExpertiseRouteWithChildren = ExpertiseRoute._addFileChildren(
+  ExpertiseRouteChildren,
+)
+
+interface PracticeJournalRouteChildren {
+  PracticeJournalSlugRoute: typeof PracticeJournalSlugRoute
+}
+
+const PracticeJournalRouteChildren: PracticeJournalRouteChildren = {
+  PracticeJournalSlugRoute: PracticeJournalSlugRoute,
+}
+
+const PracticeJournalRouteWithChildren = PracticeJournalRoute._addFileChildren(
+  PracticeJournalRouteChildren,
+)
+
+interface PracticeRouteChildren {
+  PracticeHistoryRoute: typeof PracticeHistoryRoute
+  PracticeJournalRoute: typeof PracticeJournalRouteWithChildren
+  PracticeProcessRoute: typeof PracticeProcessRoute
+}
+
+const PracticeRouteChildren: PracticeRouteChildren = {
+  PracticeHistoryRoute: PracticeHistoryRoute,
+  PracticeJournalRoute: PracticeJournalRouteWithChildren,
+  PracticeProcessRoute: PracticeProcessRoute,
+}
+
+const PracticeRouteWithChildren = PracticeRoute._addFileChildren(
+  PracticeRouteChildren,
+)
+
+interface ProjectsRouteChildren {
+  ProjectsCategoryRoute: typeof ProjectsCategoryRoute
+}
+
+const ProjectsRouteChildren: ProjectsRouteChildren = {
+  ProjectsCategoryRoute: ProjectsCategoryRoute,
+}
+
+const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
+  ProjectsRouteChildren,
+)
+
+interface StudioRouteChildren {
+  StudioAboutRoute: typeof StudioAboutRoute
+  StudioTeamRoute: typeof StudioTeamRoute
+}
+
+const StudioRouteChildren: StudioRouteChildren = {
+  StudioAboutRoute: StudioAboutRoute,
+  StudioTeamRoute: StudioTeamRoute,
+}
+
+const StudioRouteWithChildren =
+  StudioRoute._addFileChildren(StudioRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
+  ExpertiseRoute: ExpertiseRouteWithChildren,
+  PracticeRoute: PracticeRouteWithChildren,
+  ProjectsRoute: ProjectsRouteWithChildren,
+  StudioRoute: StudioRouteWithChildren,
   ProjectSlugRoute: ProjectSlugRoute,
-  StudioTeamRoute: StudioTeamRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

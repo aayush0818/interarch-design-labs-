@@ -1,53 +1,70 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { PageHero, PageShell } from "@/components/home/PageShell";
-import { pageImages, partners } from "@/data/siteContent";
+import { AnimatePresence, motion } from "framer-motion";
+import { partners } from "@/data/siteContent";
 
 export const Route = createFileRoute("/studio/team")({
   head: () => ({ meta: [
-    { title: "Team — Interarch Design Labs" },
-    { name: "description", content: "Four partners. Distinct strengths. One aligned vision — meet the leadership of IDL." },
-    { property: "og:title", content: "Team — Interarch Design Labs" },
-    { property: "og:description", content: "The partners and associates who shape IDL's architecture, interiors and delivery." },
+    { title: "Team — Studio · IDL" },
+    { name: "description", content: "The four partners and the studio team behind Interarch Design Labs." },
+    { property: "og:title", content: "Team — Studio · IDL" },
+    { property: "og:description", content: "Architects and designers shaping every project." },
   ] }),
   component: TeamPage,
 });
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+const tilts = [-0.8, 0.9, -1.1, 0.6];
+
 function TeamPage() {
+  const [open, setOpen] = useState<number | null>(null);
   return (
-    <PageShell>
-      <PageHero image={pageImages.teamHero} alt="IDL team studio" title="Four partners. One aligned vision." />
-      <section className="partner-strip-section">
-        <span className="section-kicker">Leadership</span>
-        <div className="partner-strip">
-          {partners.map((p) => (
-            <a className="partner-tile" href={`#${encodeURIComponent(p.name)}`} key={p.name} data-hover>
-              <img src={p.image} alt={p.name} width={900} height={900} loading="lazy" />
-              <h3>{p.name}</h3>
-              <p>{p.role}</p>
-            </a>
-          ))}
-        </div>
-      </section>
-      {partners.map((p) => (
-        <section className="partner-section" id={p.name} key={p.name}>
-          <div className="img-reveal-wrap partner-portrait" data-reveal-direction="bottom">
-            <div className="img-parallax"><img src={p.image} alt={p.name} width={1000} height={1400} loading="lazy" /></div>
-          </div>
-          <div className="partner-copy" data-reveal>
-            <h2>{p.name}</h2>
-            <span className="partner-role">{p.role}</span>
-            <p className="partner-line">{p.line}</p>
-            <ul>{p.details.map((d) => <li key={d}>{d}</li>)}</ul>
-          </div>
-          <div className="partner-divider"><span>{p.role}</span></div>
-        </section>
-      ))}
-      <section className="associates-section">
-        <span className="section-kicker">Studio</span>
-        <p style={{ maxWidth: 720, opacity: 0.7, marginBottom: 24 }}>
-          The partners are supported by a multidisciplinary team of architects, interior designers, visualisers, project managers and delivery specialists across our Mumbai and Ahmedabad studios.
-        </p>
-      </section>
-    </PageShell>
+    <section className="idl-portraits">
+      <header className="idl-portraits-head">
+        <span className="idl-portraits-eyebrow">— Studio · Team</span>
+        <h1>Four partners.<br /><em>One conviction.</em></h1>
+        <p>Hover a portrait to hear them. Click to read the full bio.</p>
+      </header>
+      <div className="idl-portraits-grid">
+        {partners.map((p, i) => {
+          const isOpen = open === i;
+          return (
+            <motion.article
+              key={p.name}
+              className={`idl-portrait ${isOpen ? "is-open" : ""}`}
+              initial={{ opacity: 0, y: 40, rotate: tilts[i] }}
+              whileInView={{ opacity: 1, y: 0, rotate: tilts[i] }}
+              whileHover={{ rotate: 0, y: -8 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: EASE, delay: i * 0.1 }}
+              onClick={() => setOpen(isOpen ? null : i)}
+              data-hover
+            >
+              <div className="idl-portrait-img">
+                <img src={p.image} alt={p.name} loading="lazy" />
+              </div>
+              <div className="idl-portrait-cap">
+                <span>{String(i + 1).padStart(2, "0")} — {p.role}</span>
+                <h2>{p.name}</h2>
+                <em className="idl-portrait-quote">"{p.line}"</em>
+              </div>
+              <AnimatePresence>
+                {isOpen ? (
+                  <motion.ul
+                    className="idl-portrait-bio"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.45, ease: EASE }}
+                  >
+                    {p.details.map((d) => <li key={d}>— {d}</li>)}
+                  </motion.ul>
+                ) : null}
+              </AnimatePresence>
+            </motion.article>
+          );
+        })}
+      </div>
+    </section>
   );
 }
