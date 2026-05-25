@@ -8,12 +8,13 @@
    IDL HOMEPAGE DESIGN TOKENS
    ============================================================ */
 :root {
-  --bg: #f5ede0;
-  --fg: #3f3431;
+  --bg: #f5ede0;          /* parchment cream */
+  --fg: #3f3431;          /* warm walnut brown */
   --muted: #9c8b7e;
-  --accent: #c8392b;
+  --accent: #a8392b;      /* deep brick / dried-blood terracotta */
   --stone: #e0d5c8;
   --on-dark: rgba(245, 237, 224, 0.8);
+
 
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'DM Sans', system-ui, sans-serif;
@@ -289,12 +290,14 @@ body {
 
 .v-image-panel {
   position: sticky;
-  top: 0;
-  height: 100vh;
+  top: 15vh;
+  height: 70vh;
   width: 40%;
   overflow: hidden;
   align-self: flex-start;
+  margin-right: clamp(24px, 4vw, 64px);
 }
+
 .v-image-panel img {
   position: absolute;
   inset: 0;
