@@ -5,9 +5,9 @@ import { pageImages, partners } from "@/data/siteContent";
 export const Route = createFileRoute("/studio/team")({
   head: () => ({ meta: [
     { title: "Team — Interarch Design Labs" },
-    { name: "description", content: "Meet the partners and associates behind Interarch Design Labs." },
+    { name: "description", content: "Four partners. Distinct strengths. One aligned vision — meet the leadership of IDL." },
     { property: "og:title", content: "Team — Interarch Design Labs" },
-    { property: "og:description", content: "The people who shape IDL's architecture, interiors, research and delivery." },
+    { property: "og:description", content: "The partners and associates who shape IDL's architecture, interiors and delivery." },
   ] }),
   component: TeamPage,
 });
@@ -15,11 +15,17 @@ export const Route = createFileRoute("/studio/team")({
 function TeamPage() {
   return (
     <PageShell>
-      <PageHero image={pageImages.teamHero} alt="IDL team studio" title="People behind the precision." />
+      <PageHero image={pageImages.teamHero} alt="IDL team studio" title="Four partners. One aligned vision." />
       <section className="partner-strip-section">
-        <span className="section-kicker">Partners</span>
+        <span className="section-kicker">Leadership</span>
         <div className="partner-strip">
-          {partners.map((p) => <a className="partner-tile" href={`#${p.name}`} key={p.name} data-hover><img src={p.image} alt={p.name} width={900} height={900} loading="lazy" /><h3>{p.name}</h3><p>{p.role}</p></a>)}
+          {partners.map((p) => (
+            <a className="partner-tile" href={`#${encodeURIComponent(p.name)}`} key={p.name} data-hover>
+              <img src={p.image} alt={p.name} width={900} height={900} loading="lazy" />
+              <h3>{p.name}</h3>
+              <p>{p.role}</p>
+            </a>
+          ))}
         </div>
       </section>
       {partners.map((p) => (
@@ -37,8 +43,10 @@ function TeamPage() {
         </section>
       ))}
       <section className="associates-section">
-        <span className="section-kicker">Associates</span>
-        <table><tbody>{['Riya Kapoor — Senior Architect', 'Devika Jain — Interior Lead', 'Omar Sheikh — Project Architect', 'Tara Menon — Materials Research'].map((r) => <tr key={r}><td>{r}</td></tr>)}</tbody></table>
+        <span className="section-kicker">Studio</span>
+        <p style={{ maxWidth: 720, opacity: 0.7, marginBottom: 24 }}>
+          The partners are supported by a multidisciplinary team of architects, interior designers, visualisers, project managers and delivery specialists across our Mumbai and Ahmedabad studios.
+        </p>
       </section>
     </PageShell>
   );

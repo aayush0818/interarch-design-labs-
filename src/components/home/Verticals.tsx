@@ -10,25 +10,25 @@ const items = [
   {
     name: "Residential",
     href: "/sectors/residential",
-    desc: "Homes that prioritise daylight, proportion and an intuitive flow. Every decision, from plan to finish, supports daily life with calm precision.",
+    desc: "Apartments, bungalows and villas conceived for privacy, openness and a seamless connection to the outdoors. Every decision, from plan to finish, supports daily life with calm precision.",
     img: residential,
   },
   {
     name: "Commercial",
     href: "/sectors/commercial",
-    desc: "Workplaces and retail environments that translate brand identity into spatial performance. Designed for productivity, culture and future growth.",
+    desc: "Workplaces and retail environments that translate brand identity into spatial performance. Designed for productivity, culture and adaptability — now and into future growth.",
     img: commercial,
   },
   {
     name: "Institutional",
     href: "/sectors/institutional",
-    desc: "Buildings that serve public life with clarity and durability. Designed for long-term performance, with efficiency, accessibility and civic presence.",
+    desc: "Buildings that serve public life with clarity and durability. Schools, civic centres and cultural landmarks designed for long-term relevance, efficiency and civic presence.",
     img: institutional,
   },
   {
     name: "Hospitality",
     href: "/sectors/hospitality",
-    desc: "Environments shaped by atmosphere, warmth and the art of arrival. Every space is calibrated to the experience of the guest.",
+    desc: "Bespoke hospitality interiors that elevate lifestyle — choreographed through warmth, sequence, tactility and the careful art of arrival.",
     img: hospitality,
   },
   {

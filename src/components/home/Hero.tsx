@@ -16,6 +16,12 @@ export function Hero() {
         <span className="dot" />
         <span>Interarch Design Labs</span>
       </div>
+      <h1 className="idl-hero-headline">
+        Not just spaces. Stories, shaped with care,
+        <br />
+        clarity, and the way you live.
+      </h1>
+      <div className="idl-hero-sub">Designed around you.</div>
       <div className="idl-hero-scroll">
         <div>Scroll</div>
         <div className="line" />

@@ -6,9 +6,9 @@ export const Route = createFileRoute("/studio")({
   head: () => ({
     meta: [
       { title: "Studio — Interarch Design Labs" },
-      { name: "description", content: "The philosophy, practice and working culture of Interarch Design Labs." },
+      { name: "description", content: "35+ years of craft, clarity and care. The IDL studio combines the legacies of Interarch and Kala Design." },
       { property: "og:title", content: "Studio — Interarch Design Labs" },
-      { property: "og:description", content: "A studio shaped by clarity, proportion, material intelligence and restraint." },
+      { property: "og:description", content: "A multidisciplinary studio across architecture, interiors, planning and engineering." },
     ],
   }),
   component: StudioPage,
@@ -20,23 +20,27 @@ function StudioPage() {
 
   return (
     <PageShell>
-      <PageHero image={pageImages.studioHero} alt="Warm architectural studio interior" title="A studio shaped by restraint." />
+      <PageHero image={pageImages.studioHero} alt="Interarch Design Labs studio" title="35+ years of craft, clarity and care." />
       <section className="editorial-two-col">
         <div className="story-copy" data-reveal>
-          <p>Interarch Design Labs works across architecture, interiors and spatial strategy. The practice is built on the belief that a project should feel inevitable: precise in plan, calm in material and generous in the way it supports life.</p>
-          <p>We begin with context before image. Climate, use, craft, sequence and memory are studied until the building's quieter logic appears. The work is contemporary, but never rushed; refined, but never decorative for its own sake.</p>
+          <p>Interarch Design Labs is the union of two legacy firms — Interarch, founded in 1989 by Ar. Dipak Thaker and Ar. Murtuza Rangwala, and Kala Design, led by Ar. Hussain Rangwala and Ar. Rohit Gojia. Together we bring forward a shared philosophy: design should not chase trends, it should serve intent.</p>
+          <p>Our practice spans architecture, interiors, planning and engineering. The foundation is singular — a deep respect for context, craft and collaboration. From residential homes to institutional campuses, our portfolio speaks of relationships built on trust and consistency.</p>
         </div>
         <div className="fact-rule" />
         <div className="facts-grid">
-          <div className="fact-item"><span>Founded</span><strong>2009</strong></div>
-          <div className="fact-item"><span>Studios</span><strong>02</strong></div>
-          <div className="fact-item"><span>Sectors</span><strong>06</strong></div>
-          <div className="fact-item"><span>Projects</span><strong>120+</strong></div>
+          <div className="fact-item"><span>Founded</span><strong>1989</strong></div>
+          <div className="fact-item"><span>Studios</span><strong>Mumbai · Ahmedabad</strong></div>
+          <div className="fact-item"><span>Partners</span><strong>04</strong></div>
+          <div className="fact-item"><span>Reach</span><strong>India · ME · Africa</strong></div>
         </div>
       </section>
       <section className="three-column-block">
-        <span className="section-kicker">Principles</span>
-        {['Clarity before gesture', 'Material honesty', 'Silence as confidence'].map((text, i) => (
+        <span className="section-kicker">Guiding Principles</span>
+        {[
+          'Architecture must respond to life.',
+          'Every design should feel inevitable yet personal.',
+          'Innovation matters only when rooted in context.',
+        ].map((text, i) => (
           <div className="principle" data-reveal key={text}>
             <span>{String(i + 1).padStart(2, '0')}</span>
             <p>{text}</p>
@@ -48,9 +52,9 @@ function StudioPage() {
           <div className="img-parallax"><img src={pageImages.studioCulture} alt="Studio material table" width={1400} height={1000} loading="lazy" /></div>
         </div>
         <div data-reveal>
-          <span className="section-kicker">Culture</span>
-          <h2>Every decision is reviewed at the scale of the city, the room and the hand.</h2>
-          <p>Drawings, samples, conversations and site visits sit beside one another. The studio's pace is deliberate because every built decision becomes part of someone's daily rhythm.</p>
+          <span className="section-kicker">Culture & Process</span>
+          <h2>Not a hierarchy, but a dialogue — across disciplines, generations and perspectives.</h2>
+          <p>We value process as much as outcomes: the sketch before the line, the question before the answer, the conversation before the decision. Architecture, for us, is not an object to be delivered — it is an experience to be lived.</p>
         </div>
       </section>
     </PageShell>
