@@ -9,7 +9,7 @@ const items = [
     date: "2010",
     headline:
       "Chief Minister of Maharashtra Award — Babasaheb Ambedkar Bhavan",
-    href: "/journal",
+    href: "/practice/journal",
   },
   {
     img: award2,
@@ -17,7 +17,7 @@ const items = [
     date: "25 Years",
     headline:
       "25 years of continuous service to DRDO, Ministry of Defence",
-    href: "/journal",
+    href: "/practice/journal",
   },
   {
     img: award3,
@@ -25,7 +25,7 @@ const items = [
     date: "2015",
     headline:
       "Rachana Sansad Diamond Jubilee felicitation of Ar. Dipak Thaker",
-    href: "/journal",
+    href: "/practice/journal",
   },
 ];
 

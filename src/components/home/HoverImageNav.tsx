@@ -6,7 +6,7 @@ import contact from "@/assets/nav-contact.jpg";
 
 const links = [
   { label: "Our Story", href: "/studio", img: story },
-  { label: "Our Work", href: "/works", img: work },
+  { label: "Our Work", href: "/projects", img: work },
   { label: "Our Team", href: "/studio/team", img: team },
   { label: "Get in Touch", href: "/contact", img: contact },
 ];
