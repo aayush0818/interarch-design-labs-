@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute, useRouterState } from "@tanstack/react-router";
 import { PageHero, PageShell } from "@/components/home/PageShell";
 import { pageImages } from "@/data/siteContent";
 
@@ -15,6 +15,9 @@ export const Route = createFileRoute("/studio")({
 });
 
 function StudioPage() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  if (pathname !== "/studio") return <Outlet />;
+
   return (
     <PageShell>
       <PageHero image={pageImages.studioHero} alt="Warm architectural studio interior" title="A studio shaped by restraint." />
