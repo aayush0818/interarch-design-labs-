@@ -429,10 +429,10 @@ body {
 }
 .works-card--wide {
   grid-column: 1 / -1;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 21 / 8;
 }
 .works-card--tall {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
 }
 .works-card-label {
   position: absolute;
