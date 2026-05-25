@@ -11,7 +11,7 @@ import navContact from "@/assets/nav-contact.jpg";
 type SubItem = { label: string; to: string; params?: Record<string, string> };
 type NavItem = {
   label: string;
-  to: string;
+  to?: string;
   image: string;
   blurb: string;
   children?: SubItem[];
@@ -20,13 +20,19 @@ type NavItem = {
 const NAV: NavItem[] = [
   {
     label: "Projects",
-    to: "/works",
     image: navWork,
     blurb: "A growing archive of architecture, interiors and research built across India.",
+    children: [
+      { label: "All Works", to: "/works" },
+      ...sectors.map((s) => ({
+        label: s.name,
+        to: "/sectors/$sector",
+        params: { sector: s.slug },
+      })),
+    ],
   },
   {
     label: "Expertise",
-    to: "/sectors",
     image: navStory,
     blurb: "Six sectors, one architectural language — measured, material, daylit.",
     children: sectors.map((s) => ({
@@ -37,7 +43,6 @@ const NAV: NavItem[] = [
   },
   {
     label: "Practice",
-    to: "/studio",
     image: navStory,
     blurb: "How the studio thinks, draws, and brings buildings into the world.",
     children: [
@@ -50,9 +55,12 @@ const NAV: NavItem[] = [
   },
   {
     label: "Studios",
-    to: "/studio",
     image: navContact,
-    blurb: "Working between Mumbai, Ahmedabad and site — one continuous practice.",
+    blurb: "Working between Mumbai and Ahmedabad — one continuous practice.",
+    children: [
+      { label: "Mumbai", to: "/studio" },
+      { label: "Ahmedabad", to: "/contact" },
+    ],
   },
   {
     label: "Specialists",
@@ -63,6 +71,15 @@ const NAV: NavItem[] = [
 ];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+function SearchIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-3.5-3.5" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -85,13 +102,13 @@ export function Header() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") closeAll();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const close = () => {
+  const closeAll = () => {
     setOpen(false);
     setActiveIdx(null);
   };
@@ -102,24 +119,45 @@ export function Header() {
   return (
     <>
       <header className={headerClass}>
-        <Link to="/" className="idl-logo" aria-label="Interarch Design Labs — Home" onClick={close}>
+        <Link to="/" className="idl-logo" aria-label="Interarch Design Labs — Home" onClick={closeAll}>
           <img src={logo} alt="Interarch Design Labs" className="idl-logo-mark" />
         </Link>
 
+        {/* Hero state: centered full nav (hidden when scrolled / menu open) */}
         <nav className="idl-topnav" aria-label="Primary">
-          {NAV.map((item) => (
-            <Link key={item.label} to={item.to} className="idl-topnav-link" data-hover>
-              {item.label}
-            </Link>
-          ))}
+          {NAV.map((item) =>
+            item.to && !item.children ? (
+              <Link key={item.label} to={item.to} className="idl-topnav-link" data-hover>
+                {item.label}
+              </Link>
+            ) : (
+              <button
+                key={item.label}
+                type="button"
+                className="idl-topnav-link"
+                data-hover
+                onClick={() => {
+                  const idx = NAV.findIndex((n) => n.label === item.label);
+                  setActiveIdx(idx);
+                  setOpen(true);
+                }}
+              >
+                {item.label}
+              </button>
+            )
+          )}
         </nav>
 
+        {/* Right cluster: Menu (scrolled only) + Search */}
         <div className="idl-header-right">
           <button
             className="idl-menu-btn"
             data-hover
             type="button"
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+              if (open) closeAll();
+              else setOpen(true);
+            }}
             aria-expanded={open}
             aria-controls="idl-mega-menu"
           >
@@ -127,6 +165,9 @@ export function Header() {
             <span className="idl-menu-btn-icon" aria-hidden>
               <span /><span />
             </span>
+          </button>
+          <button type="button" className="idl-icon-btn" aria-label="Search" data-hover>
+            <SearchIcon />
           </button>
         </div>
       </header>
@@ -136,10 +177,10 @@ export function Header() {
           <motion.div
             id="idl-mega-menu"
             className="idl-mega"
-            initial={{ opacity: 0, y: -16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.55, ease: EASE }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.45, ease: EASE }}
             role="dialog"
             aria-modal="true"
           >
@@ -155,7 +196,9 @@ export function Header() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.5, ease: EASE }}
                   >
-                    <div className="idl-mega-eyebrow">— {String((activeIdx ?? 0) + 1).padStart(2, "0")} / {String(NAV.length).padStart(2, "0")}</div>
+                    <div className="idl-mega-eyebrow">
+                      — {String((activeIdx ?? 0) + 1).padStart(2, "0")} / {String(NAV.length).padStart(2, "0")}
+                    </div>
                     <h2 className="idl-mega-title">{active.label}</h2>
                     <p className="idl-mega-blurb">{active.blurb}</p>
                     <div className="idl-mega-image">
@@ -173,7 +216,9 @@ export function Header() {
                   >
                     <div className="idl-mega-eyebrow">— Index</div>
                     <h2 className="idl-mega-title">Interarch<br />Design Labs</h2>
-                    <p className="idl-mega-blurb">Architecture, interiors and research — measured, material, daylit. Choose a section to begin.</p>
+                    <p className="idl-mega-blurb">
+                      Architecture, interiors and research — measured, material, daylit. Choose a section to begin.
+                    </p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -189,9 +234,9 @@ export function Header() {
                   return (
                     <motion.li
                       key={item.label}
-                      initial={{ opacity: 0, y: 18 }}
+                      initial={{ opacity: 0, y: 14 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, ease: EASE, delay: 0.15 + i * 0.06 }}
+                      transition={{ duration: 0.5, ease: EASE, delay: 0.12 + i * 0.06 }}
                       className={`idl-mega-nav-row${isActive ? " is-active" : ""}`}
                     >
                       {hasKids ? (
@@ -201,6 +246,7 @@ export function Header() {
                           data-hover
                           aria-expanded={isActive}
                           onClick={() => setActiveIdx(isActive ? null : i)}
+                          onMouseEnter={() => setActiveIdx(i)}
                         >
                           <span className="idl-mega-nav-index">{String(i + 1).padStart(2, "0")}</span>
                           <span className="idl-mega-nav-label">{item.label}</span>
@@ -208,17 +254,17 @@ export function Header() {
                         </button>
                       ) : (
                         <Link
-                          to={item.to}
+                          to={item.to!}
                           className="idl-mega-nav-link"
                           data-hover
-                          onClick={close}
+                          onClick={closeAll}
                           onMouseEnter={() => setActiveIdx(i)}
                         >
                           <span className="idl-mega-nav-index">{String(i + 1).padStart(2, "0")}</span>
                           <span className="idl-mega-nav-label">{item.label}</span>
                         </Link>
                       )}
-                      <AnimatePresence>
+                      <AnimatePresence initial={false}>
                         {isActive && hasKids ? (
                           <motion.ul
                             className="idl-mega-sub"
@@ -230,16 +276,16 @@ export function Header() {
                             {item.children!.map((c, ci) => (
                               <motion.li
                                 key={c.label}
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.35, ease: EASE, delay: ci * 0.05 }}
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.35, ease: EASE, delay: 0.06 + ci * 0.06 }}
                               >
                                 <Link
                                   to={c.to}
                                   params={c.params as never}
                                   className="idl-mega-sub-link"
                                   data-hover
-                                  onClick={close}
+                                  onClick={closeAll}
                                 >
                                   {c.label}
                                 </Link>

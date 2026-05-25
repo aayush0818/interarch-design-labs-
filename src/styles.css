@@ -154,26 +154,29 @@ body {
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 32px;
-  padding: 22px 48px;
+  height: 110px;
+  padding: 0 56px;
   background: transparent;
   color: #ffffff;
-  transition:
-    background-color 450ms cubic-bezier(0.22, 1, 0.36, 1),
-    color 450ms cubic-bezier(0.22, 1, 0.36, 1),
-    padding 450ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 450ms ease;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   border-bottom: 1px solid transparent;
 }
 .idl-header.is-scrolled {
-  background: #f5f3ef;
+  background: rgba(245, 243, 239, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   color: #2a2520;
-  padding: 14px 48px;
+  height: 78px;
   border-bottom-color: rgba(42, 37, 32, 0.08);
+  box-shadow: 0 1px 0 rgba(42, 37, 32, 0.04), 0 12px 30px -24px rgba(42, 37, 32, 0.18);
 }
 .idl-header.is-menu {
   background: transparent;
   color: #f5ede0;
   border-bottom-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .idl-logo {
@@ -185,42 +188,39 @@ body {
   justify-self: start;
 }
 .idl-logo-mark {
-  height: 72px;
-  width: auto;
+  width: 180px;
+  height: auto;
   display: block;
   filter: brightness(0) invert(1);
-  transition: filter 450ms cubic-bezier(0.22, 1, 0.36, 1),
-              height 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .idl-header.is-scrolled .idl-logo-mark {
-  height: 56px;
+  width: 140px;
   filter: none;
 }
 .idl-header.is-menu .idl-logo-mark { filter: brightness(0) invert(1); }
 
-@media (max-width: 900px) {
-  .idl-header { grid-template-columns: 1fr auto; padding: 16px 22px; }
-  .idl-header.is-scrolled { padding: 12px 22px; }
-  .idl-logo-mark { height: 48px; }
-  .idl-header.is-scrolled .idl-logo-mark { height: 42px; }
-  .idl-topnav { display: none; }
-}
-
-/* Centre navigation */
+/* Centre navigation — visible only in hero (top) state */
 .idl-topnav {
   display: flex;
   align-items: center;
-  gap: clamp(20px, 2.6vw, 44px);
+  gap: clamp(22px, 2.8vw, 48px);
   justify-self: center;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .idl-topnav-link {
   font-family: var(--sans);
   font-size: 11px;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
   font-weight: 400;
   color: inherit;
   text-decoration: none;
+  background: none;
+  border: none;
+  cursor: none;
   position: relative;
   padding: 6px 0;
   opacity: 0.9;
@@ -239,19 +239,44 @@ body {
 }
 .idl-topnav-link:hover { opacity: 1; }
 .idl-topnav-link:hover::after { transform: scaleX(1); transform-origin: left center; }
-.idl-header.is-menu .idl-topnav { opacity: 0; pointer-events: none; transition: opacity 200ms ease; }
-.idl-header.is-scrolled .idl-topnav { opacity: 0; pointer-events: none; }
 
-/* Menu button only visible once scrolled OR when overlay open */
+/* Hide top nav as soon as we scroll, or when overlay is open */
+.idl-header.is-scrolled .idl-topnav,
+.idl-header.is-menu .idl-topnav {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Menu button: hidden in hero, visible when scrolled or overlay open */
 .idl-menu-btn {
   opacity: 0;
   pointer-events: none;
-  transition: opacity 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  visibility: hidden;
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .idl-header.is-scrolled .idl-menu-btn,
 .idl-header.is-menu .idl-menu-btn {
   opacity: 1;
   pointer-events: auto;
+  visibility: visible;
+}
+
+/* Responsive: tablet */
+@media (max-width: 1024px) {
+  .idl-header { height: 90px; padding: 0 32px; }
+  .idl-header.is-scrolled { height: 72px; }
+  .idl-logo-mark { width: 150px; }
+  .idl-header.is-scrolled .idl-logo-mark { width: 120px; }
+}
+
+/* Responsive: mobile — hide centre nav, keep logo + (scrolled only) menu + search */
+@media (max-width: 768px) {
+  .idl-header { height: 80px; padding: 0 20px; grid-template-columns: 1fr auto; gap: 16px; }
+  .idl-header.is-scrolled { height: 66px; }
+  .idl-logo-mark { width: 120px; }
+  .idl-header.is-scrolled .idl-logo-mark { width: 108px; }
+  .idl-topnav { display: none; }
 }
 
 .idl-mega-nav-caret {
