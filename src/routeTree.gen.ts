@@ -9,38 +9,223 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorksRouteImport } from './routes/works'
+import { Route as StudioRouteImport } from './routes/studio'
+import { Route as SectorsRouteImport } from './routes/sectors'
+import { Route as ProcessRouteImport } from './routes/process'
+import { Route as JournalRouteImport } from './routes/journal'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StudioTeamRouteImport } from './routes/studio.team'
+import { Route as StudioHistoryRouteImport } from './routes/studio.history'
+import { Route as SectorsSectorRouteImport } from './routes/sectors.$sector'
+import { Route as ProjectSlugRouteImport } from './routes/project.$slug'
+import { Route as JournalSlugRouteImport } from './routes/journal.$slug'
 
+const WorksRoute = WorksRouteImport.update({
+  id: '/works',
+  path: '/works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudioRoute = StudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SectorsRoute = SectorsRouteImport.update({
+  id: '/sectors',
+  path: '/sectors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProcessRoute = ProcessRouteImport.update({
+  id: '/process',
+  path: '/process',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudioTeamRoute = StudioTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => StudioRoute,
+} as any)
+const StudioHistoryRoute = StudioHistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => StudioRoute,
+} as any)
+const SectorsSectorRoute = SectorsSectorRouteImport.update({
+  id: '/$sector',
+  path: '/$sector',
+  getParentRoute: () => SectorsRoute,
+} as any)
+const ProjectSlugRoute = ProjectSlugRouteImport.update({
+  id: '/project/$slug',
+  path: '/project/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalSlugRoute = JournalSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => JournalRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/journal': typeof JournalRouteWithChildren
+  '/process': typeof ProcessRoute
+  '/sectors': typeof SectorsRouteWithChildren
+  '/studio': typeof StudioRouteWithChildren
+  '/works': typeof WorksRoute
+  '/journal/$slug': typeof JournalSlugRoute
+  '/project/$slug': typeof ProjectSlugRoute
+  '/sectors/$sector': typeof SectorsSectorRoute
+  '/studio/history': typeof StudioHistoryRoute
+  '/studio/team': typeof StudioTeamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/journal': typeof JournalRouteWithChildren
+  '/process': typeof ProcessRoute
+  '/sectors': typeof SectorsRouteWithChildren
+  '/studio': typeof StudioRouteWithChildren
+  '/works': typeof WorksRoute
+  '/journal/$slug': typeof JournalSlugRoute
+  '/project/$slug': typeof ProjectSlugRoute
+  '/sectors/$sector': typeof SectorsSectorRoute
+  '/studio/history': typeof StudioHistoryRoute
+  '/studio/team': typeof StudioTeamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/journal': typeof JournalRouteWithChildren
+  '/process': typeof ProcessRoute
+  '/sectors': typeof SectorsRouteWithChildren
+  '/studio': typeof StudioRouteWithChildren
+  '/works': typeof WorksRoute
+  '/journal/$slug': typeof JournalSlugRoute
+  '/project/$slug': typeof ProjectSlugRoute
+  '/sectors/$sector': typeof SectorsSectorRoute
+  '/studio/history': typeof StudioHistoryRoute
+  '/studio/team': typeof StudioTeamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/journal'
+    | '/process'
+    | '/sectors'
+    | '/studio'
+    | '/works'
+    | '/journal/$slug'
+    | '/project/$slug'
+    | '/sectors/$sector'
+    | '/studio/history'
+    | '/studio/team'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/contact'
+    | '/journal'
+    | '/process'
+    | '/sectors'
+    | '/studio'
+    | '/works'
+    | '/journal/$slug'
+    | '/project/$slug'
+    | '/sectors/$sector'
+    | '/studio/history'
+    | '/studio/team'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/journal'
+    | '/process'
+    | '/sectors'
+    | '/studio'
+    | '/works'
+    | '/journal/$slug'
+    | '/project/$slug'
+    | '/sectors/$sector'
+    | '/studio/history'
+    | '/studio/team'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
+  JournalRoute: typeof JournalRouteWithChildren
+  ProcessRoute: typeof ProcessRoute
+  SectorsRoute: typeof SectorsRouteWithChildren
+  StudioRoute: typeof StudioRouteWithChildren
+  WorksRoute: typeof WorksRoute
+  ProjectSlugRoute: typeof ProjectSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/works': {
+      id: '/works'
+      path: '/works'
+      fullPath: '/works'
+      preLoaderRoute: typeof WorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/studio': {
+      id: '/studio'
+      path: '/studio'
+      fullPath: '/studio'
+      preLoaderRoute: typeof StudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sectors': {
+      id: '/sectors'
+      path: '/sectors'
+      fullPath: '/sectors'
+      preLoaderRoute: typeof SectorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/process': {
+      id: '/process'
+      path: '/process'
+      fullPath: '/process'
+      preLoaderRoute: typeof ProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +233,89 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/studio/team': {
+      id: '/studio/team'
+      path: '/team'
+      fullPath: '/studio/team'
+      preLoaderRoute: typeof StudioTeamRouteImport
+      parentRoute: typeof StudioRoute
+    }
+    '/studio/history': {
+      id: '/studio/history'
+      path: '/history'
+      fullPath: '/studio/history'
+      preLoaderRoute: typeof StudioHistoryRouteImport
+      parentRoute: typeof StudioRoute
+    }
+    '/sectors/$sector': {
+      id: '/sectors/$sector'
+      path: '/$sector'
+      fullPath: '/sectors/$sector'
+      preLoaderRoute: typeof SectorsSectorRouteImport
+      parentRoute: typeof SectorsRoute
+    }
+    '/project/$slug': {
+      id: '/project/$slug'
+      path: '/project/$slug'
+      fullPath: '/project/$slug'
+      preLoaderRoute: typeof ProjectSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal/$slug': {
+      id: '/journal/$slug'
+      path: '/$slug'
+      fullPath: '/journal/$slug'
+      preLoaderRoute: typeof JournalSlugRouteImport
+      parentRoute: typeof JournalRoute
+    }
   }
 }
 
+interface JournalRouteChildren {
+  JournalSlugRoute: typeof JournalSlugRoute
+}
+
+const JournalRouteChildren: JournalRouteChildren = {
+  JournalSlugRoute: JournalSlugRoute,
+}
+
+const JournalRouteWithChildren =
+  JournalRoute._addFileChildren(JournalRouteChildren)
+
+interface SectorsRouteChildren {
+  SectorsSectorRoute: typeof SectorsSectorRoute
+}
+
+const SectorsRouteChildren: SectorsRouteChildren = {
+  SectorsSectorRoute: SectorsSectorRoute,
+}
+
+const SectorsRouteWithChildren =
+  SectorsRoute._addFileChildren(SectorsRouteChildren)
+
+interface StudioRouteChildren {
+  StudioHistoryRoute: typeof StudioHistoryRoute
+  StudioTeamRoute: typeof StudioTeamRoute
+}
+
+const StudioRouteChildren: StudioRouteChildren = {
+  StudioHistoryRoute: StudioHistoryRoute,
+  StudioTeamRoute: StudioTeamRoute,
+}
+
+const StudioRouteWithChildren =
+  StudioRoute._addFileChildren(StudioRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
+  JournalRoute: JournalRouteWithChildren,
+  ProcessRoute: ProcessRoute,
+  SectorsRoute: SectorsRouteWithChildren,
+  StudioRoute: StudioRouteWithChildren,
+  WorksRoute: WorksRoute,
+  ProjectSlugRoute: ProjectSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

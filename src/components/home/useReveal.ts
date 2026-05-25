@@ -75,8 +75,9 @@ export function useReveal() {
 
         wrap.style.setProperty("--mask", p.toFixed(3));
         if (wrap.dataset.revealDirection === "down") {
-          wrap.style.setProperty("--works-drop", `${(-10 + p * 10).toFixed(2)}%`);
-          wrap.style.setProperty("--works-opacity", String(Math.max(0.08, p)));
+          const eased = 1 - Math.pow(1 - p, 3);
+          wrap.style.setProperty("--works-drop", `${(-22 + eased * 22).toFixed(2)}%`);
+          wrap.style.setProperty("--works-opacity", eased.toFixed(3));
         }
 
         if (wrap.classList.contains("parallax-img")) {
