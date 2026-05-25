@@ -412,10 +412,10 @@ body {
 }
 .works-viewall:hover { background-size: 100% 1px; }
 
-.works-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+.works-stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 5vw, 72px);
   padding: 0 clamp(40px, 6vw, 100px);
 }
 .works-card {
@@ -428,11 +428,8 @@ body {
   background: var(--stone);
 }
 .works-card--wide {
-  grid-column: 1 / -1;
+  width: 100%;
   aspect-ratio: 16 / 9;
-}
-.works-card--tall {
-  aspect-ratio: 3 / 4;
 }
 .works-card-label {
   position: absolute;
