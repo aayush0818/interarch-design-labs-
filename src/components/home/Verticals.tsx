@@ -9,37 +9,37 @@ import workplace from "@/assets/sector-workplace.jpg";
 const items = [
   {
     name: "Residential",
-    href: "/sectors/residential",
+    href: "/expertise/residential",
     desc: "Apartments, bungalows and villas conceived for privacy, openness and a seamless connection to the outdoors. Every decision, from plan to finish, supports daily life with calm precision.",
     img: residential,
   },
   {
     name: "Commercial",
-    href: "/sectors/commercial",
+    href: "/expertise/commercial",
     desc: "Workplaces and retail environments that translate brand identity into spatial performance. Designed for productivity, culture and adaptability — now and into future growth.",
     img: commercial,
   },
   {
     name: "Institutional",
-    href: "/sectors/institutional",
+    href: "/expertise/institutional",
     desc: "Buildings that serve public life with clarity and durability. Schools, civic centres and cultural landmarks designed for long-term relevance, efficiency and civic presence.",
     img: institutional,
   },
   {
     name: "Hospitality",
-    href: "/sectors/hospitality",
+    href: "/expertise/hospitality",
     desc: "Bespoke hospitality interiors that elevate lifestyle — choreographed through warmth, sequence, tactility and the careful art of arrival.",
     img: hospitality,
   },
   {
     name: "Industrial",
-    href: "/sectors/industrial",
+    href: "/expertise/industrial",
     desc: "Functional environments designed with the same rigour and material intelligence as our finest interiors. Performance and presence, unified.",
     img: industrial,
   },
   {
     name: "Workplace",
-    href: "/sectors/workplace",
+    href: "/expertise/workplace",
     desc: "Spaces that balance the needs of individuals and teams. Culture made visible through architecture and interior design.",
     img: workplace,
   },

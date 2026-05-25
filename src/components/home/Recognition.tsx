@@ -35,7 +35,7 @@ export function Recognition() {
       <div className="recognition-grid">
         <div className="recognition-left">
           <h2 className="recognition-title">Recognition</h2>
-          <a className="idl-pill" href="/journal" data-hover>
+          <a className="idl-pill" href="/practice/journal" data-hover>
             View all
           </a>
         </div>
