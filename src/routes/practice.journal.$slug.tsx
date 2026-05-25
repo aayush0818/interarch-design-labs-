@@ -8,9 +8,7 @@ import { journalPosts } from "@/data/siteContent";
 
 export const Route = createFileRoute("/practice/journal/$slug")({
   beforeLoad: ({ params }) => {
-    if (!journalPosts.find((p) => p.slug === params.slug)) {
-      throw redirect({ to: "/practice/journal" });
-    }
+    if (!journalPosts.find((p) => p.slug === params.slug)) throw redirect({ to: "/practice/journal" });
   },
   head: ({ params }) => {
     const p = journalPosts.find((x) => x.slug === params.slug);
@@ -26,7 +24,7 @@ export const Route = createFileRoute("/practice/journal/$slug")({
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const bodyFor = (slug: string): Array<{ kind: "p" | "quote"; text: string }> => [
+const body = (slug: string): Array<{ kind: "p" | "quote"; text: string }> => [
   { kind: "p", text: "Every building begins not with a line, but with a question. Why this room, why this window, why this view? The drawing only earns its weight once the answer is honest." },
   { kind: "p", text: "We talk to the people who will use the space long before the brief is fixed. Habits that drawings miss — the way light is preferred at breakfast, the door that everyone leaves open — these are the real plans." },
   { kind: "quote", text: "Clarity is not minimalism. It is the discipline of leaving in only what matters." },
@@ -45,9 +43,9 @@ function EssayPage() {
       <CustomCursor />
       <Header />
       <motion.div className="idl-read-progress" style={{ scaleX: scrollYProgress }} />
-      <article className="idl-longread" ref={ref}>
-        <header className="idl-longread-head">
-          <Link to="/practice/journal" className="idl-longread-back" data-hover>← Journal</Link>
+      <article className="idl-essay" ref={ref}>
+        <Link to="/practice/journal" className="idl-essay-back" data-hover>← Journal</Link>
+        <header>
           <span className="kicker">{post.category} · {post.date}</span>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -56,23 +54,23 @@ function EssayPage() {
           >
             {post.title}
           </motion.h1>
-          <p className="idl-longread-dek">{post.dek}</p>
+          <p className="idl-essay-dek">{post.dek}</p>
         </header>
-        <div className="idl-longread-body">
-          {bodyFor(slug).map((b, i) =>
+        <div className="idl-essay-body">
+          {body(slug).map((b, i) =>
             b.kind === "quote" ? (
               <motion.blockquote
                 key={i}
-                className="idl-longread-pull"
-                initial={{ opacity: 0, scale: 0.96 }}
+                className="idl-essay-pull"
+                initial={{ opacity: 0, scale: 0.98 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: EASE }}
+                transition={{ duration: 0.9, ease: EASE }}
               >
                 {b.text}
               </motion.blockquote>
             ) : i === 0 ? (
-              <p key={i} className="idl-longread-first">{b.text}</p>
+              <p key={i} className="idl-essay-first">{b.text}</p>
             ) : (
               <p key={i}>{b.text}</p>
             )

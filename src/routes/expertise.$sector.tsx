@@ -8,17 +8,16 @@ import { projectsBySector } from "@/data/projects";
 
 export const Route = createFileRoute("/expertise/$sector")({
   beforeLoad: ({ params }) => {
-    if (!sectors.find((s) => s.slug === params.sector)) {
-      throw redirect({ to: "/expertise" });
-    }
+    if (!sectors.find((s) => s.slug === params.sector)) throw redirect({ to: "/expertise" });
   },
   head: ({ params }) => {
     const s = sectors.find((x) => x.slug === params.sector);
     return { meta: [
       { title: `${s?.name ?? "Sector"} — Expertise · IDL` },
-      { name: "description", content: s?.statement ?? "Sector expertise by Interarch Design Labs." },
+      { name: "description", content: s?.statement ?? "" },
       { property: "og:title", content: `${s?.name} — Expertise · IDL` },
       { property: "og:description", content: s?.statement ?? "" },
+      ...(s?.image ? [{ property: "og:image", content: s.image }] : []),
     ] };
   },
   component: SectorPage,
@@ -35,63 +34,50 @@ function SectorPage() {
     <>
       <CustomCursor />
       <Header />
-      <main className="idl-spread">
-        <header className="idl-spread-masthead">
-          <div className="idl-spread-eyebrow">— Expertise · {String(sectors.findIndex((s) => s.slug === sector) + 1).padStart(2, "0")} / 06</div>
-          <motion.h1
-            className="idl-spread-title"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: EASE }}
-          >
-            {data.name}
-          </motion.h1>
-        </header>
-        <section className="idl-spread-body">
-          <div className="idl-spread-dropcap">
-            <span className="dropcap">{data.name.charAt(0)}</span>
-            <p>{data.statement}</p>
-          </div>
-          <div className="idl-spread-col">
-            <p>Every project in this sector begins with the same questions — how is the day spent here, where does the light fall, what material will age with grace? Answers shape proportion, plan and detail.</p>
-            <p>We hold the brief lightly enough to let the place speak, and firmly enough that the building serves its people first.</p>
+      <main>
+        <section className="idl-phero">
+          <div className="idl-phero-img"><img src={data.image} alt={data.name} /></div>
+          <div className="idl-phero-shade" />
+          <div className="idl-phero-cap">
+            <span className="idl-eyebrow"><span className="dot" />Expertise</span>
+            <h1>{data.name}.</h1>
           </div>
         </section>
-        <aside className="idl-spread-pull">
-          <span className="idl-spread-rule" />
-          <blockquote>"Architecture must respond to life. {data.name.toLowerCase()} is no exception."</blockquote>
-          <span className="idl-spread-rule" />
-        </aside>
-        <section className="idl-spread-filmstrip">
-          <header>
-            <span className="idl-spread-eyebrow">— Selected work</span>
-            <h2>{list.length} project{list.length !== 1 ? "s" : ""}</h2>
+        <section className="idl-sec">
+          <p className="idl-prose-lead">{data.statement}</p>
+        </section>
+        <section className="idl-sec--sm idl-sec--bordered">
+          <header style={{ textAlign: "center", marginBottom: "60px" }}>
+            <span className="idl-eyebrow">— Selected work</span>
           </header>
-          <div className="idl-spread-track">
-            {list.length === 0 ? (
-              <p className="idl-spread-empty">Project records coming soon.</p>
-            ) : list.map((p, i) => (
-              <motion.div
-                key={p.slug}
-                className="idl-spread-frame"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: i * 0.08, ease: EASE }}
-              >
-                <Link to="/project/$slug" params={{ slug: p.slug }} data-hover>
-                  <img src={p.cover} alt={p.name} loading="lazy" />
-                  <span>{p.name}</span>
-                  <small>{p.location} · {p.year}</small>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+          {list.length === 0 ? (
+            <p style={{ textAlign: "center", fontFamily: "var(--serif)", fontStyle: "italic", opacity: 0.6 }}>Project records coming soon.</p>
+          ) : (
+            <div className="idl-pgrid" style={{ paddingTop: 0, paddingBottom: 0 }}>
+              {list.map((p, i) => (
+                <motion.div
+                  key={p.slug}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-10%" }}
+                  transition={{ duration: 0.9, delay: (i % 4) * 0.08, ease: EASE }}
+                >
+                  <Link to="/project/$slug" params={{ slug: p.slug }} className="idl-pcard" data-hover>
+                    <div className="idl-pcard-img"><img src={p.cover} alt={p.name} loading="lazy" /></div>
+                    <div className="idl-pcard-cap">
+                      <span>{p.location}</span>
+                      <strong>{p.name}</strong>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </section>
-        <footer className="idl-spread-cta">
-          <h2>Begin a {data.name.toLowerCase()} project.</h2>
-          <Link to="/contact" className="text-arrow" data-hover>Contact the studio →</Link>
-        </footer>
+        <section className="idl-sec idl-sec--bordered" style={{ textAlign: "center" }}>
+          <p className="idl-prose-lead" style={{ marginBottom: 28 }}>Begin a {data.name.toLowerCase()} project.</p>
+          <Link to="/contact" className="idl-erow-link" data-hover>Contact the studio →</Link>
+        </section>
       </main>
       <Footer />
     </>
