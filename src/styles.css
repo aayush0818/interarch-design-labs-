@@ -872,7 +872,11 @@ a:hover .img-reveal-wrap.is-visible img {
   .idl-cols-left, .idl-cols-right { width: 100%; }
   .idl-cols-right { grid-template-columns: 1fr; }
   .idl-footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .works-grid { grid-template-columns: 1fr; gap: 16px; padding: 0 24px; }
+  .works-header { padding: 0 24px; }
+  .works-card--tall { aspect-ratio: 4 / 5; }
 }
+
 
 /* ============================================================
    SHADCN BASE TOKENS (kept for components in src/components/ui)
