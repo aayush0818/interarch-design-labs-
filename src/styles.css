@@ -290,12 +290,14 @@ body {
 
 .v-image-panel {
   position: sticky;
-  top: 0;
-  height: 100vh;
+  top: 15vh;
+  height: 70vh;
   width: 40%;
   overflow: hidden;
   align-self: flex-start;
+  margin-right: clamp(24px, 4vw, 64px);
 }
+
 .v-image-panel img {
   position: absolute;
   inset: 0;
