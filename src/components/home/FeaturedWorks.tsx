@@ -6,14 +6,14 @@ import work5 from "@/assets/work-5.jpg";
 import work6 from "@/assets/work-6.jpg";
 import { projects } from "@/data/projects";
 
-// Every selected work is presented full-width, stacked. No grid pairs.
-const grid = [
-  { img: work1, slug: projects[0]?.slug },
-  { img: work2, slug: projects[1]?.slug },
-  { img: work3, slug: projects[2]?.slug },
-  { img: work4, slug: projects[3]?.slug },
-  { img: work5, slug: projects[4]?.slug },
-  { img: work6, slug: projects[5]?.slug },
+// work-2 and work-6 are wide; the other four sit as two pairs.
+const grid: Array<{ img: string; slug?: string; span: "wide" | "tall" }> = [
+  { img: work2, slug: projects[0]?.slug, span: "wide" },
+  { img: work1, slug: projects[1]?.slug, span: "tall" },
+  { img: work3, slug: projects[2]?.slug, span: "tall" },
+  { img: work4, slug: projects[3]?.slug, span: "tall" },
+  { img: work5, slug: projects[4]?.slug, span: "tall" },
+  { img: work6, slug: projects[5]?.slug, span: "wide" },
 ];
 
 export function FeaturedWorks() {
@@ -26,12 +26,12 @@ export function FeaturedWorks() {
         </a>
       </div>
 
-      <div className="works-stack">
+      <div className="works-grid">
         {grid.map((cell, i) => (
           <a
             key={i}
             href={cell.slug ? `/project/${cell.slug}` : "/works"}
-            className="works-card works-card--wide"
+            className={`works-card works-card--${cell.span}`}
             data-hover
           >
             <div className="img-reveal-wrap works-drop-wrap">
@@ -46,4 +46,5 @@ export function FeaturedWorks() {
     </section>
   );
 }
+
 
