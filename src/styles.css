@@ -874,31 +874,16 @@ body {
   transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
-/* The cream curtain. JS drives `--mask` from 100 (fully covered)
-   → 0 (fully revealed) tied directly to scroll position. */
-.img-reveal-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--bg);
-  transform: translate3d(0, calc(-100% * var(--mask, 0)), 0);
-  will-change: transform;
-  pointer-events: none;
-  z-index: 2;
-}
-.img-reveal-wrap[data-reveal-direction="down"]::after {
-  transform: translate3d(0, calc(-100% + 100% * var(--mask, 0)), 0);
-}
-.img-reveal-wrap[data-reveal-direction="bottom"]::after {
-  transform: translate3d(0, calc(100% * var(--mask, 0)), 0);
-}
-.works-drop-wrap .img-parallax { inset: -24% 0 0; height: 124%; }
+/* Curtain mask disabled globally — images are simply visible. */
+.img-reveal-wrap::after { display: none; }
+
+/* Works section (home) — reverse scroll-tied motion:
+   as the page scrolls down, the image translates downward inside its frame. */
 .works-drop-wrap .img-parallax {
-  opacity: var(--works-opacity, 0);
-  transform: translate3d(0, var(--works-drop, -22%), 0);
-  transition: opacity 80ms linear;
+  inset: -14% 0 -14% 0;
+  height: 128%;
+  transform: translate3d(0, var(--works-drop, -12%), 0);
 }
-.works-drop-wrap::after { display: none; }
 .static-image-wrap img {
   display: block;
   width: 100%;
