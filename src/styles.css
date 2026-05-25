@@ -892,11 +892,11 @@ body {
 .img-reveal-wrap[data-reveal-direction="bottom"]::after {
   transform: translate3d(0, calc(100% * var(--mask, 0)), 0);
 }
-.works-drop-wrap .img-parallax { inset: 0; height: 100%; }
+.works-drop-wrap .img-parallax { inset: -24% 0 0; height: 124%; }
 .works-drop-wrap .img-parallax {
-  opacity: var(--works-opacity, 0.08);
-  transform: translate3d(0, var(--works-drop, -10%), 0);
-  transition: opacity 120ms linear;
+  opacity: var(--works-opacity, 0);
+  transform: translate3d(0, var(--works-drop, -22%), 0);
+  transition: opacity 80ms linear;
 }
 .works-drop-wrap::after { display: none; }
 .static-image-wrap img {
