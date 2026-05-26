@@ -1,23 +1,20 @@
 import { useState } from "react";
-import story from "@/assets/nav-story.jpg";
-import work from "@/assets/nav-work.jpg";
-import team from "@/assets/nav-team.jpg";
-import contact from "@/assets/nav-contact.jpg";
+import story from "@/assets/idl-home-hero-mansion.png";
+import work from "@/assets/idl-institutional-facade.png";
+import team from "@/assets/idl-workplace-studio.png";
+import awards from "@/assets/idl-retail-boutique.png";
 
 const links = [
-  { label: "Our Story", href: "/studio", img: story },
-  { label: "Our Work", href: "/projects", img: work },
-  { label: "Our Team", href: "/studio/team", img: team },
-  { label: "Get in Touch", href: "/contact", img: contact },
+  { label: "Studio", href: "/studio/about", img: story },
+  { label: "Projects", href: "/projects", img: work },
+  { label: "News", href: "/news", img: awards },
+  { label: "Contact", href: "/contact", img: team },
 ];
 
 export function HoverImageNav() {
   const [active, setActive] = useState(0);
   return (
-    <section
-      className="hover-nav-section"
-      onMouseLeave={() => setActive(0)}
-    >
+    <section className="hover-nav-section" onMouseLeave={() => setActive(0)}>
       {links.map((l, i) => (
         <img
           key={l.label}
