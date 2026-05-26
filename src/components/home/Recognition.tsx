@@ -7,25 +7,22 @@ const items = [
     img: award1,
     category: "Civic Recognition",
     date: "2010",
-    headline:
-      "Chief Minister of Maharashtra Award — Babasaheb Ambedkar Bhavan",
-    href: "/practice/journal",
+    headline: "Chief Minister of Maharashtra Award — Babasaheb Ambedkar Bhavan",
+    href: "/news/awards",
   },
   {
     img: award2,
     category: "Institutional Trust",
     date: "25 Years",
-    headline:
-      "25 years of continuous service to DRDO, Ministry of Defence",
-    href: "/practice/journal",
+    headline: "25 years of continuous service to DRDO, Ministry of Defence",
+    href: "/news/awards",
   },
   {
     img: award3,
     category: "Academy of Architecture",
     date: "2015",
-    headline:
-      "Rachana Sansad Diamond Jubilee felicitation of Ar. Dipak Thaker",
-    href: "/practice/journal",
+    headline: "Rachana Sansad Diamond Jubilee felicitation of Ar. Dipak Thaker",
+    href: "/news/awards",
   },
 ];
 
@@ -34,9 +31,9 @@ export function Recognition() {
     <section className="recognition-section">
       <div className="recognition-grid">
         <div className="recognition-left">
-          <h2 className="recognition-title">Recognition</h2>
-          <a className="idl-pill" href="/practice/journal" data-hover>
-            View all
+          <h2 className="recognition-title">Awards</h2>
+          <a className="idl-pill" href="/news/awards" data-hover>
+            View archive
           </a>
         </div>
         <div className="recognition-cards">

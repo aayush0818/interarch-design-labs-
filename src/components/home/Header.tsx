@@ -2,11 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from "@/assets/idl-logo.png";
-import { sectors } from "@/data/siteContent";
-import navWork from "@/assets/nav-work.jpg";
-import navStory from "@/assets/nav-story.jpg";
-import navTeam from "@/assets/nav-team.jpg";
-import navContact from "@/assets/nav-contact.jpg";
+import navWork from "@/assets/idl-institutional-facade.png";
+import navStory from "@/assets/idl-home-hero-mansion.png";
+import navTeam from "@/assets/idl-workplace-studio.png";
+import navNews from "@/assets/idl-retail-boutique.png";
+import navContact from "@/assets/idl-commercial-salon.png";
 
 type SubItem = { label: string; to: string; params?: Record<string, string> };
 type NavItem = {
@@ -22,7 +22,7 @@ const NAV: NavItem[] = [
     label: "Projects",
     to: "/projects",
     image: navWork,
-    blurb: "A growing archive — split between architecture and interiors.",
+    blurb: "Architecture and interiors presented as a calm, image-led archive.",
     children: [
       { label: "Architecture", to: "/projects/$category", params: { category: "architecture" } },
       { label: "Interiors", to: "/projects/$category", params: { category: "interiors" } },
@@ -31,39 +31,42 @@ const NAV: NavItem[] = [
   {
     label: "Expertise",
     to: "/expertise",
-    image: navStory,
-    blurb: "Six sectors, one architectural language — measured, material, daylit.",
-    children: sectors.map((s) => ({
-      label: s.name,
-      to: "/expertise/$sector",
-      params: { sector: s.slug },
-    })),
+    image: navContact,
+    blurb: "Residential, commercial, institutional, hospitality, industrial, and workplace design.",
+    children: [
+      { label: "Residential", to: "/expertise/$sector", params: { sector: "residential" } },
+      { label: "Commercial", to: "/expertise/$sector", params: { sector: "commercial" } },
+      { label: "Institutional", to: "/expertise/$sector", params: { sector: "institutional" } },
+      { label: "Hospitality", to: "/expertise/$sector", params: { sector: "hospitality" } },
+      { label: "Industrial", to: "/expertise/$sector", params: { sector: "industrial" } },
+      { label: "Workplace", to: "/expertise/$sector", params: { sector: "workplace" } },
+    ],
   },
   {
     label: "Studio",
     to: "/studio/about",
-    image: navTeam,
-    blurb: "Who we are, and the people who shape every project.",
+    image: navStory,
+    blurb: "Legacy, team, and history shaped into a quieter documentary-like experience.",
     children: [
       { label: "About", to: "/studio/about" },
       { label: "Team", to: "/studio/team" },
+      { label: "History", to: "/studio/history" },
     ],
   },
   {
-    label: "Practice",
-    to: "/practice",
-    image: navStory,
-    blurb: "How the studio thinks, draws, and brings buildings into the world.",
+    label: "News",
+    to: "/news",
+    image: navNews,
+    blurb: "A refined journal and awards archive with publication-like pacing.",
     children: [
-      { label: "History", to: "/practice/history" },
-      { label: "Process", to: "/practice/process" },
-      { label: "Journal", to: "/practice/journal" },
+      { label: "Journal", to: "/news/journal" },
+      { label: "Awards", to: "/news/awards" },
     ],
   },
   {
     label: "Contact",
     to: "/contact",
-    image: navContact,
+    image: navTeam,
     blurb: "Wherever you are, we design for you.",
   },
 ];
@@ -128,42 +131,19 @@ export function Header() {
         <nav className="idl-topnav" aria-label="Primary" onMouseLeave={() => setHoverIdx(null)}>
           {NAV.map((item, i) =>
             !item.children ? (
-              <Link
-                key={item.label}
-                to={item.to!}
-                className="idl-topnav-link"
-                data-hover
-                onMouseEnter={() => setHoverIdx(null)}
-              >
+              <Link key={item.label} to={item.to!} className="idl-topnav-link" data-hover onMouseEnter={() => setHoverIdx(null)}>
                 {item.label}
               </Link>
             ) : (
-              <div
-                key={item.label}
-                className="idl-topnav-item"
-                onMouseEnter={() => setHoverIdx(i)}
-              >
+              <div key={item.label} className="idl-topnav-item" onMouseEnter={() => setHoverIdx(i)}>
                 <Link to={item.to!} className="idl-topnav-link" data-hover>
                   {item.label}
                 </Link>
                 <AnimatePresence>
-                  {hoverIdx === i && item.children ? (
-                    <motion.div
-                      className="idl-topnav-drop"
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 4 }}
-                      transition={{ duration: 0.22, ease: EASE }}
-                    >
+                  {hoverIdx === i ? (
+                    <motion.div className="idl-topnav-drop" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }} transition={{ duration: 0.22, ease: EASE }}>
                       {item.children.map((c) => (
-                        <Link
-                          key={c.label}
-                          to={c.to}
-                          params={c.params as never}
-                          className="idl-topnav-drop-link"
-                          data-hover
-                          onClick={() => setHoverIdx(null)}
-                        >
+                        <Link key={c.label} to={c.to} params={c.params as never} className="idl-topnav-drop-link" data-hover onClick={() => setHoverIdx(null)}>
                           {c.label}
                         </Link>
                       ))}
@@ -176,17 +156,7 @@ export function Header() {
         </nav>
 
         <div className="idl-header-right">
-          <button
-            className="idl-menu-btn"
-            data-hover
-            type="button"
-            onClick={() => {
-              if (open) closeAll();
-              else setOpen(true);
-            }}
-            aria-expanded={open}
-            aria-controls="idl-mega-menu"
-          >
+          <button className="idl-menu-btn" data-hover type="button" onClick={() => (open ? closeAll() : setOpen(true))} aria-expanded={open} aria-controls="idl-mega-menu">
             <span className="idl-menu-btn-label">{open ? "Close" : "Menu"}</span>
             <span className="idl-menu-btn-icon" aria-hidden>
               <span /><span />
@@ -200,30 +170,12 @@ export function Header() {
 
       <AnimatePresence>
         {open ? (
-          <motion.div
-            id="idl-mega-menu"
-            className="idl-mega"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.45, ease: EASE }}
-            role="dialog"
-            aria-modal="true"
-          >
+          <motion.div id="idl-mega-menu" className="idl-mega" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.45, ease: EASE }} role="dialog" aria-modal="true">
             <div className="idl-mega-left">
               <AnimatePresence mode="wait">
                 {active ? (
-                  <motion.div
-                    key={active.label}
-                    className="idl-mega-left-inner"
-                    initial={{ opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.5, ease: EASE }}
-                  >
-                    <div className="idl-mega-eyebrow">
-                      — {String((activeIdx ?? 0) + 1).padStart(2, "0")} / {String(NAV.length).padStart(2, "0")}
-                    </div>
+                  <motion.div key={active.label} className="idl-mega-left-inner" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.5, ease: EASE }}>
+                    <div className="idl-mega-eyebrow">— {String((activeIdx ?? 0) + 1).padStart(2, "0")} / {String(NAV.length).padStart(2, "0")}</div>
                     <h2 className="idl-mega-title">{active.label}</h2>
                     <p className="idl-mega-blurb">{active.blurb}</p>
                     <div className="idl-mega-image">
@@ -231,19 +183,10 @@ export function Header() {
                     </div>
                   </motion.div>
                 ) : (
-                  <motion.div
-                    key="idle"
-                    className="idl-mega-left-inner"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4, ease: EASE }}
-                  >
+                  <motion.div key="idle" className="idl-mega-left-inner" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4, ease: EASE }}>
                     <div className="idl-mega-eyebrow">— Index</div>
                     <h2 className="idl-mega-title">Interarch<br />Design Labs</h2>
-                    <p className="idl-mega-blurb">
-                      Architecture, interiors and research — measured, material, daylit. Choose a section to begin.
-                    </p>
+                    <p className="idl-mega-blurb">Architecture, interiors and spatial strategy presented through image, calm pacing, and restraint.</p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -256,61 +199,25 @@ export function Header() {
                   const isActive = i === activeIdx;
                   const hasKids = !!item.children?.length;
                   return (
-                    <motion.li
-                      key={item.label}
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, ease: EASE, delay: 0.12 + i * 0.06 }}
-                      className={`idl-mega-nav-row${isActive ? " is-active" : ""}`}
-                    >
+                    <motion.li key={item.label} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: EASE, delay: 0.12 + i * 0.06 }} className={`idl-mega-nav-row${isActive ? " is-active" : ""}`}>
                       {hasKids ? (
-                        <button
-                          type="button"
-                          className="idl-mega-nav-link"
-                          data-hover
-                          aria-expanded={isActive}
-                          onClick={() => setActiveIdx(isActive ? null : i)}
-                          onMouseEnter={() => setActiveIdx(i)}
-                        >
+                        <button type="button" className="idl-mega-nav-link" data-hover aria-expanded={isActive} onClick={() => setActiveIdx(isActive ? null : i)} onMouseEnter={() => setActiveIdx(i)}>
                           <span className="idl-mega-nav-index">{String(i + 1).padStart(2, "0")}</span>
                           <span className="idl-mega-nav-label">{item.label}</span>
                           <span className="idl-mega-nav-caret" aria-hidden>{isActive ? "—" : "+"}</span>
                         </button>
                       ) : (
-                        <Link
-                          to={item.to!}
-                          className="idl-mega-nav-link"
-                          data-hover
-                          onClick={closeAll}
-                          onMouseEnter={() => setActiveIdx(i)}
-                        >
+                        <Link to={item.to!} className="idl-mega-nav-link" data-hover onClick={closeAll} onMouseEnter={() => setActiveIdx(i)}>
                           <span className="idl-mega-nav-index">{String(i + 1).padStart(2, "0")}</span>
                           <span className="idl-mega-nav-label">{item.label}</span>
                         </Link>
                       )}
                       <AnimatePresence initial={false}>
                         {isActive && hasKids ? (
-                          <motion.ul
-                            className="idl-mega-sub"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.4, ease: EASE }}
-                          >
+                          <motion.ul className="idl-mega-sub" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.4, ease: EASE }}>
                             {item.children!.map((c, ci) => (
-                              <motion.li
-                                key={c.label}
-                                initial={{ opacity: 0, y: 8 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.35, ease: EASE, delay: 0.06 + ci * 0.06 }}
-                              >
-                                <Link
-                                  to={c.to}
-                                  params={c.params as never}
-                                  className="idl-mega-sub-link"
-                                  data-hover
-                                  onClick={closeAll}
-                                >
+                              <motion.li key={c.label} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, ease: EASE, delay: 0.06 + ci * 0.06 }}>
+                                <Link to={c.to} params={c.params as never} className="idl-mega-sub-link" data-hover onClick={closeAll}>
                                   {c.label}
                                 </Link>
                               </motion.li>

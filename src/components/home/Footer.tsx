@@ -15,7 +15,7 @@ export function Footer() {
             <a href="/projects" data-hover>Projects</a>
             <a href="/expertise" data-hover>Expertise</a>
             <a href="/studio/about" data-hover>Studio</a>
-            <a href="/practice" data-hover>Practice</a>
+            <a href="/news" data-hover>News</a>
             <a href="/contact" data-hover>Contact</a>
           </nav>
         </div>
