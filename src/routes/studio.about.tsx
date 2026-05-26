@@ -1,101 +1,224 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { CinematicHero } from "@/components/motion/CinematicHero";
+import { MaskText } from "@/components/motion/MaskText";
+import { Reveal } from "@/components/motion/Reveal";
+import { Marquee } from "@/components/motion/Marquee";
 import studioHero from "@/assets/studio-hero.jpg";
 import studioCulture from "@/assets/studio-culture.jpg";
 import teamHero from "@/assets/team-hero.jpg";
-import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
-import work3 from "@/assets/work-3.jpg";
+import work4 from "@/assets/work-4.jpg";
+import {
+  aboutCopy,
+  mission,
+  vision,
+  values,
+  idlStudioNarrative,
+  rangeOfExperience,
+  recognitionList,
+  cultureBlocks,
+} from "@/data/siteContent";
 
 export const Route = createFileRoute("/studio/about")({
-  head: () => ({ meta: [
-    { title: "About — Studio · IDL" },
-    { name: "description", content: "35+ years of craft, clarity and care. A contemporary legacy in architecture and interiors." },
-    { property: "og:title", content: "About — Studio · IDL" },
-    { property: "og:description", content: "The union of Interarch and Kala Design." },
-    { property: "og:image", content: studioHero },
-  ] }),
+  head: () => ({
+    meta: [
+      { title: "About — Studio · Interarch Design Labs" },
+      { name: "description", content: aboutCopy.intro.slice(0, 160) },
+      { property: "og:title", content: "About — Studio · IDL" },
+      { property: "og:description", content: aboutCopy.intro.slice(0, 160) },
+      { property: "og:image", content: studioHero },
+    ],
+  }),
   component: AboutPage,
 });
-
-const EASE = [0.22, 1, 0.36, 1] as const;
-
-const philosophy: Array<{ kicker: string; title: string; body: string; img: string; reverse?: boolean }> = [
-  { kicker: "— 01 Clarity", title: "Clarity, before form.", body: "Removing what doesn't matter so the essential can define the space. Every project begins with intent.", img: work1 },
-  { kicker: "— 02 Intent", title: "Design must answer how life is lived.", body: "Buildings and interiors are purposeful, considered and quietly luxurious — designed around the people who use them.", img: work2, reverse: true },
-  { kicker: "— 03 People & Place", title: "Context is the first material.", body: "Climate, culture and craft inform every move. We listen before we draw.", img: studioCulture },
-  { kicker: "— 04 Sustainability", title: "Long-life, low-care.", body: "Passive design, natural light and ventilation, conscious materials and energy-efficient systems — an IGBC Gold project among our certifications.", img: work3, reverse: true },
-  { kicker: "— 05 Craft & Collaboration", title: "Not a hierarchy. A dialogue.", body: "Architects, designers, engineers and craftspeople — one studio, many voices, one register.", img: teamHero },
-];
-
-const recognition = [
-  { award: "A+D Spectrum Architecture Award", inst: "A+D Magazine", year: "2001" },
-  { award: "AREA Acknowledgement", inst: "Association of Real Estate Agents", year: "2008" },
-  { award: "DRDO Silver Jubilee Honour", inst: "Defence Research & Development Organisation", year: "2009" },
-  { award: "AICA Asia Fest Commendation", inst: "AICA Asia", year: "2014" },
-  { award: "Rachana Sansad Diamond Jubilee Honour", inst: "Academy of Architecture, Mumbai", year: "2015" },
-  { award: "IGBC Gold Certification", inst: "Indian Green Building Council", year: "—" },
-];
 
 function AboutPage() {
   return (
     <>
-      <section className="idl-sec--sm" style={{ textAlign: "center", paddingTop: 80 }}>
-        <span className="idl-eyebrow">— Studio · About</span>
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: EASE }}
-          style={{ margin: "20px auto 0", maxWidth: 1000, fontFamily: "var(--serif)", fontWeight: 300, fontSize: "clamp(40px, 5.4vw, 80px)", lineHeight: 1.05, letterSpacing: "-0.01em" }}
-        >
-          A contemporary legacy in architecture and interiors.
-        </motion.h1>
-      </section>
-      <section className="idl-split">
-        <div className="idl-split-img"><img src={studioHero} alt="Studio" /></div>
-        <div className="idl-split-body">
-          <span className="idl-eyebrow">— The studio</span>
-          <h2>Where rigorous intent meets modern refinement.</h2>
-          <p>Interarch Design Labs is the union of two legacy firms — Interarch, founded in 1989 by Ar. Dipak Thaker, and Kala Design, led by Ar. Hussain Rangwala and Ar. Rohit Gojia. Together we bring forward a shared philosophy: design should not chase trends, it should serve intent.</p>
-          <p>The practice spans architecture, interiors, planning and engineering. From a private residence to a civic campus, the foundation is singular — a deep respect for context, craft and collaboration.</p>
+      <CinematicHero
+        image={studioHero}
+        alt="Interarch Design Labs studio"
+        eyebrow={aboutCopy.eyebrow}
+        title={aboutCopy.headline}
+        meta="Mumbai · Ahmedabad — Est. 1989"
+      />
+
+      {/* Manifesto */}
+      <section className="idlx-section">
+        <div className="idlx-manifesto">
+          <Reveal>
+            <MaskText as="h2" className="idlx-h2">
+              {`Where rigorous intent\nmeets modern refinement.`}
+            </MaskText>
+          </Reveal>
+          <Reveal delay={0.15} className="idlx-manifesto-body">
+            <p className="idlx-lead">{aboutCopy.intro}</p>
+            <p className="idlx-body idlx-body--lg">{aboutCopy.body}</p>
+            <p className="idlx-body idlx-body--lg">{aboutCopy.legacy}</p>
+          </Reveal>
         </div>
       </section>
-      {philosophy.map((b) => (
-        <motion.section
-          key={b.title}
-          className={`idl-split ${b.reverse ? "idl-split--reverse" : ""}`}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-15%" }}
-          transition={{ duration: 0.9, ease: EASE }}
-        >
-          <div className="idl-split-img"><img src={b.img} alt={b.title} loading="lazy" /></div>
-          <div className="idl-split-body">
-            <span className="idl-eyebrow">{b.kicker}</span>
-            <h2>{b.title}</h2>
-            <p>{b.body}</p>
-          </div>
-        </motion.section>
-      ))}
-      <section className="idl-recog idl-sec--bordered">
-        <header className="idl-recog-head">
-          <span className="idl-eyebrow">— Recognition</span>
-          <h2>Quiet acknowledgement, over three decades.</h2>
-        </header>
-        <div className="idl-recog-list">
-          {recognition.map((r) => (
-            <div className="idl-recog-item" key={r.award}>
-              <strong>{r.award}</strong>
-              <em>{r.inst}</em>
-              <time>{r.year}</time>
+
+      {/* Pullquote */}
+      <section className="idlx-pullquote idlx-section--bordered">
+        <Reveal>
+          <p>{aboutCopy.signoff}</p>
+        </Reveal>
+      </section>
+
+      {/* Mission / Vision / Values */}
+      <section className="idlx-section idlx-section--bordered">
+        <Reveal>
+          <span className="idlx-eyebrow"><span className="idlx-eyebrow-dot" /> The conviction</span>
+        </Reveal>
+        <div style={{ height: 60 }} />
+        <div className="idlx-mvv">
+          <Reveal>
+            <div className="idlx-mvv-block">
+              <span className="idlx-eyebrow">{mission.eyebrow}</span>
+              <p className="idlx-lead" style={{ fontSize: "clamp(20px,1.8vw,26px)" }}>{mission.text}</p>
             </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="idlx-mvv-block">
+              <span className="idlx-eyebrow">{vision.eyebrow}</span>
+              <p className="idlx-lead" style={{ fontSize: "clamp(20px,1.8vw,26px)" }}>{vision.text}</p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <div className="idlx-mvv-block">
+              <span className="idlx-eyebrow">— Values</span>
+              <p className="idlx-body">Four principles that hold every project — small or civic — to the same line of intent.</p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Values list */}
+      <section className="idlx-section--sm" style={{ padding: "0 clamp(28px,6vw,120px) clamp(80px,12vw,160px)" }}>
+        <div className="idlx-values">
+          {values.map((v, i) => (
+            <Reveal key={v.title} delay={i * 0.06}>
+              <div className="idlx-value-row">
+                <span className="idlx-value-n">{v.n}</span>
+                <span className="idlx-value-title">{v.title}</span>
+                <span className="idlx-value-body">{v.body}</span>
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
-      <section className="idl-strip idl-sec--bordered">
-        <div className="idl-strip-cell"><img src={studioCulture} alt="Studio material table" loading="lazy" /></div>
-        <div className="idl-strip-cell"><img src={teamHero} alt="Studio team" loading="lazy" /></div>
-        <div className="idl-strip-cell"><img src={studioHero} alt="Studio space" loading="lazy" /></div>
+
+      {/* Split: IDL Studio narrative */}
+      <div className="idlx-split">
+        <div className="idlx-split-img">
+          <Reveal>
+            <img src={studioCulture} alt="Studio life — drawings, samples and the long table" loading="lazy" />
+          </Reveal>
+        </div>
+        <div className="idlx-split-body">
+          <Reveal>
+            <span className="idlx-eyebrow">{idlStudioNarrative.eyebrow}</span>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <MaskText as="h2" className="idlx-h2">{idlStudioNarrative.headline}</MaskText>
+          </Reveal>
+          {idlStudioNarrative.body.map((p, i) => (
+            <Reveal key={i} delay={0.2 + i * 0.08}>
+              <p className="idlx-body idlx-body--lg">{p}</p>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+
+      {/* Range of experience */}
+      <section className="idlx-section idlx-section--bordered">
+        <div className="idlx-manifesto">
+          <Reveal>
+            <span className="idlx-eyebrow">{rangeOfExperience.eyebrow}</span>
+            <MaskText as="h2" className="idlx-h2" delay={0.1}>{`A studio with reach\nand a steady register.`}</MaskText>
+          </Reveal>
+          <Reveal delay={0.15} className="idlx-manifesto-body">
+            <p className="idlx-lead">{rangeOfExperience.intro}</p>
+            <div className="idlx-values" style={{ marginTop: 24 }}>
+              {rangeOfExperience.partners.map((p) => (
+                <div key={p.note} className="idlx-value-row">
+                  <span className="idlx-value-n">{p.y}</span>
+                  <span className="idlx-value-body" style={{ gridColumn: "2 / -1" }}>{p.note}</span>
+                </div>
+              ))}
+            </div>
+            <ul className="idlx-bullets" style={{ marginTop: 24 }}>
+              {rangeOfExperience.fields.map((f) => (
+                <li key={f}>{f}</li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Recognition */}
+      <section className="idlx-section idlx-section--bordered">
+        <Reveal>
+          <span className="idlx-eyebrow"><span className="idlx-eyebrow-dot" /> Industry Recognition</span>
+          <h2 className="idlx-h2" style={{ marginTop: 24, maxWidth: 760 }}>Quiet acknowledgement, over three decades.</h2>
+        </Reveal>
+        <div style={{ height: 60 }} />
+        <div className="idlx-awards">
+          {recognitionList.map((r, i) => (
+            <Reveal key={r.award} delay={i * 0.04}>
+              <div className="idlx-award-row">
+                <span className="idlx-award-year">{r.year}</span>
+                <span className="idlx-award-name">{r.award}</span>
+                <span className="idlx-award-note">{r.note}</span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Marquee — image strip */}
+      <Marquee speed={50}>
+        <span>— Mumbai · Ahmedabad · India · Middle East · Africa</span>
+        <span>— Architecture · Interiors · Planning · Engineering</span>
+        <span>— Residential · Hospitality · Institutional · Workplace</span>
+      </Marquee>
+
+      {/* Culture / Internships / Mentorship / Working at IDL */}
+      <section className="idlx-section idlx-section--bordered">
+        <Reveal>
+          <span className="idlx-eyebrow"><span className="idlx-eyebrow-dot" /> Culture</span>
+          <h2 className="idlx-h2" style={{ marginTop: 24, maxWidth: 760 }}>How the studio works, every day.</h2>
+        </Reveal>
+        <div style={{ height: 60 }} />
+        <div className="idlx-culture">
+          {cultureBlocks.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.08}>
+              <div className="idlx-culture-card">
+                <span className="idlx-eyebrow">{c.eyebrow}</span>
+                <h3 className="idlx-h3">{c.title}</h3>
+                <p className="idlx-body idlx-body--lg">{c.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Strip */}
+      <div className="idlx-split">
+        <div className="idlx-split-img"><img src={teamHero} alt="The leadership" /></div>
+        <div className="idlx-split-img"><img src={work2} alt="Architectural detail" /></div>
+      </div>
+
+      {/* CTA */}
+      <section className="idlx-cta idlx-section--bordered">
+        <Reveal>
+          <p className="idlx-lead" style={{ maxWidth: 720 }}>Meet the four partners — and the studio behind every project.</p>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <Link to="/studio/team" className="idlx-cta-link" data-hover>The leadership →</Link>
+        </Reveal>
+        <img src={work4} alt="" loading="lazy" style={{ display: "none" }} />
       </section>
     </>
   );

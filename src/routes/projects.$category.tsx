@@ -1,26 +1,28 @@
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
-import { motion } from "framer-motion";
 import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
 import { CustomCursor } from "@/components/home/CustomCursor";
+import { CinematicHero } from "@/components/motion/CinematicHero";
+import { Reveal } from "@/components/motion/Reveal";
 import { projectsByCategory } from "@/data/projects";
 import work1 from "@/assets/work-1.jpg";
 import work3 from "@/assets/work-3.jpg";
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-const EASE = [0.22, 1, 0.36, 1] as const;
 
 export const Route = createFileRoute("/projects/$category")({
   beforeLoad: ({ params }) => {
     const c = params.category.toLowerCase();
     if (c !== "architecture" && c !== "interiors") throw redirect({ to: "/projects" });
   },
-  head: ({ params }) => ({ meta: [
-    { title: `${cap(params.category)} — Projects · IDL` },
-    { name: "description", content: `${cap(params.category)} projects by Interarch Design Labs.` },
-    { property: "og:title", content: `${cap(params.category)} — Projects · IDL` },
-    { property: "og:description", content: `Selected ${params.category.toLowerCase()} work.` },
-  ] }),
+  head: ({ params }) => ({
+    meta: [
+      { title: `${cap(params.category)} — Projects · IDL` },
+      { name: "description", content: `Selected ${params.category.toLowerCase()} projects by Interarch Design Labs.` },
+      { property: "og:title", content: `${cap(params.category)} — Projects · IDL` },
+      { property: "og:description", content: `Selected ${params.category.toLowerCase()} work.` },
+    ],
+  }),
   component: CategoryPage,
 });
 
@@ -29,44 +31,93 @@ function CategoryPage() {
   const cat = category.toLowerCase() as "architecture" | "interiors";
   const list = projectsByCategory(cat);
   const hero = cat === "architecture" ? work1 : work3;
+  const other = cat === "architecture" ? "interiors" : "architecture";
+
+  // Editorial asymmetric: pattern of wide/narrow rows
+  const layout = (i: number): "wide" | "narrow" | "tall" => {
+    const m = i % 5;
+    if (m === 0) return "wide";
+    if (m === 3) return "tall";
+    return "narrow";
+  };
 
   return (
     <>
       <CustomCursor />
       <Header />
-      <main>
-        <section className="idl-phero">
-          <div className="idl-phero-img"><img src={hero} alt={cap(cat)} /></div>
-          <div className="idl-phero-shade" />
-          <div className="idl-phero-cap">
-            <span className="idl-eyebrow"><span className="dot" />Projects · {cap(cat)}</span>
-            <h1>{cap(cat)}.</h1>
-          </div>
-        </section>
-        <nav className="idl-catnav" aria-label="Project categories">
-          <Link to="/projects">All</Link>
-          <Link to="/projects/$category" params={{ category: "architecture" }} className={cat === "architecture" ? "is-on" : ""}>Architecture</Link>
-          <Link to="/projects/$category" params={{ category: "interiors" }} className={cat === "interiors" ? "is-on" : ""}>Interiors</Link>
-        </nav>
-        <div className="idl-pgrid">
-          {list.map((p, i) => (
-            <motion.div
-              key={p.slug}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.9, delay: (i % 4) * 0.08, ease: EASE }}
+      <main className="idlx-page">
+        <CinematicHero
+          image={hero}
+          alt={cap(cat)}
+          eyebrow={`— Projects · ${cap(cat)}`}
+          title={cap(cat) + "."}
+          meta={`${list.length} works`}
+          height="tall"
+        />
+
+        <div className="idlx-archive">
+          <aside className="idlx-archive-rail">
+            <span>— Category</span>
+            <Link to="/projects" data-hover>All projects</Link>
+            <Link
+              to="/projects/$category"
+              params={{ category: "architecture" }}
+              data-hover
+              className={cat === "architecture" ? "is-on" : ""}
             >
-              <Link to="/project/$slug" params={{ slug: p.slug }} className="idl-pcard" data-hover>
-                <div className="idl-pcard-img"><img src={p.cover} alt={p.name} loading="lazy" /></div>
-                <div className="idl-pcard-cap">
-                  <span>{p.location}</span>
-                  <strong>{p.name}</strong>
+              Architecture
+            </Link>
+            <Link
+              to="/projects/$category"
+              params={{ category: "interiors" }}
+              data-hover
+              className={cat === "interiors" ? "is-on" : ""}
+            >
+              Interiors
+            </Link>
+            <span style={{ marginTop: 32 }}>— Count</span>
+            <span style={{ fontFamily: "var(--serif)", fontSize: 30, color: "var(--idlx-ink)" }}>{String(list.length).padStart(2, "0")}</span>
+          </aside>
+
+          <div className="idlx-archive-grid">
+            {list.map((p, i) => {
+              const kind = layout(i);
+              const cls =
+                kind === "wide"
+                  ? "idlx-archive-cell idlx-archive-cell--wide"
+                  : "idlx-archive-cell";
+              const imgCls =
+                kind === "wide"
+                  ? "idlx-pcard2-img idlx-pcard2-img--wide"
+                  : kind === "tall"
+                  ? "idlx-pcard2-img idlx-pcard2-img--tall"
+                  : "idlx-pcard2-img";
+              return (
+                <div key={p.slug} className={cls}>
+                  <Reveal delay={(i % 3) * 0.05}>
+                    <Link to="/project/$slug" params={{ slug: p.slug }} className="idlx-pcard2" data-hover>
+                      <div className={imgCls}>
+                        <img src={p.cover} alt={p.name} loading="lazy" />
+                      </div>
+                      <div className="idlx-pcard2-cap">
+                        <span className="idlx-pcard2-name">{p.name}</span>
+                        <span className="idlx-pcard2-meta">{p.location} · {p.year}</span>
+                      </div>
+                    </Link>
+                  </Reveal>
                 </div>
-              </Link>
-            </motion.div>
-          ))}
+              );
+            })}
+          </div>
         </div>
+
+        <section className="idlx-cta idlx-section--bordered">
+          <Reveal>
+            <Link to="/projects/$category" params={{ category: other }} className="idlx-cta-link" data-hover>
+              View {cap(other)} →
+            </Link>
+          </Reveal>
+        </section>
       </main>
       <Footer />
     </>

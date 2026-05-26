@@ -1,8 +1,10 @@
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
-import { motion } from "framer-motion";
 import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
 import { CustomCursor } from "@/components/home/CustomCursor";
+import { CinematicHero } from "@/components/motion/CinematicHero";
+import { Reveal } from "@/components/motion/Reveal";
+import { MaskText } from "@/components/motion/MaskText";
 import { sectors } from "@/data/siteContent";
 import { projectsBySector } from "@/data/projects";
 
@@ -12,71 +14,123 @@ export const Route = createFileRoute("/expertise/$sector")({
   },
   head: ({ params }) => {
     const s = sectors.find((x) => x.slug === params.sector);
-    return { meta: [
-      { title: `${s?.name ?? "Sector"} — Expertise · IDL` },
-      { name: "description", content: s?.statement ?? "" },
-      { property: "og:title", content: `${s?.name} — Expertise · IDL` },
-      { property: "og:description", content: s?.statement ?? "" },
-      ...(s?.image ? [{ property: "og:image", content: s.image }] : []),
-    ] };
+    return {
+      meta: [
+        { title: `${s?.name ?? "Sector"} — Expertise · IDL` },
+        { name: "description", content: s?.statement?.slice(0, 160) ?? "" },
+        { property: "og:title", content: `${s?.name} — Expertise · IDL` },
+        { property: "og:description", content: s?.statement?.slice(0, 160) ?? "" },
+        ...(s?.image ? [{ property: "og:image", content: s.image }] : []),
+      ],
+    };
   },
   component: SectorPage,
 });
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-
 function SectorPage() {
   const { sector } = Route.useParams();
   const data = sectors.find((s) => s.slug === sector)!;
-  const list = projectsBySector(data.name);
+  // Map slug to old sector name for project list — gracefully empty otherwise
+  const sectorMap: Record<string, string> = {
+    residential: "Residential",
+    commercial: "Commercial",
+    institutional: "Institutional",
+    hospitality: "Hospitality",
+    industrial: "Industrial",
+    workplace: "Workplace",
+  };
+  const list = projectsBySector(sectorMap[sector] ?? data.name);
 
   return (
     <>
       <CustomCursor />
       <Header />
-      <main>
-        <section className="idl-phero">
-          <div className="idl-phero-img"><img src={data.image} alt={data.name} /></div>
-          <div className="idl-phero-shade" />
-          <div className="idl-phero-cap">
-            <span className="idl-eyebrow"><span className="dot" />Expertise</span>
-            <h1>{data.name}.</h1>
+      <main className="idlx-page">
+        <CinematicHero
+          image={data.image}
+          alt={data.name}
+          eyebrow={`— Expertise / ${data.name}`}
+          title={data.name + "."}
+          height="full"
+        />
+
+        {/* Intro with drop-cap */}
+        <section className="idlx-sector-intro">
+          <Reveal>
+            <MaskText as="h2" className="idlx-h2">{`On ${data.name.toLowerCase()}.`}</MaskText>
+          </Reveal>
+          <Reveal delay={0.12}>
+            <p>{data.statement}</p>
+          </Reveal>
+        </section>
+
+        {/* Sub-spread for Residential or bullets for Sustainability */}
+        {data.sub ? (
+          <div className="idlx-sub-spread">
+            {data.sub.map((sub, i) => (
+              <Reveal key={sub.title} delay={i * 0.08}>
+                <article className="idlx-sub-card">
+                  <div className="idlx-sub-card-img">
+                    <img src={data.image} alt={sub.title} loading="lazy" />
+                  </div>
+                  <h3 className="idlx-h3" style={{ marginTop: 8 }}>{sub.title}</h3>
+                  <p className="idlx-body idlx-body--lg">{sub.body}</p>
+                </article>
+              </Reveal>
+            ))}
           </div>
-        </section>
-        <section className="idl-sec">
-          <p className="idl-prose-lead">{data.statement}</p>
-        </section>
-        <section className="idl-sec--sm idl-sec--bordered">
-          <header style={{ textAlign: "center", marginBottom: "60px" }}>
-            <span className="idl-eyebrow">— Selected work</span>
-          </header>
-          {list.length === 0 ? (
-            <p style={{ textAlign: "center", fontFamily: "var(--serif)", fontStyle: "italic", opacity: 0.6 }}>Project records coming soon.</p>
-          ) : (
-            <div className="idl-pgrid" style={{ paddingTop: 0, paddingBottom: 0 }}>
-              {list.map((p, i) => (
-                <motion.div
-                  key={p.slug}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-10%" }}
-                  transition={{ duration: 0.9, delay: (i % 4) * 0.08, ease: EASE }}
-                >
-                  <Link to="/project/$slug" params={{ slug: p.slug }} className="idl-pcard" data-hover>
-                    <div className="idl-pcard-img"><img src={p.cover} alt={p.name} loading="lazy" /></div>
-                    <div className="idl-pcard-cap">
-                      <span>{p.location}</span>
-                      <strong>{p.name}</strong>
-                    </div>
-                  </Link>
-                </motion.div>
+        ) : null}
+
+        {data.bullets ? (
+          <section className="idlx-section idlx-section--bordered">
+            <div className="idlx-manifesto">
+              <Reveal>
+                <span className="idlx-eyebrow"><span className="idlx-eyebrow-dot" /> Practice</span>
+                <MaskText as="h2" className="idlx-h2" delay={0.1}>{`How we design\nfor longevity.`}</MaskText>
+              </Reveal>
+              <Reveal delay={0.18} className="idlx-manifesto-body">
+                <ul className="idlx-bullets">
+                  {data.bullets.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+          </section>
+        ) : null}
+
+        {/* Related work filmstrip */}
+        {list.length > 0 && (
+          <>
+            <section className="idlx-section--sm" style={{ padding: "clamp(60px,8vw,100px) clamp(28px,6vw,100px) 40px" }}>
+              <Reveal>
+                <span className="idlx-eyebrow"><span className="idlx-eyebrow-dot" /> Selected work</span>
+                <h2 className="idlx-h2" style={{ marginTop: 18, maxWidth: 720 }}>{data.name} in practice.</h2>
+              </Reveal>
+            </section>
+            <div className="idlx-filmstrip">
+              {list.map((p) => (
+                <Link key={p.slug} to="/project/$slug" params={{ slug: p.slug }} data-hover>
+                  <div className="idlx-filmstrip-img">
+                    <img src={p.cover} alt={p.name} loading="lazy" />
+                  </div>
+                  <div className="idlx-pcard2-cap">
+                    <span className="idlx-pcard2-name">{p.name}</span>
+                    <span className="idlx-pcard2-meta">{p.location}</span>
+                  </div>
+                </Link>
               ))}
             </div>
-          )}
-        </section>
-        <section className="idl-sec idl-sec--bordered" style={{ textAlign: "center" }}>
-          <p className="idl-prose-lead" style={{ marginBottom: 28 }}>Begin a {data.name.toLowerCase()} project.</p>
-          <Link to="/contact" className="idl-erow-link" data-hover>Contact the studio →</Link>
+          </>
+        )}
+
+        <section className="idlx-cta idlx-section--bordered">
+          <Reveal>
+            <p className="idlx-lead">Begin a {data.name.toLowerCase()} project with the studio.</p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <Link to="/contact" className="idlx-cta-link" data-hover>Contact →</Link>
+          </Reveal>
         </section>
       </main>
       <Footer />

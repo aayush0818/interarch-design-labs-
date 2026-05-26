@@ -8,21 +8,23 @@ import work4 from "@/assets/work-4.jpg";
 import studioCulture from "@/assets/studio-culture.jpg";
 
 export const Route = createFileRoute("/practice")({
-  head: () => ({ meta: [
-    { title: "Practice — Interarch Design Labs" },
-    { name: "description", content: "History, process and journal — how the IDL studio thinks, draws and builds." },
-    { property: "og:title", content: "Practice — Interarch Design Labs" },
-    { property: "og:description", content: "Three readings of the practice." },
-  ] }),
+  head: () => ({
+    meta: [
+      { title: "Practice — Interarch Design Labs" },
+      { name: "description", content: "How the studio thinks, draws, and builds — history, process and journal." },
+      { property: "og:title", content: "Practice — IDL" },
+      { property: "og:description", content: "Three readings of the practice." },
+    ],
+  }),
   component: PracticePage,
 });
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const rows = [
-  { to: "/practice/history" as const, eyebrow: "— 01 / History", title: "Three decades of work.", body: "From Interarch (1989) to Interarch Design Labs — a chronological reading of the practice.", img: work1 },
-  { to: "/practice/process" as const, eyebrow: "— 02 / Process", title: "Five phases. One trajectory.", body: "From listening to evolution — the considered method that shapes every project.", img: work4 },
-  { to: "/practice/journal" as const, eyebrow: "— 03 / Journal", title: "Notes from the studio.", body: "Essays and observations on architecture, interiors, light and material.", img: studioCulture },
+const doors = [
+  { to: "/practice/history" as const, num: "01", name: "History", body: "From Interarch (1989) to Interarch Design Labs — a chronological reading.", img: work1 },
+  { to: "/practice/process" as const, num: "02", name: "Process", body: "Five phases, one trajectory — from listening to evolution.", img: work4 },
+  { to: "/practice/journal" as const, num: "03", name: "Journal", body: "Essays and notes on architecture, light and material.", img: studioCulture },
 ];
 
 function PracticePage() {
@@ -33,34 +35,27 @@ function PracticePage() {
     <>
       <CustomCursor />
       <Header />
-      <main>
-        <section className="idl-phero">
-          <div className="idl-phero-img"><img src={studioCulture} alt="Practice" /></div>
-          <div className="idl-phero-shade" />
-          <div className="idl-phero-cap">
-            <span className="idl-eyebrow"><span className="dot" />Practice</span>
-            <h1>How the studio thinks, draws, and brings buildings into the world.</h1>
-          </div>
-        </section>
-        {rows.map((r) => (
-          <motion.div
-            key={r.title}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-15%" }}
-            transition={{ duration: 0.9, ease: EASE }}
-          >
-            <Link to={r.to} className="idl-pract-row" data-hover>
-              <div className="idl-pract-img"><img src={r.img} alt={r.title} loading="lazy" /></div>
-              <div className="idl-pract-body">
-                <span className="idl-eyebrow">{r.eyebrow}</span>
-                <h2>{r.title}</h2>
-                <p>{r.body}</p>
-                <span className="idl-erow-link">Continue →</span>
-              </div>
-            </Link>
-          </motion.div>
-        ))}
+      <main className="idlx-page">
+        <div className="idlx-doors">
+          {doors.map((d, i) => (
+            <motion.div
+              key={d.num}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.4, delay: 0.2 + i * 0.18, ease: EASE }}
+              style={{ position: "relative" }}
+            >
+              <Link to={d.to} className="idlx-door" data-hover style={{ display: "block", height: "100%" }}>
+                <img src={d.img} alt={d.name} />
+                <div className="idlx-door-cap">
+                  <span className="idlx-door-num">— {d.num} / Practice</span>
+                  <span className="idlx-door-name">{d.name}</span>
+                  <p className="idlx-door-body">{d.body}</p>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
       </main>
       <Footer />
     </>

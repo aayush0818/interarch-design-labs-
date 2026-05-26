@@ -3,17 +3,22 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
 import { CustomCursor } from "@/components/home/CustomCursor";
+import { Reveal } from "@/components/motion/Reveal";
+import { MaskText } from "@/components/motion/MaskText";
 import { projects } from "@/data/projects";
 import work1 from "@/assets/work-1.jpg";
+import work3 from "@/assets/work-3.jpg";
 
 export const Route = createFileRoute("/projects")({
-  head: () => ({ meta: [
-    { title: "Projects — Interarch Design Labs" },
-    { name: "description", content: "Architecture and interiors shaped through clarity, context and enduring intent." },
-    { property: "og:title", content: "Projects — Interarch Design Labs" },
-    { property: "og:description", content: "An archive of architecture and interiors by Interarch Design Labs." },
-    { property: "og:image", content: work1 },
-  ] }),
+  head: () => ({
+    meta: [
+      { title: "Projects — Interarch Design Labs" },
+      { name: "description", content: "An archive of architecture and interiors — split between two disciplines, one register." },
+      { property: "og:title", content: "Projects — Interarch Design Labs" },
+      { property: "og:description", content: "Architecture and interiors by Interarch Design Labs." },
+      { property: "og:image", content: work1 },
+    ],
+  }),
   component: ProjectsPage,
 });
 
@@ -23,43 +28,59 @@ function ProjectsPage() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   if (pathname !== "/projects") return <Outlet />;
 
+  const arch = projects.filter((p) => p.category === "Architecture").length;
+  const intr = projects.filter((p) => p.category === "Interiors").length;
+
   return (
     <>
       <CustomCursor />
       <Header />
-      <main>
-        <section className="idl-phero">
-          <div className="idl-phero-img"><img src={work1} alt="Selected projects" /></div>
-          <div className="idl-phero-shade" />
-          <div className="idl-phero-cap">
-            <span className="idl-eyebrow"><span className="dot" />Projects</span>
-            <h1>Architecture and interiors, shaped through clarity, context and enduring intent.</h1>
+      <main className="idlx-page">
+        <div className="idlx-diptych">
+          <Link to="/projects/$category" params={{ category: "architecture" }} className="idlx-diptych-half">
+            <img src={work1} alt="Architecture projects" />
+            <motion.div
+              className="idlx-diptych-label"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, delay: 0.3, ease: EASE }}
+            >
+              <span className="idlx-diptych-sub">— 01 / Architecture</span>
+              <span>Architecture</span>
+              <span className="idlx-diptych-sub" style={{ opacity: 0.6 }}>{arch} works</span>
+            </motion.div>
+          </Link>
+          <Link to="/projects/$category" params={{ category: "interiors" }} className="idlx-diptych-half">
+            <img src={work3} alt="Interior projects" />
+            <motion.div
+              className="idlx-diptych-label"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, delay: 0.5, ease: EASE }}
+            >
+              <span className="idlx-diptych-sub">— 02 / Interiors</span>
+              <span>Interiors</span>
+              <span className="idlx-diptych-sub" style={{ opacity: 0.6 }}>{intr} works</span>
+            </motion.div>
+          </Link>
+        </div>
+
+        <section className="idlx-section">
+          <div className="idlx-manifesto">
+            <Reveal>
+              <span className="idlx-eyebrow"><span className="idlx-eyebrow-dot" /> The archive</span>
+              <MaskText as="h2" className="idlx-h2" delay={0.1}>{`Two disciplines.\nOne register.`}</MaskText>
+            </Reveal>
+            <Reveal delay={0.18} className="idlx-manifesto-body">
+              <p className="idlx-lead">
+                A growing record of work across India, the Middle East and Africa — composed with the same care from a private residence to a civic campus.
+              </p>
+              <p className="idlx-body idlx-body--lg">
+                {arch} architecture projects · {intr} interior projects · across residential, hospitality, institutional and workplace.
+              </p>
+            </Reveal>
           </div>
         </section>
-        <nav className="idl-catnav" aria-label="Project categories">
-          <Link to="/projects" className="is-on">All</Link>
-          <Link to="/projects/$category" params={{ category: "architecture" }}>Architecture</Link>
-          <Link to="/projects/$category" params={{ category: "interiors" }}>Interiors</Link>
-        </nav>
-        <div className="idl-pgrid">
-          {projects.map((p, i) => (
-            <motion.div
-              key={p.slug}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.9, delay: (i % 4) * 0.08, ease: EASE }}
-            >
-              <Link to="/project/$slug" params={{ slug: p.slug }} className="idl-pcard" data-hover>
-                <div className="idl-pcard-img"><img src={p.cover} alt={p.name} loading="lazy" /></div>
-                <div className="idl-pcard-cap">
-                  <span>{p.location}</span>
-                  <strong>{p.name}</strong>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
       </main>
       <Footer />
     </>
