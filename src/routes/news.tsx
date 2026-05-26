@@ -4,6 +4,7 @@ import { Footer } from "@/components/home/Footer";
 import { CustomCursor } from "@/components/home/CustomCursor";
 import { CinematicHero } from "@/components/motion/CinematicHero";
 import hero from "@/assets/idl-retail-boutique.png";
+import awardsHero from "@/assets/award-1.jpg";
 
 export const Route = createFileRoute("/news")({ component: NewsPage });
 
@@ -23,7 +24,7 @@ function NewsPage() {
             <div className="idlx-diptych-label"><span className="idlx-diptych-sub">— 01</span><span>Journal</span></div>
           </Link>
           <Link to="/news/awards" className="idlx-diptych-half">
-            <img src="/src/assets/award-1.jpg" alt="Awards" />
+            <img src={awardsHero} alt="Awards" />
             <div className="idlx-diptych-label"><span className="idlx-diptych-sub">— 02</span><span>Awards</span></div>
           </Link>
         </section>
