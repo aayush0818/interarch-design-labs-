@@ -1,22 +1,24 @@
 import { Outlet, Link, createFileRoute, useRouterState } from "@tanstack/react-router";
-import { motion } from "framer-motion";
 import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
 import { CustomCursor } from "@/components/home/CustomCursor";
-import { sectors } from "@/data/siteContent";
+import { CinematicHero } from "@/components/motion/CinematicHero";
+import { Reveal } from "@/components/motion/Reveal";
+import { MaskText } from "@/components/motion/MaskText";
+import { sectors, designApproach } from "@/data/siteContent";
 
 export const Route = createFileRoute("/expertise")({
-  head: () => ({ meta: [
-    { title: "Expertise — Interarch Design Labs" },
-    { name: "description", content: "Six sectors, one architectural language — measured, material, daylit." },
-    { property: "og:title", content: "Expertise — Interarch Design Labs" },
-    { property: "og:description", content: "Residential, commercial, institutional, hospitality, industrial, workplace." },
-    { property: "og:image", content: sectors[0]?.image },
-  ] }),
+  head: () => ({
+    meta: [
+      { title: "Expertise — Interarch Design Labs" },
+      { name: "description", content: "Six disciplines. One sensibility — residential, commercial, institutional, hospitality, master planning and sustainability." },
+      { property: "og:title", content: "Expertise — IDL" },
+      { property: "og:description", content: "Six disciplines. One sensibility." },
+      { property: "og:image", content: sectors[0]?.image },
+    ],
+  }),
   component: ExpertisePage,
 });
-
-const EASE = [0.22, 1, 0.36, 1] as const;
 
 function ExpertisePage() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -26,36 +28,63 @@ function ExpertisePage() {
     <>
       <CustomCursor />
       <Header />
-      <main>
-        <section className="idl-phero">
-          <div className="idl-phero-img"><img src={sectors[0].image} alt="Expertise" /></div>
-          <div className="idl-phero-shade" />
-          <div className="idl-phero-cap">
-            <span className="idl-eyebrow"><span className="dot" />Expertise</span>
-            <h1>Six sectors. One architectural language — measured, material, daylit.</h1>
+      <main className="idlx-page">
+        <CinematicHero
+          image={sectors[0].image}
+          alt="Expertise"
+          eyebrow="— Expertise"
+          title={"Six disciplines.\nOne sensibility."}
+          height="tall"
+        />
+
+        <section className="idlx-section">
+          <div className="idlx-manifesto">
+            <Reveal>
+              <span className="idlx-eyebrow"><span className="idlx-eyebrow-dot" /> The Index</span>
+            </Reveal>
+            <Reveal delay={0.12} className="idlx-manifesto-body">
+              <p className="idlx-lead">
+                Architecture, interiors and planning across scales — held to the same register of clarity, intent, context and craft. Each discipline carries its own technical depth; the studio's voice remains one.
+              </p>
+            </Reveal>
           </div>
         </section>
-        <section className="idl-sec--sm">
-          <p className="idl-prose-lead">The studio works across scales without changing its register — from a private residence to a civic campus.</p>
+
+        <section className="idlx-exp-list">
+          {sectors.map((s, i) => (
+            <Link key={s.slug} to="/expertise/$sector" params={{ sector: s.slug }} className="idlx-exp-row" data-hover>
+              <span className="idlx-exp-num">{String(i + 1).padStart(2, "0")} / 06</span>
+              <span className="idlx-exp-name">{s.name}</span>
+              <span className="idlx-exp-blurb">{s.short}</span>
+              <span className="idlx-exp-arr">→</span>
+              <span className="idlx-exp-peek" aria-hidden>
+                <img src={s.image} alt="" loading="lazy" />
+              </span>
+            </Link>
+          ))}
         </section>
-        {sectors.map((s, i) => (
-          <motion.section
-            key={s.slug}
-            className="idl-erow"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-15%" }}
-            transition={{ duration: 0.9, ease: EASE }}
-          >
-            <div className="idl-erow-img"><img src={s.image} alt={s.name} loading="lazy" /></div>
-            <div className="idl-erow-body">
-              <span className="idl-eyebrow">— {String(i + 1).padStart(2, "0")} / 06</span>
-              <h2>{s.name}</h2>
-              <p>{s.statement}</p>
-              <Link to="/expertise/$sector" params={{ sector: s.slug }} className="idl-erow-link" data-hover>View {s.name.toLowerCase()} work</Link>
-            </div>
-          </motion.section>
-        ))}
+
+        {/* Design approach */}
+        <section className="idlx-section idlx-section--bordered idlx-section--ink">
+          <Reveal>
+            <span className="idlx-eyebrow"><span className="idlx-eyebrow-dot" /> Our Design Approach</span>
+            <MaskText as="h2" className="idlx-h2" delay={0.1}>
+              {`Five attitudes that\nshape every project.`}
+            </MaskText>
+          </Reveal>
+          <div style={{ height: 80 }} />
+          <div className="idlx-values">
+            {designApproach.map((d, i) => (
+              <Reveal key={d.title} delay={i * 0.06}>
+                <div className="idlx-value-row" style={{ borderColor: "rgba(245,238,227,0.12)" }}>
+                  <span className="idlx-value-n" style={{ color: "rgba(245,238,227,0.5)" }}>{String(i + 1).padStart(2, "0")}</span>
+                  <span className="idlx-value-title" style={{ color: "var(--idlx-cream)" }}>{d.title}</span>
+                  <span className="idlx-value-body" style={{ color: "rgba(245,238,227,0.78)" }}>{d.body}</span>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
       </main>
       <Footer />
     </>

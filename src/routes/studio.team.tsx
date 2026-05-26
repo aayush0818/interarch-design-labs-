@@ -1,61 +1,121 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { partners, pageImages } from "@/data/siteContent";
+import { useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { AnimatePresence, motion } from "framer-motion";
+import { CinematicHero } from "@/components/motion/CinematicHero";
+import { Reveal } from "@/components/motion/Reveal";
+import { Marquee } from "@/components/motion/Marquee";
+import { partners, teamCopy, pageImages } from "@/data/siteContent";
+import teamHero from "@/assets/team-hero.jpg";
 
 export const Route = createFileRoute("/studio/team")({
-  head: () => ({ meta: [
-    { title: "Team — Studio · IDL" },
-    { name: "description", content: "The four partners and the studio team behind Interarch Design Labs." },
-    { property: "og:title", content: "Team — Studio · IDL" },
-    { property: "og:description", content: "Architects and designers shaping every project." },
-  ] }),
+  head: () => ({
+    meta: [
+      { title: "Team — Studio · Interarch Design Labs" },
+      { name: "description", content: teamCopy.intro.slice(0, 160) },
+      { property: "og:title", content: "Team — Studio · IDL" },
+      { property: "og:description", content: teamCopy.intro.slice(0, 160) },
+      { property: "og:image", content: teamHero },
+    ],
+  }),
   component: TeamPage,
 });
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 function TeamPage() {
+  const [open, setOpen] = useState<string | null>(null);
+
   return (
     <>
-      <section className="idl-sec--sm" style={{ textAlign: "center", paddingTop: 80 }}>
-        <span className="idl-eyebrow">— Studio · Team</span>
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: EASE }}
-          style={{ margin: "20px auto 24px", maxWidth: 900, fontFamily: "var(--serif)", fontWeight: 300, fontSize: "clamp(40px, 5vw, 72px)", lineHeight: 1.05 }}
-        >
-          Four partners. One conviction.
-        </motion.h1>
-        <p className="idl-prose-lead" style={{ fontSize: "clamp(18px, 1.6vw, 22px)" }}>A studio formed by the union of Interarch and Kala Design — architects who design around how life is lived.</p>
+      <CinematicHero
+        image={teamHero}
+        alt="The IDL team"
+        eyebrow={teamCopy.eyebrow}
+        title={teamCopy.headline}
+        height="tall"
+      />
+
+      <section className="idlx-section">
+        <div className="idlx-manifesto">
+          <Reveal>
+            <span className="idlx-eyebrow"><span className="idlx-eyebrow-dot" /> Meet the leadership</span>
+          </Reveal>
+          <Reveal delay={0.12} className="idlx-manifesto-body">
+            <p className="idlx-lead">{teamCopy.intro}</p>
+          </Reveal>
+        </div>
       </section>
-      <div className="idl-team-grid">
-        {partners.map((p, i) => (
-          <motion.div
-            key={p.name}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.9, delay: (i % 2) * 0.1, ease: EASE }}
-            className="idl-tcard"
-          >
-            <div className="idl-tcard-img"><img src={p.image} alt={p.name} loading="lazy" /></div>
-            <div className="idl-tcard-cap">
-              <strong>{p.name}</strong>
-              <span>{p.role}</span>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-      <section className="idl-sec--sm idl-sec--bordered" style={{ textAlign: "center" }}>
-        <span className="idl-eyebrow">— Studio culture</span>
-        <p className="idl-prose-lead" style={{ marginTop: 20, fontSize: "clamp(20px, 2vw, 28px)" }}>The work shows in the rooms — drawings, models, samples and the long table where everything is decided.</p>
+
+      <section className="idlx-section--sm" style={{ padding: "0 clamp(28px,6vw,100px) clamp(120px,16vw,180px)" }}>
+        <div className="idlx-team-grid">
+          {partners.map((p, i) => {
+            const isOpen = open === p.name;
+            return (
+              <Reveal key={p.name} delay={(i % 2) * 0.1} duration={1.2}>
+                <button
+                  type="button"
+                  className="idlx-portrait"
+                  data-hover
+                  onClick={() => setOpen(isOpen ? null : p.name)}
+                  style={{ background: "none", border: "none", padding: 0, textAlign: "left", width: "100%" }}
+                >
+                  <div className="idlx-portrait-img">
+                    <img src={p.image} alt={p.name} loading="lazy" />
+                  </div>
+                  <div className="idlx-portrait-cap">
+                    <span className="idlx-portrait-role">{p.role} · {p.years}</span>
+                    <span className="idlx-portrait-name">{p.name}</span>
+                    <span className="idlx-body" style={{ fontStyle: "italic", color: "var(--idlx-mute)", marginTop: 4 }}>{p.line}</span>
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.p
+                          className="idlx-portrait-bio"
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.6, ease: EASE }}
+                        >
+                          {p.bio}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </button>
+              </Reveal>
+            );
+          })}
+        </div>
       </section>
-      <div className="idl-strip">
-        <div className="idl-strip-cell"><img src={pageImages.studioCulture} alt="Drawings and models" loading="lazy" /></div>
-        <div className="idl-strip-cell"><img src={pageImages.studioHero} alt="Studio interior" loading="lazy" /></div>
-        <div className="idl-strip-cell"><img src={pageImages.teamHero} alt="Collaboration" loading="lazy" /></div>
+
+      <section className="idlx-section--sm idlx-section--bordered" style={{ textAlign: "center" }}>
+        <Reveal>
+          <span className="idlx-eyebrow"><span className="idlx-eyebrow-dot" /> The collective</span>
+          <p className="idlx-lead" style={{ maxWidth: 900, margin: "24px auto 0" }}>{teamCopy.collective}</p>
+        </Reveal>
+      </section>
+
+      <Marquee speed={45}>
+        <span>— Architects</span>
+        <span>— Interior Designers</span>
+        <span>— Visualisers</span>
+        <span>— Project Managers</span>
+        <span>— Delivery Specialists</span>
+        <span>— Strategists</span>
+      </Marquee>
+
+      <div className="idlx-split">
+        <div className="idlx-split-img"><img src={pageImages.studioCulture} alt="Studio life" /></div>
+        <div className="idlx-split-img"><img src={pageImages.studioHero} alt="Studio space" /></div>
       </div>
+
+      <section className="idlx-cta idlx-section--bordered">
+        <Reveal>
+          <p className="idlx-lead">Begin a project with the studio.</p>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <Link to="/contact" className="idlx-cta-link" data-hover>Contact the studio →</Link>
+        </Reveal>
+      </section>
     </>
   );
 }
