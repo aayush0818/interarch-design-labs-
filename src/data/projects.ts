@@ -1,4 +1,4 @@
-import work1 from "@/assets/work-1.jpg";
+import work1 from "@/assets/9c5aa0d0-310f-4331-b48d-b05de9dac663.jpg";
 import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
 import work4 from "@/assets/work-4.jpg";
