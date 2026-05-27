@@ -1,10 +1,10 @@
 import studioHero from "@/assets/studio-hero.jpg";
 import teamHero from "@/assets/team-hero.jpg";
 import studioCulture from "@/assets/studio-culture.jpg";
-import partner1 from "@/assets/partner-1.jpg";
-import partner2 from "@/assets/partner-2.jpg";
-import partner3 from "@/assets/partner-3.jpg";
-import partner4 from "@/assets/partner-4.jpg";
+import partner1 from "@/assets/team-dipak-thaker.jpg";
+import partner2 from "@/assets/team-murtaza-rangwala.jpg";
+import partner3 from "@/assets/team-hussain-rangwala.jpg";
+import partner4 from "@/assets/team-rohit-gojia.jpg";
 import work1 from "@/assets/9c5aa0d0-310f-4331-b48d-b05de9dac663.jpg";
 import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
@@ -140,40 +140,40 @@ export const teamCopy = {
 
 export const partners = [
   {
-    name: "Ar. Dipak Thaker",
-    role: "Founder · Architecture",
+    name: "Dipak Thaker",
+    role: "Director · IDL",
     image: partner1,
-    years: "40+ years",
-    line: "Modern architecture, drawn from traditional guidelines — that has been the practice since 1989.",
-    bio:
-      "Founded Interarch in 1989 with the conviction that modern architecture must remain rooted in traditional principles. Felicitated by Rachana Sansad, Mumbai (2015), and honoured for 25+ years of service to DRDO.",
-  },
-  {
-    name: "Ar. Murtuza Rangwala",
-    role: "Partner · Interiors",
-    image: partner2,
     years: "30+ years",
-    line: "The interior is the last act of architecture becoming daily life.",
+    line: "Structure, process, and buildability held together with long-view precision.",
     bio:
-      "Co-founder of the Interarch legacy. Leads material palettes and hospitality interiors, bringing three decades of detail-led interior expertise to every commission.",
+      "Dipak Thaker brings over three decades of experience in architecture and interior design, having led projects across residential, commercial, institutional, and industrial sectors. His work is defined by strong planning logic, technical depth, and execution precision, particularly on largescale and complex developments. Dipak has been instrumental in shaping projects from concept to completion, ensuring design intent is carried through every stage of construction. At IDL, he anchors the practice with structure, process, and a deep understanding of buildability.",
   },
   {
-    name: "Ar. Hussain Rangwala",
-    role: "Partner · Contemporary Design",
+    name: "Murtaza Rangwala",
+    role: "Director · IDL",
+    image: partner2,
+    years: "Decades of experience",
+    line: "Calm leadership, operational rigour, and dependable delivery across every stage.",
+    bio:
+      "Murtaza Rangwala has spent decades building a practice rooted in consistency, discipline, and long-term client trust. His experience spans a wide range of architectural and interior projects, where he has played a critical role in project coordination, detailing, and on-site execution. Known for his calm leadership and hands-on involvement, Murtaza ensures that every project is delivered with clarity and control. At IDL, he strengthens the firms foundation through operational rigor and dependable project delivery.",
+  },
+  {
+    name: "Hussain Rangwala",
+    role: "Director · IDL",
     image: partner3,
-    years: "—",
-    line: "Detail is not decoration — it is the discipline that gives a space its calm.",
+    years: "Contemporary practice",
+    line: "A modern design voice shaped by proportion, context, and spatial clarity.",
     bio:
-      "Brought the Kala Design legacy into IDL. Leads design development and material craft with a contextual, detail-driven sensibility.",
+      "Hussain Rangwala represents a contemporary design voice shaped by strong architectural fundamentals and evolving spatial sensibilities. His work focuses on residential and commercial projects where context, proportion, and detailing define the outcome. Hussain brings a refined approach to layouts, material selection, and spatial flow, ensuring each project feels both thoughtful and relevant. At IDL, he contributes design direction that bridges legacy expertise with modern architectural expression.",
   },
   {
-    name: "Ar. Rohit Gojia",
-    role: "Partner · Design Strategy",
+    name: "Rohit Gojia",
+    role: "Director · IDL",
     image: partner4,
-    years: "—",
-    line: "Every design should feel inevitable, yet personal to the people it serves.",
+    years: "Interior-focused leadership",
+    line: "Modern living translated into clear, material-led interior narratives.",
     bio:
-      "Contemporary, detail-led design lead. Guides spatial strategy and project direction across architecture and interiors.",
+      "Rohit Gojia is driven by a strong understanding of modern living and interior environments. His work spans residential and interior-focused projects, with a sharp eye for materials, finishes, and user experience. Known for translating client aspirations into clear design narratives, Rohit brings creativity grounded in practicality. At IDL, he adds a contemporary interior perspective, shaping spaces that are functional, expressive, and deeply liveable.",
   },
 ];
 
