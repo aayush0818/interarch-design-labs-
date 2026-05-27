@@ -1,13 +1,13 @@
-import heroImg from "@/assets/idl-home-hero-mansion.png";
+import heroImg from "@/assets/institutional-aerial-campus.png";
 
 export function Hero() {
   return (
     <section className="idl-hero" aria-label="Interarch Design Labs">
       <img
         src={heroImg}
-        alt="Interarch Design Labs architectural residence"
-        width={1760}
-        height={1173}
+        alt="Interarch Design Labs project aerial"
+        width={1092}
+        height={768}
         loading="eager"
         fetchPriority="high"
       />
@@ -23,3 +23,4 @@ export function Hero() {
     </section>
   );
 }
+
