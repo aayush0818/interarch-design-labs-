@@ -291,7 +291,7 @@ export const milestones = [
   {
     year: "2014–15",
     title: "AICA Asia Fest Commendation",
-    image: residentialImageWarm,
+    image: res.warm,
     text:
       "At the Artists in Concrete Awards (AICA), Asia Fest, IDL's work on large-scale institutional projects — including the Educational Big and Medical Academy — received a Commendation Award, endorsed by an international panel of architects and designers.",
   },
