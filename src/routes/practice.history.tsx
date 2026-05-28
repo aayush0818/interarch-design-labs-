@@ -7,7 +7,9 @@ import { CustomCursor } from "@/components/home/CustomCursor";
 import { CinematicHero } from "@/components/motion/CinematicHero";
 import { Reveal } from "@/components/motion/Reveal";
 import { milestones } from "@/data/siteContent";
-import work1 from "@/assets/work-1.jpg";
+import { realImages } from "@/data/realImages";
+
+const work1 = realImages.institutional.aerial;
 
 export const Route = createFileRoute("/practice/history")({
   head: () => ({
