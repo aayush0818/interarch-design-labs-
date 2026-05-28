@@ -1,14 +1,11 @@
 import { useState } from "react";
-import story from "@/assets/idl-home-hero-mansion.png";
-import work from "@/assets/idl-institutional-facade.png";
-import team from "@/assets/idl-workplace-studio.png";
-import awards from "@/assets/idl-retail-boutique.png";
+import { realImages } from "@/data/realImages";
 
 const links = [
-  { label: "Studio", href: "/studio/about", img: story },
-  { label: "Projects", href: "/projects", img: work },
-  { label: "News", href: "/news", img: awards },
-  { label: "Contact", href: "/contact", img: team },
+  { label: "Studio", href: "/studio/about", img: realImages.residential.gallery },
+  { label: "Projects", href: "/projects", img: realImages.institutional.aerial },
+  { label: "News", href: "/news", img: realImages.commercial.boutiquePanorama },
+  { label: "Contact", href: "/contact", img: realImages.commercial.lounge },
 ];
 
 export function HoverImageNav() {
