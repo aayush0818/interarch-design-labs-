@@ -175,18 +175,21 @@ export const sectors = [
   {
     slug: "residential",
     name: "Residential",
-    image: residential,
+    image: res.gallery,
+    gallery: [res.gallery, res.warm, res.dining, res.aquarium, res.noir],
     short: "Apartments, bungalows and villas — composed around light, view, and movement.",
     statement:
       "Homes that prioritise daylight, proportion and an intuitive flow. Every decision — from plan to finish — supports daily life with calm precision.",
     sub: [
       {
         title: "Apartments",
+        image: res.gallery,
         body:
           "Homes that prioritise daylight, proportion and an intuitive flow. Every decision — from plan to finish — supports daily life with calm precision.",
       },
       {
         title: "Bungalows & Villas",
+        image: res.warm,
         body:
           "Independent houses conceived for privacy, openness and a seamless connection to the outdoors. The architecture is composed around light, view and movement.",
       },
@@ -195,7 +198,8 @@ export const sectors = [
   {
     slug: "commercial",
     name: "Commercial Interiors",
-    image: commercial,
+    image: com.lounge,
+    gallery: [com.lounge, com.boardroom, com.corridor, com.boutiquePanorama, com.salon, com.textile],
     short: "Workplaces and retail that translate brand identity into spatial performance.",
     statement:
       "Workplaces and retail environments that translate brand identity into spatial performance. Our interiors support productivity, culture and adaptability — designed for now and future growth.",
@@ -203,7 +207,8 @@ export const sectors = [
   {
     slug: "institutional",
     name: "Institutional",
-    image: institutional,
+    image: inst.aerial,
+    gallery: [inst.aerial, inst.pool, inst.tower, inst.palm],
     short: "Civic buildings designed for long life, accessibility and quiet presence.",
     statement:
       "Buildings that serve public life with clarity and durability. We design institutional projects for long-term performance, with efficiency, accessibility and civic presence as guiding principles.",
@@ -211,7 +216,8 @@ export const sectors = [
   {
     slug: "hospitality",
     name: "Hospitality",
-    image: hospitality,
+    image: inst.palm,
+    gallery: [inst.palm, inst.pool, com.reception, com.boutiqueInterior],
     short: "Hotels and retreats choreographed through warmth, sequence and view.",
     statement:
       "Bespoke hospitality interiors that elevate lifestyle — choreographed through warmth, sequence, tactility and view. Arrival, pause and aftertaste, shaped as a single architectural experience.",
@@ -219,7 +225,8 @@ export const sectors = [
   {
     slug: "industrial",
     name: "Master Planning",
-    image: industrial,
+    image: inst.aerial,
+    gallery: [inst.aerial, inst.tower, inst.palm],
     short: "Integrated planning that brings coherence to large-scale developments.",
     statement:
       "Integrated planning solutions that bring coherence and clarity to large-scale developments — campuses, mixed-use neighbourhoods and institutional grounds composed for long, useful life.",
@@ -227,7 +234,8 @@ export const sectors = [
   {
     slug: "workplace",
     name: "Sustainability",
-    image: workplace,
+    image: inst.tower,
+    gallery: [inst.tower, res.dining, inst.pool],
     short: "Passive, daylit, long-life buildings — IGBC Gold among our certifications.",
     statement:
       "For us, sustainability is a form of respect — for land, material and time. A building is truly sustainable when it adapts, ages well, and remains meaningful for decades. We combine traditional wisdom with modern engineering to create spaces that breathe with their surroundings rather than resist them.",
