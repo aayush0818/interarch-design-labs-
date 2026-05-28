@@ -114,6 +114,11 @@ function ContactPage() {
             <h3>Regions</h3>
             <p style={{ marginTop: 10 }}>{contactCopy.regions}</p>
           </Reveal>
+          <Reveal delay={0.24}>
+            <div className="idlx-contact-img">
+              <img src={realImages.commercial.reception} alt="Interarch Design Labs interior" loading="lazy" />
+            </div>
+          </Reveal>
         </aside>
       </main>
       <Footer />
