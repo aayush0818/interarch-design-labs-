@@ -5,8 +5,10 @@ import { CustomCursor } from "@/components/home/CustomCursor";
 import { CinematicHero } from "@/components/motion/CinematicHero";
 import { Reveal } from "@/components/motion/Reveal";
 import { projectsByCategory } from "@/data/projects";
-import work1 from "@/assets/work-1.jpg";
-import work3 from "@/assets/work-3.jpg";
+import { realImages } from "@/data/realImages";
+
+const work1 = realImages.institutional.aerial;
+const work3 = realImages.residential.gallery;
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
