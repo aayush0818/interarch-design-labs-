@@ -6,8 +6,10 @@ import { CustomCursor } from "@/components/home/CustomCursor";
 import { Reveal } from "@/components/motion/Reveal";
 import { MaskText } from "@/components/motion/MaskText";
 import { projects } from "@/data/projects";
-import work1 from "@/assets/work-1.jpg";
-import work3 from "@/assets/work-3.jpg";
+import { realImages } from "@/data/realImages";
+
+const work1 = realImages.institutional.aerial;
+const work3 = realImages.residential.gallery;
 
 export const Route = createFileRoute("/projects")({
   head: () => ({

@@ -7,6 +7,7 @@ import { CustomCursor } from "@/components/home/CustomCursor";
 import { MaskText } from "@/components/motion/MaskText";
 import { Reveal } from "@/components/motion/Reveal";
 import { contactCopy } from "@/data/siteContent";
+import { realImages } from "@/data/realImages";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -112,6 +113,11 @@ function ContactPage() {
           <Reveal delay={0.18}>
             <h3>Regions</h3>
             <p style={{ marginTop: 10 }}>{contactCopy.regions}</p>
+          </Reveal>
+          <Reveal delay={0.24}>
+            <div className="idlx-contact-img">
+              <img src={realImages.commercial.reception} alt="Interarch Design Labs interior" loading="lazy" />
+            </div>
           </Reveal>
         </aside>
       </main>

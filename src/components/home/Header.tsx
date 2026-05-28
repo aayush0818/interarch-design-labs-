@@ -2,11 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import logo from "@/assets/idl-logo.png";
-import navWork from "@/assets/idl-institutional-facade.png";
-import navStory from "@/assets/idl-home-hero-mansion.png";
-import navTeam from "@/assets/idl-workplace-studio.png";
-import navNews from "@/assets/idl-retail-boutique.png";
-import navContact from "@/assets/idl-commercial-salon.png";
+import { realImages } from "@/data/realImages";
+
+const navWork = realImages.institutional.aerial;
+const navStory = realImages.residential.gallery;
+const navTeam = realImages.commercial.lounge;
+const navNews = realImages.commercial.boutiquePanorama;
+const navContact = realImages.commercial.reception;
 
 type SubItem = { label: string; to: string; params?: Record<string, string> };
 type NavItem = {

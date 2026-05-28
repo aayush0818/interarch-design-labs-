@@ -4,7 +4,9 @@ import { Footer } from "@/components/home/Footer";
 import { CustomCursor } from "@/components/home/CustomCursor";
 import { CinematicHero } from "@/components/motion/CinematicHero";
 import { recognitionList } from "@/data/siteContent";
-import hero from "@/assets/award-1.jpg";
+import { realImages } from "@/data/realImages";
+
+const hero = realImages.institutional.pool;
 
 export const Route = createFileRoute("/news/awards")({ component: AwardsPage });
 

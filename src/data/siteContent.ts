@@ -1,30 +1,21 @@
-import studioHero from "@/assets/studio-hero.jpg";
-import teamHero from "@/assets/team-hero.jpg";
-import studioCulture from "@/assets/studio-culture.jpg";
-import partner1 from "@/assets/team-dipak-thaker.jpg";
-import partner2 from "@/assets/team-rohit-gojia.jpg";
-import partner3 from "@/assets/team-murtaza-rangwala.jpg";
-import partner4 from "@/assets/team-hussain-rangwala.jpg";
-import work1 from "@/assets/9c5aa0d0-310f-4331-b48d-b05de9dac663.jpg";
-import work2 from "@/assets/work-2.jpg";
-import work3 from "@/assets/work-3.jpg";
-import work4 from "@/assets/work-4.jpg";
-import work5 from "@/assets/work-5.jpg";
-import work6 from "@/assets/work-6.jpg";
-import residential from "@/assets/sector-residential.jpg";
-import commercial from "@/assets/sector-commercial.jpg";
-import institutional from "@/assets/sector-institutional.jpg";
-import hospitality from "@/assets/sector-hospitality.jpg";
-import industrial from "@/assets/sector-industrial.jpg";
-import workplace from "@/assets/sector-workplace.jpg";
-import skyline from "@/assets/skyline-sketch.png";
+import { realImages, realPool } from "@/data/realImages";
+
+const { institutional: inst, residential: res, commercial: com, team } = realImages;
+
+const studioHero = inst.aerial;
+const teamHero = com.lounge;
+const studioCulture = com.corridor;
+
+const partner1 = team.dipak;
+const partner2 = team.murtaza;
+const partner3 = team.hussain;
+const partner4 = team.rohit;
 
 export const pageImages = {
   studioHero,
   teamHero,
   studioCulture,
-  skyline,
-  works: [work1, work2, work3, work4, work5, work6],
+  works: realPool,
 };
 
 /* =================================================================
@@ -184,18 +175,21 @@ export const sectors = [
   {
     slug: "residential",
     name: "Residential",
-    image: residential,
+    image: res.gallery,
+    gallery: [res.gallery, res.warm, res.dining, res.aquarium, res.noir],
     short: "Apartments, bungalows and villas — composed around light, view, and movement.",
     statement:
       "Homes that prioritise daylight, proportion and an intuitive flow. Every decision — from plan to finish — supports daily life with calm precision.",
     sub: [
       {
         title: "Apartments",
+        image: res.gallery,
         body:
           "Homes that prioritise daylight, proportion and an intuitive flow. Every decision — from plan to finish — supports daily life with calm precision.",
       },
       {
         title: "Bungalows & Villas",
+        image: res.warm,
         body:
           "Independent houses conceived for privacy, openness and a seamless connection to the outdoors. The architecture is composed around light, view and movement.",
       },
@@ -204,7 +198,8 @@ export const sectors = [
   {
     slug: "commercial",
     name: "Commercial Interiors",
-    image: commercial,
+    image: com.lounge,
+    gallery: [com.lounge, com.boardroom, com.corridor, com.boutiquePanorama, com.salon, com.textile],
     short: "Workplaces and retail that translate brand identity into spatial performance.",
     statement:
       "Workplaces and retail environments that translate brand identity into spatial performance. Our interiors support productivity, culture and adaptability — designed for now and future growth.",
@@ -212,7 +207,8 @@ export const sectors = [
   {
     slug: "institutional",
     name: "Institutional",
-    image: institutional,
+    image: inst.aerial,
+    gallery: [inst.aerial, inst.pool, inst.tower, inst.palm],
     short: "Civic buildings designed for long life, accessibility and quiet presence.",
     statement:
       "Buildings that serve public life with clarity and durability. We design institutional projects for long-term performance, with efficiency, accessibility and civic presence as guiding principles.",
@@ -220,7 +216,8 @@ export const sectors = [
   {
     slug: "hospitality",
     name: "Hospitality",
-    image: hospitality,
+    image: inst.palm,
+    gallery: [inst.palm, inst.pool, com.reception, com.boutiqueInterior],
     short: "Hotels and retreats choreographed through warmth, sequence and view.",
     statement:
       "Bespoke hospitality interiors that elevate lifestyle — choreographed through warmth, sequence, tactility and view. Arrival, pause and aftertaste, shaped as a single architectural experience.",
@@ -228,7 +225,8 @@ export const sectors = [
   {
     slug: "industrial",
     name: "Master Planning",
-    image: industrial,
+    image: inst.aerial,
+    gallery: [inst.aerial, inst.tower, inst.palm],
     short: "Integrated planning that brings coherence to large-scale developments.",
     statement:
       "Integrated planning solutions that bring coherence and clarity to large-scale developments — campuses, mixed-use neighbourhoods and institutional grounds composed for long, useful life.",
@@ -236,7 +234,8 @@ export const sectors = [
   {
     slug: "workplace",
     name: "Sustainability",
-    image: workplace,
+    image: inst.tower,
+    gallery: [inst.tower, res.dining, inst.pool],
     short: "Passive, daylit, long-life buildings — IGBC Gold among our certifications.",
     statement:
       "For us, sustainability is a form of respect — for land, material and time. A building is truly sustainable when it adapts, ages well, and remains meaningful for decades. We combine traditional wisdom with modern engineering to create spaces that breathe with their surroundings rather than resist them.",
@@ -257,48 +256,56 @@ export const milestones = [
   {
     year: "1989",
     title: "Interarch is founded",
+    image: inst.aerial,
     text:
       "Founded by architect Dipak Thaker, Interarch (with its twin firm DID Consultants) was established with the guiding principle of \"modern architecture drawn from traditional guidelines.\" The practice began with a vision to blend innovation, technology, and timeless design sensibilities.",
   },
   {
     year: "2001",
     title: "A+D Spectrum Architecture Awards",
+    image: res.gallery,
     text:
       "Recognition came early when IDL participated in the A+D & Spectrum Paints Architecture Awards, with the jury praising the firm's creative approach and contribution to the contemporary design dialogue.",
   },
   {
     year: "2008",
     title: "AREA Acknowledgement",
+    image: com.lounge,
     text:
       "IDL's growing reputation extended beyond architecture to its collaborative work with the real estate sector. The Association of Real Estate Agents (AREA) acknowledged the firm's support and commitment during their 3rd Real Estate Conference.",
   },
   {
     year: "2009",
     title: "DRDO Silver Jubilee Honour",
+    image: inst.tower,
     text:
       "Marking a strong institutional partnership, IDL was honoured by the Defence Research & Development Organisation (DRDO) during its Silver Jubilee celebrations, recognising the firm's role in supporting key projects.",
   },
   {
     year: "2010",
     title: "Civic Recognition",
+    image: inst.pool,
     text:
       "A proud cultural and civic recognition was received for contributions to architecture and the built environment, felicitated by government and civic leaders for design impact on Babasaheb Ambedkar Bhavan and other public works.",
   },
   {
     year: "2014–15",
     title: "AICA Asia Fest Commendation",
+    image: res.warm,
     text:
       "At the Artists in Concrete Awards (AICA), Asia Fest, IDL's work on large-scale institutional projects — including the Educational Big and Medical Academy — received a Commendation Award, endorsed by an international panel of architects and designers.",
   },
   {
     year: "2015",
     title: "Rachana Sansad Diamond Jubilee",
+    image: com.reception,
     text:
       "The Academy of Architecture, Rachana Sansad (Mumbai), felicitated Ar. Dipak Thaker during their Diamond Jubilee celebrations, recognising his significant contributions to the profession and his role as an inspiring alumnus.",
   },
   {
     year: "Today",
     title: "Interarch Design Labs",
+    image: inst.palm,
     text:
       "With over three decades of practice, IDL has grown into a multidisciplinary studio delivering across architecture, interiors, engineering and master planning. From bungalows and corporate campuses to large institutional projects, the firm continues to uphold its founding philosophy — innovative design rooted in tradition, delivered with sensitivity to clients and context.",
   },

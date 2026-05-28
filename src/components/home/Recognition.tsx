@@ -1,24 +1,24 @@
-import award1 from "@/assets/award-1.jpg";
-import award2 from "@/assets/award-2.jpg";
-import award3 from "@/assets/award-3.jpg";
+import { realImages } from "@/data/realImages";
+
+const { institutional: inst, commercial: com } = realImages;
 
 const items = [
   {
-    img: award1,
+    img: inst.pool,
     category: "Civic Recognition",
     date: "2010",
     headline: "Chief Minister of Maharashtra Award — Babasaheb Ambedkar Bhavan",
     href: "/news/awards",
   },
   {
-    img: award2,
+    img: inst.tower,
     category: "Institutional Trust",
     date: "25 Years",
     headline: "25 years of continuous service to DRDO, Ministry of Defence",
     href: "/news/awards",
   },
   {
-    img: award3,
+    img: com.reception,
     category: "Academy of Architecture",
     date: "2015",
     headline: "Rachana Sansad Diamond Jubilee felicitation of Ar. Dipak Thaker",

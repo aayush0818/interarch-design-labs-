@@ -3,11 +3,13 @@ import { CinematicHero } from "@/components/motion/CinematicHero";
 import { MaskText } from "@/components/motion/MaskText";
 import { Reveal } from "@/components/motion/Reveal";
 import { Marquee } from "@/components/motion/Marquee";
-import studioHero from "@/assets/studio-hero.jpg";
-import studioCulture from "@/assets/studio-culture.jpg";
-import teamHero from "@/assets/team-hero.jpg";
-import work2 from "@/assets/work-2.jpg";
-import work4 from "@/assets/work-4.jpg";
+import { realImages } from "@/data/realImages";
+
+const studioHero = realImages.institutional.aerial;
+const studioCulture = realImages.commercial.corridor;
+const teamHero = realImages.commercial.lounge;
+const work2 = realImages.residential.gallery;
+const work4 = realImages.residential.warm;
 import {
   aboutCopy,
   mission,

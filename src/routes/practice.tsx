@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
 import { CustomCursor } from "@/components/home/CustomCursor";
-import work1 from "@/assets/work-1.jpg";
-import work4 from "@/assets/work-4.jpg";
-import studioCulture from "@/assets/studio-culture.jpg";
+import { realImages } from "@/data/realImages";
+
+const work1 = realImages.institutional.aerial;
+const work4 = realImages.residential.warm;
+const studioCulture = realImages.commercial.corridor;
 
 export const Route = createFileRoute("/practice")({
   head: () => ({
