@@ -3,8 +3,10 @@ import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
 import { CustomCursor } from "@/components/home/CustomCursor";
 import { CinematicHero } from "@/components/motion/CinematicHero";
-import hero from "@/assets/idl-retail-boutique.png";
-import awardsHero from "@/assets/award-1.jpg";
+import { realImages } from "@/data/realImages";
+
+const hero = realImages.commercial.boutiquePanorama;
+const awardsHero = realImages.institutional.pool;
 
 export const Route = createFileRoute("/news")({ component: NewsPage });
 
