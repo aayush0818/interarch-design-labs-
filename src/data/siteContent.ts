@@ -1,30 +1,21 @@
-import studioHero from "@/assets/studio-hero.jpg";
-import teamHero from "@/assets/team-hero.jpg";
-import studioCulture from "@/assets/studio-culture.jpg";
-import partner1 from "@/assets/team-dipak-thaker.jpg";
-import partner2 from "@/assets/team-rohit-gojia.jpg";
-import partner3 from "@/assets/team-murtaza-rangwala.jpg";
-import partner4 from "@/assets/team-hussain-rangwala.jpg";
-import work1 from "@/assets/9c5aa0d0-310f-4331-b48d-b05de9dac663.jpg";
-import work2 from "@/assets/work-2.jpg";
-import work3 from "@/assets/work-3.jpg";
-import work4 from "@/assets/work-4.jpg";
-import work5 from "@/assets/work-5.jpg";
-import work6 from "@/assets/work-6.jpg";
-import residential from "@/assets/sector-residential.jpg";
-import commercial from "@/assets/sector-commercial.jpg";
-import institutional from "@/assets/sector-institutional.jpg";
-import hospitality from "@/assets/sector-hospitality.jpg";
-import industrial from "@/assets/sector-industrial.jpg";
-import workplace from "@/assets/sector-workplace.jpg";
-import skyline from "@/assets/skyline-sketch.png";
+import { realImages, realPool } from "@/data/realImages";
+
+const { institutional: inst, residential: res, commercial: com, team } = realImages;
+
+const studioHero = inst.aerial;
+const teamHero = com.lounge;
+const studioCulture = com.corridor;
+
+const partner1 = team.dipak;
+const partner2 = team.murtaza;
+const partner3 = team.hussain;
+const partner4 = team.rohit;
 
 export const pageImages = {
   studioHero,
   teamHero,
   studioCulture,
-  skyline,
-  works: [work1, work2, work3, work4, work5, work6],
+  works: realPool,
 };
 
 /* =================================================================
