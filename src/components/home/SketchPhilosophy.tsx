@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
-import skyline from "@/assets/skyline-sketch.png";
+import { realImages } from "@/data/realImages";
+
+const skyline = realImages.institutional.aerial;
 
 const W = 1200;
 const H = 220;
