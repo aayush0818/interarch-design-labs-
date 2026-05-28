@@ -64,6 +64,18 @@ function SectorPage() {
           </Reveal>
         </section>
 
+        {Array.isArray((data as { gallery?: string[] }).gallery) && (data as { gallery?: string[] }).gallery!.length > 0 ? (
+          <div className="idlx-sector-band">
+            {(data as { gallery?: string[] }).gallery!.map((g, i) => (
+              <Reveal key={g + i} delay={(i % 3) * 0.06}>
+                <div className="idlx-sector-band-img">
+                  <img src={g} alt={`${data.name} ${i + 1}`} loading="lazy" />
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        ) : null}
+
         {/* Sub-spread for Residential or bullets for Sustainability */}
         {data.sub ? (
           <div className="idlx-sub-spread">
