@@ -7,6 +7,7 @@ import { CustomCursor } from "@/components/home/CustomCursor";
 import { MaskText } from "@/components/motion/MaskText";
 import { Reveal } from "@/components/motion/Reveal";
 import { contactCopy } from "@/data/siteContent";
+import { realImages } from "@/data/realImages";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
