@@ -1,142 +1,51 @@
-# Interarch Design Labs — Visual-First Rebuild Plan
+# Visual Refinement & Real-Image Migration
 
-## What will change
+A cohesive pass across five areas plus a full-site image audit. The studio keeps its quiet-luxury, image-led register. All AI-generated imagery is removed and replaced only with the provided real project photos.
 
-I’ll keep the premium architectural tone, but shift the site from text-led to image-led by rebuilding the information architecture, homepage pacing, and key inner-page compositions around your uploaded visuals.
+## Real images available (the only ones we may use)
+- **Institutional**: `institutional-aerial-campus`, `institutional-pool-court`, `institutional-green-tower`, `institutional-palm-court`
+- **Residential**: `residential-living-gallery`, `residential-lounge-warm`, `residential-dining-light`, `residential-living-aquarium`, `residential-lounge-noir`
+- **Commercial**: `commercial-monster-lounge`, `commercial-monster-boardroom`, `commercial-monster-corridor`, `commercial-boardroom-suite`, `commercial-reception-lobby`, `commercial-boutique-panorama`, `commercial-boutique-floor`, `commercial-boutique-interior`, `commercial-salon-interior`, `commercial-textile-studio`, `commercial-pilates-studio`
+- **Team portraits (real)**: `team-dipak-thaker`, `team-rohit-gojia`, `team-murtaza-rangwala`, `team-hussain-rangwala`
+- **Brand**: `idl-logo`
 
-## Approved direction locked in
+## AI-generated images to purge everywhere
+`work-1..6.jpg`, `sector-residential/commercial/institutional/hospitality/industrial/workplace.jpg`, `studio-hero.jpg`, `studio-culture.jpg`, `team-hero.jpg`, `hero.jpg`, `nav-*.jpg`, `award-1..3.jpg`, `partner-1..4.jpg`, `skyline-sketch.png`, `9c5aa0d0-...jpg`, and the `idl-home-hero-mansion / idl-institutional-facade / idl-commercial-salon / idl-retail-boutique / idl-workplace-studio` set.
 
-- Homepage hero will use the last uploaded mansion aerial image.
-- Architecture and Interiors will stay under Projects.
-- News will be introduced now with an expandable Awards structure for future additions.
+Every file referencing these (Header, HoverImageNav, Hero, FeaturedWorks, Verticals, Recognition, SketchPhilosophy, Clients, news.tsx, news.awards.tsx, projects.tsx, projects.$category.tsx, studio.about/team/history, practice.*, expertise.$sector, styles.css background refs, siteContent.ts) gets re-pointed to a real image. Where a decorative AI image has no real equivalent (e.g. sketch philosophy section), the section is reworked to lean on layout/typography instead of inventing imagery.
 
-## New information architecture
+## 1. Expertise (`expertise.tsx` + `expertise.$sector.tsx` + `sectors` data)
+- Assign each of the six sectors a real cover image and a small real gallery from the matching portfolio:
+  - Residential → residential set
+  - Commercial Interiors → commercial set
+  - Institutional → institutional set
+  - Hospitality → institutional-palm/pool (resort-like) + commercial
+  - Master Planning → institutional-aerial / green-tower
+  - Sustainability → institutional-green-tower + residential daylight shots
+- Sector detail page: replace the single repeated `data.image` in the residential sub-cards with distinct gallery images, and add a small image band so each sector reads visually, not just as text.
 
-```text
-/
-/projects
-/projects/architecture
-/projects/interiors
-/project/$slug
-/expertise
-/expertise/residential
-/expertise/commercial
-/expertise/institutional
-/expertise/hospitality
-/expertise/industrial
-/expertise/workplace
-/studio/about
-/studio/team
-/studio/history
-/news
-/news/journal
-/news/journal/$slug
-/news/awards
-/contact
-```
+## 2. History (`studio.history.tsx`)
+Rebuild from the flat award-row list into a year-by-year cinematic journey:
+- Full-height intro hero (real institutional image) with "A legacy in motion".
+- Vertical scroll spine with animated progress fill (reuse the `idlx-spine` pattern already in `practice.history.tsx`), one stage per milestone (1989 → Today).
+- Alternating layout: each stage shows year (large), title, text, and a paired real image, with clear stage-to-stage transitions (Reveal/MaskText motion). Images cycle through the real institutional/residential/commercial sets.
 
-## Build plan
+## 3. About (`studio.about.tsx`)
+Make it more visual and immersive while keeping all copy:
+- Swap `studioHero`, `studioCulture`, `teamHero`, `work2`, `work4` for real images.
+- Break dense text blocks with image-led splits: intro manifesto paired with a hero image, Mission/Vision/Values interleaved with a full-bleed image band, Range-of-Experience as a stat + image composition, Recognition kept but spaced, Culture cards given more breathing room.
+- Add varied presentation (image strips, pull-quote over image, two-up spreads) rather than stacked paragraphs.
 
-### 1. Reframe the global experience
-- Update the primary navigation to remove Practice entirely.
-- Rebuild the menu structure to match the new IA exactly.
-- Keep the same restrained typography family and palette, but tighten hierarchy so imagery leads and copy supports.
-- Refine motion globally toward softer fades, subtle image drift, gentle reveals, and calmer route transitions.
+## 4. Contact (`contact.tsx`)
+Cleaner, more minimal, cohesive layout:
+- Calmer two-column structure (letter form + studio info) with more whitespace, refined field styling, and a quiet real image accent for warmth.
+- Tighten typographic rhythm so it matches the rest of the site.
 
-### 2. Refine the homepage into a quieter cinematic landing
-- Replace the current hero image with the uploaded mansion aerial.
-- Strip the hero down to only:
-  - Interarch Design Labs
-  - subtle Scroll indicator
-- Remove the large supporting hero copy block and supporting subline.
-- Re-sequence homepage sections so they breathe more through:
-  - larger imagery
-  - visual pauses
-  - reduced on-screen paragraph density
-  - stronger spacing rhythm
-- Distribute the uploaded images strategically across homepage sections to avoid repetition.
+## 5. Footer (`Footer.tsx` + footer CSS)
+- Simplify into a clean, balanced grid: brand/logo + locations, single nav column, contact + copyright. Reduce visual noise, align spacing and type with the minimal direction.
 
-### 3. Rebuild Projects around image-led presentation
-- Keep `/projects` as the parent landing.
-- Make the landing more immersive and less informational, with architecture/interiors presented as calm visual gateways.
-- Rework `/projects/architecture` and `/projects/interiors` into spacious, editorial image grids with reduced card density and stronger photographic pacing.
-- Update project detail pages so imagery dominates and metadata/copy sits in quieter supporting rails or blocks.
-- Replace generic/placeholder project imagery where possible with uploaded assets and more deliberate curation from existing assets.
-
-### 4. Rebuild Expertise for calmer sector storytelling
-- Keep the current sector split, but relabel and present it as:
-  - Residential
-  - Commercial
-  - Institutional
-  - Hospitality
-  - Industrial
-  - Workplace
-- Reduce text density on the expertise index.
-- Shift sector pages toward cinematic hero imagery, shorter narrative blocks, and more visual pacing between content sections.
-- Pair each sector with a more appropriate uploaded image where it helps reduce repetition.
-
-### 5. Rebuild Studio into a legacy-led visual section
-- Keep About and Team, and move History under Studio.
-- Recompose About to feel more documentary-like and less like a manifesto wall.
-- Break long copy into smaller, quieter modules separated by imagery and whitespace.
-- Rebuild Team to feel more editorial and portrait-led.
-- Rebuild History as a visual timeline with large years, short narratives, and alternating image moments instead of long continuous reading blocks.
-
-### 6. Replace Practice with News
-- Remove Practice from navigation and the user journey.
-- Introduce `/news` as the new publication-style parent section.
-- Move Journal under News and redesign it to feel like an architecture publication:
-  - large imagery
-  - minimal metadata
-  - spacious editorial grid
-  - calmer hierarchy
-- Create `/news/awards` as an understated awards archive using the current recognition material.
-- Structure Awards so more entries and images can be added later without redesigning the page.
-
-### 7. Unify imagery across the whole site
-- Use all uploaded images as premium visual assets across the experience where they fit best.
-- Reduce reuse of the same asset across multiple sections.
-- Ensure every major page has at least one strong, immersive visual moment.
-- Make imagery do more of the emotional and pacing work so copy no longer dominates the viewport.
-
-## Technical implementation
-
-### Files likely to change
-- `src/components/home/Hero.tsx`
-- `src/components/home/Header.tsx`
-- `src/components/home/FeaturedWorks.tsx`
-- `src/components/home/Verticals.tsx`
-- `src/components/home/HoverImageNav.tsx`
-- `src/data/siteContent.ts`
-- `src/data/projects.ts`
-- `src/routes/projects.tsx`
-- `src/routes/projects.$category.tsx`
-- `src/routes/project.$slug.tsx`
-- `src/routes/expertise.tsx`
-- `src/routes/expertise.$sector.tsx`
-- `src/routes/studio.about.tsx`
-- `src/routes/studio.team.tsx`
-- `src/routes/studio.history.tsx` (new or moved from current history structure)
-- `src/routes/news.tsx` (new)
-- `src/routes/news.journal.tsx` (new)
-- `src/routes/news.journal.$slug.tsx` (new)
-- `src/routes/news.awards.tsx` (new)
-- `src/styles.css`
-- route files and generated route tree affected by removing Practice and adding News
-
-### Structural changes
-- Retire the current `/practice/*` route family from navigation and page flow.
-- Migrate journal/history concepts into the new Studio and News sections.
-- Update route metadata to match the new IA and shareable page structure.
-
-### Motion direction
-- Keep Framer Motion, but reduce any feeling of generic repeated fade-ups.
-- Standardize motion to quiet luxury behaviors:
-  - slow opacity reveals
-  - subtle upward offsets
-  - image stabilization / slow scale correction
-  - light parallax or drift only where it supports atmosphere
-
-## Outcome
-
-The site will feel less like a studio profile and more like a luxury architectural monograph: quieter hero, stronger imagery, less visible text density, better pacing, cleaner navigation, and a more unified cinematic experience.
+## Technical notes
+- Image swaps centralised through `siteContent.ts` and `projects.ts` import maps so routes need minimal change.
+- Reuse existing motion components (`CinematicHero`, `Reveal`, `MaskText`, `Marquee`) and `idlx-*` CSS tokens; add only small CSS for the new history timeline/about spreads.
+- After edits, grep to confirm zero references remain to any purged AI asset; delete the orphaned asset files.
+- Verify build succeeds and spot-check each redesigned route in preview.
