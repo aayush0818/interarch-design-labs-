@@ -163,7 +163,7 @@ export function SketchPhilosophy() {
               y="0"
               width={W}
               height={H}
-              preserveAspectRatio="xMidYMid meet"
+              preserveAspectRatio="xMidYMid slice"
               clipPath="url(#sketchClip)"
             />
             <line
