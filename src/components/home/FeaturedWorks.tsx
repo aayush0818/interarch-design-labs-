@@ -1,19 +1,15 @@
-import work1 from "@/assets/9c5aa0d0-310f-4331-b48d-b05de9dac663.jpg";
-import work2 from "@/assets/work-2.jpg";
-import work3 from "@/assets/work-3.jpg";
-import work4 from "@/assets/work-4.jpg";
-import work5 from "@/assets/work-5.jpg";
-import work6 from "@/assets/work-6.jpg";
+import { realImages } from "@/data/realImages";
 import { projects } from "@/data/projects";
 
-// work-2 and work-6 are wide; the other four sit as two pairs.
+const { institutional: inst, residential: res, commercial: com } = realImages;
+
 const grid: Array<{ img: string; slug?: string; span: "wide" | "tall" }> = [
-  { img: work2, slug: projects[0]?.slug, span: "wide" },
-  { img: work1, slug: projects[1]?.slug, span: "tall" },
-  { img: work3, slug: projects[2]?.slug, span: "tall" },
-  { img: work4, slug: projects[3]?.slug, span: "tall" },
-  { img: work5, slug: projects[4]?.slug, span: "tall" },
-  { img: work6, slug: projects[5]?.slug, span: "wide" },
+  { img: inst.aerial, slug: projects[0]?.slug, span: "wide" },
+  { img: res.gallery, slug: projects[1]?.slug, span: "tall" },
+  { img: com.lounge, slug: projects[2]?.slug, span: "tall" },
+  { img: res.warm, slug: projects[3]?.slug, span: "tall" },
+  { img: inst.tower, slug: projects[4]?.slug, span: "tall" },
+  { img: com.boutiquePanorama, slug: projects[5]?.slug, span: "wide" },
 ];
 
 export function FeaturedWorks() {
