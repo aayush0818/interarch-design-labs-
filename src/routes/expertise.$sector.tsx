@@ -71,7 +71,7 @@ function SectorPage() {
               <Reveal key={sub.title} delay={i * 0.08}>
                 <article className="idlx-sub-card">
                   <div className="idlx-sub-card-img">
-                    <img src={data.image} alt={sub.title} loading="lazy" />
+                    <img src={(sub as { image?: string }).image ?? data.image} alt={sub.title} loading="lazy" />
                   </div>
                   <h3 className="idlx-h3" style={{ marginTop: 8 }}>{sub.title}</h3>
                   <p className="idlx-body idlx-body--lg">{sub.body}</p>
