@@ -6,10 +6,11 @@ import { Marquee } from "@/components/motion/Marquee";
 import { realImages } from "@/data/realImages";
 
 const studioHero = realImages.institutional.aerial;
-const studioCulture = realImages.commercial.corridor;
-const teamHero = realImages.commercial.lounge;
-const work2 = realImages.residential.gallery;
-const work4 = realImages.residential.warm;
+const studioCulture = realImages.residential.stair;
+const teamHero = realImages.residential.exterior;
+const work2 = realImages.residential.atrium;
+const work4 = realImages.residential.doubleheight;
+
 import {
   aboutCopy,
   mission,
