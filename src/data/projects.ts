@@ -7,6 +7,12 @@ import residentialNoir from "@/assets/residential-lounge-noir.png";
 import residentialDining from "@/assets/residential-dining-light.png";
 import residentialGallery from "@/assets/residential-living-gallery.png";
 import residentialWarm from "@/assets/residential-lounge-warm.png";
+import residentialPastel from "@/assets/residential-lounge-pastel.png";
+import residentialExterior from "@/assets/residential-exterior-sunset-house.png";
+import residentialStair from "@/assets/residential-stair-gallery.png";
+import residentialDoubleheight from "@/assets/residential-doubleheight-lounge.png";
+import residentialAtrium from "@/assets/residential-atrium-lounge.png";
+
 
 export type Project = {
   slug: string;

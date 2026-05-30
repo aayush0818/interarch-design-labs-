@@ -8,7 +8,7 @@ const items = [
     name: "Residential",
     href: "/expertise/residential",
     desc: "Apartments, bungalows and villas conceived for privacy, openness and a seamless connection to the outdoors. Every decision, from plan to finish, supports daily life with calm precision.",
-    img: res.gallery,
+    img: res.exterior,
   },
   {
     name: "Commercial",
@@ -26,7 +26,7 @@ const items = [
     name: "Hospitality",
     href: "/expertise/hospitality",
     desc: "Bespoke hospitality interiors that elevate lifestyle — choreographed through warmth, sequence, tactility and the careful art of arrival.",
-    img: inst.palm,
+    img: res.atrium,
   },
   {
     name: "Industrial",
@@ -38,8 +38,9 @@ const items = [
     name: "Workplace",
     href: "/expertise/workplace",
     desc: "Spaces that balance the needs of individuals and teams. Culture made visible through architecture and interior design.",
-    img: com.boardroomSuite,
+    img: res.doubleheight,
   },
+
 ];
 
 export function Verticals() {

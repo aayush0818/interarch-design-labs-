@@ -8,7 +8,8 @@ import { projectsByCategory } from "@/data/projects";
 import { realImages } from "@/data/realImages";
 
 const work1 = realImages.institutional.aerial;
-const work3 = realImages.residential.gallery;
+const work3 = realImages.residential.exterior;
+
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
 
