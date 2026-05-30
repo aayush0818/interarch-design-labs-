@@ -3,8 +3,8 @@ import { realImages, realPool } from "@/data/realImages";
 const { institutional: inst, residential: res, commercial: com, team } = realImages;
 
 const studioHero = inst.aerial;
-const teamHero = com.lounge;
-const studioCulture = com.corridor;
+const teamHero = res.exterior;
+const studioCulture = res.stair;
 
 const partner1 = team.dipak;
 const partner2 = team.murtaza;
@@ -17,6 +17,7 @@ export const pageImages = {
   studioCulture,
   works: realPool,
 };
+
 
 /* =================================================================
    ABOUT / STUDIO
@@ -175,25 +176,26 @@ export const sectors = [
   {
     slug: "residential",
     name: "Residential",
-    image: res.gallery,
-    gallery: [res.gallery, res.warm, res.dining, res.aquarium, res.noir],
+    image: res.exterior,
+    gallery: [res.exterior, res.stair, res.doubleheight, res.atrium, res.pastel, res.gallery, res.warm],
     short: "Apartments, bungalows and villas — composed around light, view, and movement.",
     statement:
       "Homes that prioritise daylight, proportion and an intuitive flow. Every decision — from plan to finish — supports daily life with calm precision.",
     sub: [
       {
         title: "Apartments",
-        image: res.gallery,
+        image: res.pastel,
         body:
           "Homes that prioritise daylight, proportion and an intuitive flow. Every decision — from plan to finish — supports daily life with calm precision.",
       },
       {
         title: "Bungalows & Villas",
-        image: res.warm,
+        image: res.exterior,
         body:
           "Independent houses conceived for privacy, openness and a seamless connection to the outdoors. The architecture is composed around light, view and movement.",
       },
     ],
+
   },
   {
     slug: "commercial",
@@ -216,12 +218,13 @@ export const sectors = [
   {
     slug: "hospitality",
     name: "Hospitality",
-    image: inst.palm,
-    gallery: [inst.palm, inst.pool, com.reception, com.boutiqueInterior],
+    image: res.atrium,
+    gallery: [res.atrium, res.doubleheight, res.stair, com.reception, com.boutiqueInterior],
     short: "Hotels and retreats choreographed through warmth, sequence and view.",
     statement:
       "Bespoke hospitality interiors that elevate lifestyle — choreographed through warmth, sequence, tactility and view. Arrival, pause and aftertaste, shaped as a single architectural experience.",
   },
+
   {
     slug: "industrial",
     name: "Master Planning",
@@ -234,8 +237,8 @@ export const sectors = [
   {
     slug: "workplace",
     name: "Sustainability",
-    image: inst.tower,
-    gallery: [inst.tower, res.dining, inst.pool],
+    image: res.doubleheight,
+    gallery: [res.doubleheight, res.pastel, res.exterior, inst.tower, inst.pool],
     short: "Passive, daylit, long-life buildings — IGBC Gold among our certifications.",
     statement:
       "For us, sustainability is a form of respect — for land, material and time. A building is truly sustainable when it adapts, ages well, and remains meaningful for decades. We combine traditional wisdom with modern engineering to create spaces that breathe with their surroundings rather than resist them.",
@@ -247,6 +250,7 @@ export const sectors = [
       "IGBC Gold Certification for one of our projects — proof of our commitment to responsible design.",
     ],
   },
+
 ];
 
 /* =================================================================

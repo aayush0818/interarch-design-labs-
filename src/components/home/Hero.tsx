@@ -1,11 +1,13 @@
-import heroImg from "@/assets/institutional-aerial-campus.png";
+import { realImages } from "@/data/realImages";
+
+const heroImg = realImages.brand.homepageHeroResidentialEstate;
 
 export function Hero() {
   return (
     <section className="idl-hero" aria-label="Interarch Design Labs">
       <img
         src={heroImg}
-        alt="Interarch Design Labs project aerial"
+        alt="Interarch Design Labs residential project aerial view"
         width={1092}
         height={768}
         loading="eager"
@@ -23,4 +25,5 @@ export function Hero() {
     </section>
   );
 }
+
 

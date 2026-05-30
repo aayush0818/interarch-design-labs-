@@ -7,6 +7,12 @@ import residentialNoir from "@/assets/residential-lounge-noir.png";
 import residentialDining from "@/assets/residential-dining-light.png";
 import residentialGallery from "@/assets/residential-living-gallery.png";
 import residentialWarm from "@/assets/residential-lounge-warm.png";
+import residentialPastel from "@/assets/residential-lounge-pastel.png";
+import residentialExterior from "@/assets/residential-exterior-sunset-house.png";
+import residentialStair from "@/assets/residential-stair-gallery.png";
+import residentialDoubleheight from "@/assets/residential-doubleheight-lounge.png";
+import residentialAtrium from "@/assets/residential-atrium-lounge.png";
+
 
 export type Project = {
   slug: string;
@@ -32,8 +38,8 @@ export const projects: Project[] = [
     area: "18,400 sq ft",
     scope: "Architecture · Interiors",
     category: "Architecture",
-    cover: residentialGallery,
-    gallery: [residentialGallery, residentialWarm, residentialDining, residentialAquarium],
+    cover: residentialExterior,
+    gallery: [residentialExterior, residentialStair, residentialDoubleheight, residentialAtrium],
     description:
       "A calm residential composition shaped through height, daylight, and a refined sequence of living, dining, and gathering spaces.",
   },
@@ -46,8 +52,8 @@ export const projects: Project[] = [
     area: "12,200 sq ft",
     scope: "Architecture",
     category: "Architecture",
-    cover: residentialWarm,
-    gallery: [residentialWarm, residentialGallery, residentialDining, residentialNoir],
+    cover: residentialGallery,
+    gallery: [residentialGallery, residentialWarm, residentialDining, residentialNoir],
     description:
       "A residential environment focused on warmth, material restraint, and generous shared rooms arranged for everyday life.",
   },
@@ -60,8 +66,8 @@ export const projects: Project[] = [
     area: "9,800 sq ft",
     scope: "Interior architecture",
     category: "Interiors",
-    cover: residentialAquarium,
-    gallery: [residentialAquarium, residentialNoir, residentialDining, residentialGallery],
+    cover: residentialPastel,
+    gallery: [residentialPastel, residentialDoubleheight, residentialDining, residentialAquarium],
     description:
       "A layered interior language balancing sculpted ceilings, reflective surfaces, and intimate living zones with clarity.",
   },
@@ -102,8 +108,8 @@ export const projects: Project[] = [
     area: "14,500 sq ft",
     scope: "Interior design",
     category: "Interiors",
-    cover: residentialDining,
-    gallery: [residentialDining, residentialGallery, residentialWarm, residentialNoir],
+    cover: residentialStair,
+    gallery: [residentialStair, residentialAtrium, residentialWarm, residentialNoir],
     description:
       "A lighter interior register shaped through soft neutrals, controlled daylight, and clear zones for reception, dining, and pause.",
   },
@@ -130,12 +136,13 @@ export const projects: Project[] = [
     area: "11,200 sq ft",
     scope: "Interior design",
     category: "Interiors",
-    cover: residentialNoir,
-    gallery: [residentialNoir, residentialAquarium, residentialWarm, residentialDining],
+    cover: residentialAtrium,
+    gallery: [residentialAtrium, residentialDoubleheight, residentialPastel, residentialDining],
     description:
       "A mood-led interior with darker finishes, precise lighting, and a more immersive, hospitality-driven atmosphere.",
   },
 ];
+
 
 export const projectsBySector = (sectorSlug: string) =>
   projects.filter((p) => p.sector.toLowerCase() === sectorSlug.toLowerCase());
