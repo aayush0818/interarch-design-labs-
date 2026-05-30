@@ -237,8 +237,8 @@ export const sectors = [
   {
     slug: "workplace",
     name: "Sustainability",
-    image: inst.tower,
-    gallery: [inst.tower, res.dining, inst.pool],
+    image: res.doubleheight,
+    gallery: [res.doubleheight, res.pastel, res.exterior, inst.tower, inst.pool],
     short: "Passive, daylit, long-life buildings — IGBC Gold among our certifications.",
     statement:
       "For us, sustainability is a form of respect — for land, material and time. A building is truly sustainable when it adapts, ages well, and remains meaningful for decades. We combine traditional wisdom with modern engineering to create spaces that breathe with their surroundings rather than resist them.",
@@ -250,6 +250,7 @@ export const sectors = [
       "IGBC Gold Certification for one of our projects — proof of our commitment to responsible design.",
     ],
   },
+
 ];
 
 /* =================================================================
