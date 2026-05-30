@@ -176,25 +176,26 @@ export const sectors = [
   {
     slug: "residential",
     name: "Residential",
-    image: res.gallery,
-    gallery: [res.gallery, res.warm, res.dining, res.aquarium, res.noir],
+    image: res.exterior,
+    gallery: [res.exterior, res.stair, res.doubleheight, res.atrium, res.pastel, res.gallery, res.warm],
     short: "Apartments, bungalows and villas — composed around light, view, and movement.",
     statement:
       "Homes that prioritise daylight, proportion and an intuitive flow. Every decision — from plan to finish — supports daily life with calm precision.",
     sub: [
       {
         title: "Apartments",
-        image: res.gallery,
+        image: res.pastel,
         body:
           "Homes that prioritise daylight, proportion and an intuitive flow. Every decision — from plan to finish — supports daily life with calm precision.",
       },
       {
         title: "Bungalows & Villas",
-        image: res.warm,
+        image: res.exterior,
         body:
           "Independent houses conceived for privacy, openness and a seamless connection to the outdoors. The architecture is composed around light, view and movement.",
       },
     ],
+
   },
   {
     slug: "commercial",
