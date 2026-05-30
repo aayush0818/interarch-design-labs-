@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { realImages } from "@/data/realImages";
 
-const skyline = realImages.institutional.aerial;
+const skyline = realImages.brand.manifestoSkyline;
+
 
 const W = 1200;
 const H = 220;
