@@ -9,7 +9,8 @@ import { projects } from "@/data/projects";
 import { realImages } from "@/data/realImages";
 
 const work1 = realImages.institutional.aerial;
-const work3 = realImages.residential.gallery;
+const work3 = realImages.residential.exterior;
+
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
