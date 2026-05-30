@@ -13,6 +13,15 @@ import residentialWarm from "@/assets/residential-lounge-warm.png";
 import residentialDining from "@/assets/residential-dining-light.png";
 import residentialAquarium from "@/assets/residential-living-aquarium.png";
 import residentialNoir from "@/assets/residential-lounge-noir.png";
+import residentialLoungePastel from "@/assets/residential-lounge-pastel.png";
+import residentialExteriorSunsetHouse from "@/assets/residential-exterior-sunset-house.png";
+import residentialStairGallery from "@/assets/residential-stair-gallery.png";
+import residentialDoubleheightLounge from "@/assets/residential-doubleheight-lounge.png";
+import residentialAtriumLounge from "@/assets/residential-atrium-lounge.png";
+
+// Brand / drawing assets
+import manifestoSkyline from "@/assets/manifesto-skyline-drawing.png";
+import homepageHeroResidentialEstate from "@/assets/home-hero-residential-estate.jpg";
 
 // Commercial
 import commercialLounge from "@/assets/commercial-monster-lounge.png";
@@ -34,6 +43,10 @@ import teamMurtaza from "@/assets/team-murtaza-rangwala.jpg";
 import teamHussain from "@/assets/team-hussain-rangwala.jpg";
 
 export const realImages = {
+  brand: {
+    manifestoSkyline,
+    homepageHeroResidentialEstate,
+  },
   institutional: {
     aerial: institutionalAerial,
     pool: institutionalPool,
@@ -46,6 +59,11 @@ export const realImages = {
     dining: residentialDining,
     aquarium: residentialAquarium,
     noir: residentialNoir,
+    pastel: residentialLoungePastel,
+    exterior: residentialExteriorSunsetHouse,
+    stair: residentialStairGallery,
+    doubleheight: residentialDoubleheightLounge,
+    atrium: residentialAtriumLounge,
   },
   commercial: {
     lounge: commercialLounge,
@@ -73,17 +91,23 @@ const { institutional, residential, commercial } = realImages;
 // A curated, mixed pool of real images for galleries / strips / journals.
 export const realPool = [
   institutional.aerial,
-  residential.gallery,
+  residential.exterior,
   commercial.lounge,
   institutional.pool,
-  residential.warm,
+  residential.stair,
   commercial.boutiquePanorama,
   institutional.tower,
-  residential.dining,
+  residential.doubleheight,
   commercial.reception,
   institutional.palm,
-  residential.aquarium,
+  residential.atrium,
   commercial.boardroomSuite,
+  residential.pastel,
+  residential.gallery,
+  residential.warm,
+  residential.dining,
+  residential.aquarium,
   residential.noir,
   commercial.salon,
 ];
+
