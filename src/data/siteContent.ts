@@ -218,12 +218,13 @@ export const sectors = [
   {
     slug: "hospitality",
     name: "Hospitality",
-    image: inst.palm,
-    gallery: [inst.palm, inst.pool, com.reception, com.boutiqueInterior],
+    image: res.atrium,
+    gallery: [res.atrium, res.doubleheight, res.stair, com.reception, com.boutiqueInterior],
     short: "Hotels and retreats choreographed through warmth, sequence and view.",
     statement:
       "Bespoke hospitality interiors that elevate lifestyle — choreographed through warmth, sequence, tactility and view. Arrival, pause and aftertaste, shaped as a single architectural experience.",
   },
+
   {
     slug: "industrial",
     name: "Master Planning",
