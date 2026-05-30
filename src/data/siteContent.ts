@@ -3,8 +3,8 @@ import { realImages, realPool } from "@/data/realImages";
 const { institutional: inst, residential: res, commercial: com, team } = realImages;
 
 const studioHero = inst.aerial;
-const teamHero = com.lounge;
-const studioCulture = com.corridor;
+const teamHero = res.exterior;
+const studioCulture = res.stair;
 
 const partner1 = team.dipak;
 const partner2 = team.murtaza;
@@ -17,6 +17,7 @@ export const pageImages = {
   studioCulture,
   works: realPool,
 };
+
 
 /* =================================================================
    ABOUT / STUDIO
