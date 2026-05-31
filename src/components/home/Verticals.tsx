@@ -26,7 +26,7 @@ const items = [
     name: "Hospitality",
     href: "/expertise/hospitality",
     desc: "Bespoke hospitality interiors that elevate lifestyle — choreographed through warmth, sequence, tactility and the careful art of arrival.",
-    img: com.boutiquePanorama,
+    img: realImages.brand.hospitalityPoolsideResort,
   },
   {
     name: "Industrial",
