@@ -1,51 +1,44 @@
-# Visual Refinement & Real-Image Migration
+## Plan
 
-A cohesive pass across five areas plus a full-site image audit. The studio keeps its quiet-luxury, image-led register. All AI-generated imagery is removed and replaced only with the provided real project photos.
+### 1. Team page — fix name/photo pairing
+In `src/data/siteContent.ts` (top of file), keep the partner array order/names as-is but reassign the image references so each name shows the correct portrait:
+- Murtaza → use `team.hussain` (file that actually contains Murtaza's face)
+- Hussain → use `team.rohit` (file that actually contains Hussain's face)
+- Rohit → use `team.murtaza` (file that actually contains Rohit's face)
+- Dipak stays unchanged.
 
-## Real images available (the only ones we may use)
-- **Institutional**: `institutional-aerial-campus`, `institutional-pool-court`, `institutional-green-tower`, `institutional-palm-court`
-- **Residential**: `residential-living-gallery`, `residential-lounge-warm`, `residential-dining-light`, `residential-living-aquarium`, `residential-lounge-noir`
-- **Commercial**: `commercial-monster-lounge`, `commercial-monster-boardroom`, `commercial-monster-corridor`, `commercial-boardroom-suite`, `commercial-reception-lobby`, `commercial-boutique-panorama`, `commercial-boutique-floor`, `commercial-boutique-interior`, `commercial-salon-interior`, `commercial-textile-studio`, `commercial-pilates-studio`
-- **Team portraits (real)**: `team-dipak-thaker`, `team-rohit-gojia`, `team-murtaza-rangwala`, `team-hussain-rangwala`
-- **Brand**: `idl-logo`
+(Files aren't renamed — only the partner→image mapping is corrected.)
 
-## AI-generated images to purge everywhere
-`work-1..6.jpg`, `sector-residential/commercial/institutional/hospitality/industrial/workplace.jpg`, `studio-hero.jpg`, `studio-culture.jpg`, `team-hero.jpg`, `hero.jpg`, `nav-*.jpg`, `award-1..3.jpg`, `partner-1..4.jpg`, `skyline-sketch.png`, `9c5aa0d0-...jpg`, and the `idl-home-hero-mansion / idl-institutional-facade / idl-commercial-salon / idl-retail-boutique / idl-workplace-studio` set.
+### 2. Rollback homepage Verticals + Selected Works
+Only the homepage hero should keep the newly uploaded mansion image. Revert the two sections to their pre-upload imagery (no use of the new residential photos: pastel / exterior / stair / doubleheight / atrium).
 
-Every file referencing these (Header, HoverImageNav, Hero, FeaturedWorks, Verticals, Recognition, SketchPhilosophy, Clients, news.tsx, news.awards.tsx, projects.tsx, projects.$category.tsx, studio.about/team/history, practice.*, expertise.$sector, styles.css background refs, siteContent.ts) gets re-pointed to a real image. Where a decorative AI image has no real equivalent (e.g. sketch philosophy section), the section is reworked to lean on layout/typography instead of inventing imagery.
+**`src/components/home/Verticals.tsx`** — restore mapping to:
+- Residential → `res.gallery`
+- Commercial → `com.lounge`
+- Institutional → `inst.aerial`
+- Hospitality → `com.boutiquePanorama`
+- Industrial → `inst.tower`
+- Workplace → `com.boardroom`
 
-## 1. Expertise (`expertise.tsx` + `expertise.$sector.tsx` + `sectors` data)
-- Assign each of the six sectors a real cover image and a small real gallery from the matching portfolio:
-  - Residential → residential set
-  - Commercial Interiors → commercial set
-  - Institutional → institutional set
-  - Hospitality → institutional-palm/pool (resort-like) + commercial
-  - Master Planning → institutional-aerial / green-tower
-  - Sustainability → institutional-green-tower + residential daylight shots
-- Sector detail page: replace the single repeated `data.image` in the residential sub-cards with distinct gallery images, and add a small image band so each sector reads visually, not just as text.
+**`src/components/home/FeaturedWorks.tsx`** — restore the prior mixed institutional/residential(old)/commercial grid:
+- inst.aerial (wide), res.gallery (tall), com.lounge (tall), inst.pool (tall), res.warm (tall), com.boutiquePanorama (wide).
 
-## 2. History (`studio.history.tsx`)
-Rebuild from the flat award-row list into a year-by-year cinematic journey:
-- Full-height intro hero (real institutional image) with "A legacy in motion".
-- Vertical scroll spine with animated progress fill (reuse the `idlx-spine` pattern already in `practice.history.tsx`), one stage per milestone (1989 → Today).
-- Alternating layout: each stage shows year (large), title, text, and a paired real image, with clear stage-to-stage transitions (Reveal/MaskText motion). Images cycle through the real institutional/residential/commercial sets.
+The newly uploaded residential images remain available on the Residential expertise page and project pages (where they were also added) — only the homepage sections roll back.
 
-## 3. About (`studio.about.tsx`)
-Make it more visual and immersive while keeping all copy:
-- Swap `studioHero`, `studioCulture`, `teamHero`, `work2`, `work4` for real images.
-- Break dense text blocks with image-led splits: intro manifesto paired with a hero image, Mission/Vision/Values interleaved with a full-bleed image band, Range-of-Experience as a stat + image composition, Recognition kept but spaced, Culture cards given more breathing room.
-- Add varied presentation (image strips, pull-quote over image, two-up spreads) rather than stacked paragraphs.
+### 3. Menu hover images → architectural sketches
+The header mega-menu and the bottom hover-image nav currently show real project photos on hover. Replace them with hand-drawn architectural line sketches (black ink on warm cream paper, loose perspective drawings of buildings/interiors — same quiet aesthetic as the existing manifesto skyline drawing).
 
-## 4. Contact (`contact.tsx`)
-Cleaner, more minimal, cohesive layout:
-- Calmer two-column structure (letter form + studio info) with more whitespace, refined field styling, and a quiet real image accent for warmth.
-- Tighten typographic rhythm so it matches the rest of the site.
+- Generate 5 sketch images saved to `src/assets/` (e.g. `sketch-projects.png`, `sketch-expertise.png`, `sketch-studio.png`, `sketch-news.png`, `sketch-contact.png`) — premium model, warm-paper background, sepia/charcoal line work, no color photos.
+- Add a `sketches` group to `src/data/realImages.ts` so they're centrally referenced.
+- Update `src/components/home/Header.tsx` (NAV array) and `src/components/home/HoverImageNav.tsx` to use these sketches instead of the photo references.
 
-## 5. Footer (`Footer.tsx` + footer CSS)
-- Simplify into a clean, balanced grid: brand/logo + locations, single nav column, contact + copyright. Reduce visual noise, align spacing and type with the minimal direction.
+### 4. Site-wide: black text → warm brown
+Currently `--idlx-ink: #1a1614` (near-black) drives almost all body/heading text via `.idlx-body`, `.idlx-lead`, headings and most components. Shift the ink token to a soft dark brown so every text surface picks it up automatically.
 
-## Technical notes
-- Image swaps centralised through `siteContent.ts` and `projects.ts` import maps so routes need minimal change.
-- Reuse existing motion components (`CinematicHero`, `Reveal`, `MaskText`, `Marquee`) and `idlx-*` CSS tokens; add only small CSS for the new history timeline/about spreads.
-- After edits, grep to confirm zero references remain to any purged AI asset; delete the orphaned asset files.
-- Verify build succeeds and spot-check each redesigned route in preview.
+- `src/styles.css`: change `--idlx-ink` from `#1a1614` to a warm dark brown around `#3a2a1f` (deep espresso brown, still high-contrast on the cream background but visibly brown, not black). Adjust the shadcn `--foreground` / `--primary` / `--card-foreground` / `--popover-foreground` / `--secondary-foreground` tokens (currently `oklch(0.27 0.03 40)`) to match — e.g. `oklch(0.28 0.05 50)` — so shadcn-based components (buttons, inputs, contact form labels) also pick up the brown.
+- Spot-check Header/Footer/Hero/forms after the change; replace any hard-coded `#000` / `text-black` / `oklch(... 0)` neutrals with the token so nothing remains literally black.
+
+### Out of scope
+- No other layout or content changes.
+- No edits to project pages, expertise pages, history, about, contact, or footer beyond what the brown-ink token recolours automatically.
+- File names of team portraits stay the same (only mappings change).

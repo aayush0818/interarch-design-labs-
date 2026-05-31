@@ -1765,15 +1765,15 @@ a:hover .img-reveal-wrap .img-parallax {
 :root {
   --radius: 0.625rem;
   --background: oklch(0.96 0.02 80);
-  --foreground: oklch(0.27 0.03 40);
+  --foreground: oklch(0.30 0.05 55);
   --card: oklch(0.96 0.02 80);
-  --card-foreground: oklch(0.27 0.03 40);
+  --card-foreground: oklch(0.30 0.05 55);
   --popover: oklch(0.96 0.02 80);
-  --popover-foreground: oklch(0.27 0.03 40);
-  --primary: oklch(0.27 0.03 40);
+  --popover-foreground: oklch(0.30 0.05 55);
+  --primary: oklch(0.30 0.05 55);
   --primary-foreground: oklch(0.96 0.02 80);
   --secondary: oklch(0.88 0.02 70);
-  --secondary-foreground: oklch(0.27 0.03 40);
+  --secondary-foreground: oklch(0.30 0.05 55);
   --muted-shadcn: oklch(0.88 0.02 70);
   --muted-foreground: oklch(0.55 0.04 50);
   --accent-shadcn: oklch(0.55 0.18 35);
@@ -1795,11 +1795,11 @@ a:hover .img-reveal-wrap .img-parallax {
    ============================================================================= */
 
 :root {
-  --idlx-ink: #1a1614;
+  --idlx-ink: #3a2a1f;
   --idlx-cream: #f5eee3;
-  --idlx-brown: #3f3431;
+  --idlx-brown: #4a3528;
   --idlx-mute: #8a7a6e;
-  --idlx-line: rgba(26, 22, 20, 0.14);
+  --idlx-line: rgba(58, 42, 31, 0.16);
   --idlx-accent: #a8392b;
   --idlx-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
