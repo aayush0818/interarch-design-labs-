@@ -1,4 +1,7 @@
 {
   "buildCommand": "npm run build",
-  "framework": "tanstack-start"
+  "outputDirectory": "dist",
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
