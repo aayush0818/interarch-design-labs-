@@ -22,6 +22,7 @@ import residentialAtriumLounge from "@/assets/residential-atrium-lounge.png";
 // Brand / drawing assets
 import manifestoSkyline from "@/assets/manifesto-skyline-drawing.png";
 import homepageHeroResidentialEstate from "@/assets/home-hero-residential-estate.jpg";
+import hospitalityPoolsideResort from "@/assets/hospitality-poolside-resort.png";
 
 // Architectural sketches (menu hover art)
 import sketchProjects from "@/assets/sketch-projects.png";
