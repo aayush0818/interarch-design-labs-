@@ -2,10 +2,10 @@ import { useState } from "react";
 import { realImages } from "@/data/realImages";
 
 const links = [
-  { label: "Studio", href: "/studio/about", img: realImages.sketches.studio },
-  { label: "Projects", href: "/projects", img: realImages.sketches.projects },
-  { label: "News", href: "/news", img: realImages.sketches.news },
-  { label: "Contact", href: "/contact", img: realImages.sketches.contact },
+  { label: "Studio", href: "/studio/about", img: realImages.institutional.aerial },
+  { label: "Projects", href: "/projects", img: realImages.residential.gallery },
+  { label: "News", href: "/news", img: realImages.commercial.lounge },
+  { label: "Contact", href: "/contact", img: realImages.brand.hospitalityPoolsideResort },
 ];
 
 export function HoverImageNav() {
