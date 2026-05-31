@@ -23,6 +23,13 @@ import residentialAtriumLounge from "@/assets/residential-atrium-lounge.png";
 import manifestoSkyline from "@/assets/manifesto-skyline-drawing.png";
 import homepageHeroResidentialEstate from "@/assets/home-hero-residential-estate.jpg";
 
+// Architectural sketches (menu hover art)
+import sketchProjects from "@/assets/sketch-projects.png";
+import sketchExpertise from "@/assets/sketch-expertise.png";
+import sketchStudio from "@/assets/sketch-studio.png";
+import sketchNews from "@/assets/sketch-news.png";
+import sketchContact from "@/assets/sketch-contact.png";
+
 // Commercial
 import commercialLounge from "@/assets/commercial-monster-lounge.png";
 import commercialBoardroom from "@/assets/commercial-monster-boardroom.png";
@@ -46,6 +53,13 @@ export const realImages = {
   brand: {
     manifestoSkyline,
     homepageHeroResidentialEstate,
+  },
+  sketches: {
+    projects: sketchProjects,
+    expertise: sketchExpertise,
+    studio: sketchStudio,
+    news: sketchNews,
+    contact: sketchContact,
   },
   institutional: {
     aerial: institutionalAerial,

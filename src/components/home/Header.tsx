@@ -4,11 +4,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import logo from "@/assets/idl-logo.png";
 import { realImages } from "@/data/realImages";
 
-const navWork = realImages.institutional.aerial;
-const navStory = realImages.residential.gallery;
-const navTeam = realImages.commercial.lounge;
-const navNews = realImages.commercial.boutiquePanorama;
-const navContact = realImages.commercial.reception;
+const navWork = realImages.sketches.projects;
+const navStory = realImages.sketches.studio;
+const navTeam = realImages.sketches.contact;
+const navNews = realImages.sketches.news;
+const navContact = realImages.sketches.expertise;
 
 type SubItem = { label: string; to: string; params?: Record<string, string> };
 type NavItem = {

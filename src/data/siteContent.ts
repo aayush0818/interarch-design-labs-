@@ -6,10 +6,12 @@ const studioHero = inst.aerial;
 const teamHero = res.exterior;
 const studioCulture = res.stair;
 
-const partner1 = team.dipak;
-const partner2 = team.murtaza;
-const partner3 = team.hussain;
-const partner4 = team.rohit;
+// File names of portraits don't match the actual face in each file.
+// Map each director name to the file that actually contains their photo.
+const partner1 = team.dipak;     // Dipak — correct
+const partner2 = team.hussain;   // Murtaza's face lives in the "hussain" file
+const partner3 = team.rohit;     // Hussain's face lives in the "rohit" file
+const partner4 = team.murtaza;   // Rohit's face lives in the "murtaza" file
 
 export const pageImages = {
   studioHero,

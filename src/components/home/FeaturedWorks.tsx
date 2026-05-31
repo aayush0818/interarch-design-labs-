@@ -5,11 +5,11 @@ const { institutional: inst, residential: res, commercial: com } = realImages;
 
 const grid: Array<{ img: string; slug?: string; span: "wide" | "tall" }> = [
   { img: inst.aerial, slug: projects[0]?.slug, span: "wide" },
-  { img: res.exterior, slug: projects[1]?.slug, span: "tall" },
-  { img: res.pastel, slug: projects[2]?.slug, span: "tall" },
-  { img: res.atrium, slug: projects[3]?.slug, span: "tall" },
-  { img: res.stair, slug: projects[4]?.slug, span: "tall" },
-  { img: res.doubleheight, slug: projects[5]?.slug, span: "wide" },
+  { img: res.gallery, slug: projects[1]?.slug, span: "tall" },
+  { img: com.lounge, slug: projects[2]?.slug, span: "tall" },
+  { img: inst.pool, slug: projects[3]?.slug, span: "tall" },
+  { img: res.warm, slug: projects[4]?.slug, span: "tall" },
+  { img: com.boutiquePanorama, slug: projects[5]?.slug, span: "wide" },
 ];
 
 
