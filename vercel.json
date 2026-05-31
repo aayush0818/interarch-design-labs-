@@ -2,32 +2,13 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".output/public",
   "framework": "other",
-  "nodejs": "20.x",
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    ".output/server/*.js": {
-      "runtime": "nodejs20.x",
-      "memory": 1024,
-      "maxDuration": 60
-    }
   },
   "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/.output/server/index.js"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600"
-        }
-      ]
     }
   ]
 }
