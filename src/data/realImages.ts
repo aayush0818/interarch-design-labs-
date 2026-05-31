@@ -54,6 +54,7 @@ export const realImages = {
   brand: {
     manifestoSkyline,
     homepageHeroResidentialEstate,
+    hospitalityPoolsideResort,
   },
   sketches: {
     projects: sketchProjects,
