@@ -1,14 +1,13 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": ".output/public",
-  "framework": "other",
-  "env": {
-    "NODE_ENV": "production"
+  "outputDirectory": "dist/client",
+  "framework": null,
+  "functions": {
+    "api/index.mjs": {
+      "includeFiles": "dist/server/**"
+    }
   },
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/.output/server/index.js"
-    }
+    { "source": "/(.*)", "destination": "/api/index" }
   ]
 }
